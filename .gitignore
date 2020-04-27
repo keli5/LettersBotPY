@@ -134,5 +134,7 @@ core.Microsoft.Pytho.*
 # safekeeping
 devbottoken.txt
 bot.sh
+# ignore dbs
+*.sqlite3*
 
 # you don't need to worry about bot.sh it just does some prior checks

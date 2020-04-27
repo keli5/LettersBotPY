@@ -3,6 +3,7 @@ import discord
 
 
 class Utility(commands.Cog):
+    ''' Quick utility commands that provide mostly information '''
 
     def __init__(self, bot):
         self.bot = bot
@@ -25,6 +26,7 @@ class Utility(commands.Cog):
 
     @commands.command()
     async def userinfo(self, ctx, user: discord.Member = None):
+        ''' Get some info about a user, or yourself. '''
         user = user or ctx.author
         uiembed = discord.Embed(
             title=f"User info about {str(user)}",
@@ -43,6 +45,9 @@ class Utility(commands.Cog):
         else:
             rolestring = ", ".join(nroles[1:4])
         uiembed.add_field(name="Roles", value=rolestring, inline=len(nroles)<4)
+        uiembed.add_field(name="ID", value=user.id)
+        uiembed.add_field(name="Boosting?", value="Yes" if user.premium_since else "No")
+        uiembed.add_field(name="On mobile", value="Yes" if user.is_on_mobile() else "No")
 
         await ctx.send(embed=uiembed)
 
