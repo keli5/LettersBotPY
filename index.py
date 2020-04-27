@@ -6,8 +6,18 @@ extlist = ["jishaku", "utils"] # Add extensions to this list by filename when yo
 
 class LettersBot(commands.AutoShardedBot): # when you going
     async def on_message(self, message):
-
         await self.process_commands(message)
+
+    async def on_command_error(self, ctx, exception):
+        if isinstance(exception, commands.CommandNotFound):
+            return
+        errembed = discord.Embed(
+            title="An error occurred.",
+            description=str(exception),
+            color=0xAA0000
+        )
+        await ctx.send(embed=errembed)
+
 
 
 bot = LettersBot( # create the bot
