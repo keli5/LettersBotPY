@@ -16,7 +16,7 @@ class Utility(commands.Cog):
     @commands.command()
     async def avatar(self, ctx, user: discord.Member = None):
         ''' Get somebody's avatar, or your own. '''
-        victim = victim or ctx.author
+        victim = user or ctx.author
         avatarembed = discord.Embed(
             title=f"Avatar of {str(victim)}",
             color=victim.color
@@ -48,8 +48,8 @@ class Utility(commands.Cog):
         uiembed.add_field(name="ID", value=user.id)
         uiembed.add_field(name="Boosting?", value="Yes" if user.premium_since else "No")
         uiembed.add_field(name="On mobile", value="Yes" if user.is_on_mobile() else "No")
-
         await ctx.send(embed=uiembed)
+
 
 def setup(bot):
     bot.add_cog(Utility(bot))

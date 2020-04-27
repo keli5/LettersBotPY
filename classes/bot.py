@@ -3,32 +3,41 @@ import os
 from tortoise.models import Model
 from models import LBUser, LBGuild
 from utilfuncs import setup
+import json
 from discord.ext import commands
-extlist = ["jishaku", "utils"] # Add extensions to this list by filename when you add one. Shocking I know
+extlist = ["jishaku", "utils", "db"] # Add extensions to this list by filename when you add one. Shocking I know
 # Remove jishaku from the list for deployment
 
 class LettersBot(commands.AutoShardedBot): # when you going
     async def on_ready(self):
         await setup()
+        await bot.change_presence(activity=discord.Game(name='with your mind'))
         print("Ready!")
     
     async def on_message(self, message):
         if message.author.bot: return
-        user = await LBUser.get_or_create(defaults={
-            "id": message.author.id,
-            "balance": 0,
-            "canUseBot": True,
-            "inventory": []
-        })
-        guild = await LBGuild.get_or_create(defaults={
-            "id": message.guild.id,
-            "muteRole": 0,
-        })
-        if user[1] == True:
-            print(f'Created entry for {message.author}')
-        if guild[1] == True:
-            print(f'Created entry for {message.guild}')
-        await self.process_commands(message)
+        guild = ""
+        user = ""
+        try:
+            user = await LBUser.get(id=message.author.id)
+        except:
+            user = await LBUser.create(
+                id=message.author.id,
+                balance=0,
+                canUseBot=True,
+                inventory=[]
+            )
+            print(f"Created entry for {message.author}")
+        try:
+            guild = await LBGuild.get(id=message.guild.id)
+        except:
+            guild = await LBGuild.create(
+                id=message.guild.id,
+                muteRole=0
+            )
+            print(f"Created entry for {message.guild}")
+        if user.canUseBot == True:
+            await self.process_commands(message)
 
     async def on_command_error(self, ctx, exception):
         if isinstance(exception, commands.CommandNotFound):
@@ -42,10 +51,6 @@ class LettersBot(commands.AutoShardedBot): # when you going
 
 
 
-bot = LettersBot( # create the bot
-    command_prefix="d::",
-    case_insensitive=True
-)
 
 if __name__ == "__main__":    # Importing extensions
   for extension in extlist:
@@ -55,6 +60,3 @@ if __name__ == "__main__":    # Importing extensions
     except Exception as e:
       exc = '{}: {}'.format(type(e).__name__, e)
       print('Failed to load extension {}\nError: {}'.format(extension, exc))
-
-
-bot.run(os.environ['BOT_TOKEN'])
