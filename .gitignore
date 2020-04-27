@@ -132,4 +132,7 @@ dmypy.json
 .theia/
 core.Microsoft.Pytho.*
 # safekeeping
-devbottoken.txt 
+devbottoken.txt
+bot.sh
+
+# you don't need to worry about bot.sh it just does some prior checks
