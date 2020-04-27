@@ -1,6 +1,11 @@
 from classes.bot import LettersBot
+import os
+import json
 
-botowners = open("models/botowners.txt", "r")
+extlist = ["jishaku", "cogs.utils", "cogs.db"] # Add extensions to this list by filename when you add one. Shocking I know
+# Remove jishaku from the list for deployment
+
+botowners = open("classes/botowners.txt", "r")
 bot = LettersBot( # create the bot
     command_prefix="d::",
     case_insensitive=True,
@@ -8,6 +13,16 @@ bot = LettersBot( # create the bot
 )
 botowners.close()
 
+if not os.path.exists("lettersbot_data.sqlite3"):
+    print('Running initdb.py')
+    exec(open("utility/initdb.py").read())
 
+for extension in extlist:
+    try:
+      bot.load_extension(extension)
+      print('Successfully loaded extension ' + extension)
+    except Exception as e:
+      exc = '{}: {}'.format(type(e).__name__, e)
+      print('Failed to load extension {}\nError: {}'.format(extension, exc))
 
 bot.run(os.environ['BOT_TOKEN'])

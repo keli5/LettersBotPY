@@ -1,17 +1,15 @@
 import discord
 import os
 from tortoise.models import Model
-from models import LBUser, LBGuild
-from utilfuncs import setup
+from classes.dbmodels import LBGuild, LBUser
+from utility.funcs import setup
 import json
 from discord.ext import commands
-extlist = ["jishaku", "utils", "db"] # Add extensions to this list by filename when you add one. Shocking I know
-# Remove jishaku from the list for deployment
 
 class LettersBot(commands.AutoShardedBot): # when you going
     async def on_ready(self):
         await setup()
-        await bot.change_presence(activity=discord.Game(name='with your mind'))
+        await self.change_presence(activity=discord.Game(name='with your mind'))
         print("Ready!")
     
     async def on_message(self, message):
@@ -52,11 +50,4 @@ class LettersBot(commands.AutoShardedBot): # when you going
 
 
 
-if __name__ == "__main__":    # Importing extensions
-  for extension in extlist:
-    try:
-      bot.load_extension(extension)
-      print('Successfully loaded extension ' + extension)
-    except Exception as e:
-      exc = '{}: {}'.format(type(e).__name__, e)
-      print('Failed to load extension {}\nError: {}'.format(extension, exc))
+
