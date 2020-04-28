@@ -55,7 +55,7 @@ class LettersBot(commands.AutoShardedBot): # when you going
         guild = member.guild
         guilddb = await LBGuild.filter(id=guild.id).first()
         joinmsg = getattr(guilddb, "joinMesg")
-        joinmsgchannel:discord.TextChannel = getattr(guilddb, "joinMesgChannel") or guild.system_channel
+        joinmsgchannel = self.get_channel(getattr(guilddb, "joinMesgChannel")) or guild.system_channel
         if (joinmsg is not None) and (joinmsgchannel is not None):
             await joinmsgchannel.send(f"{member.mention}\n{joinmsg}")
 

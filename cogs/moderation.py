@@ -76,6 +76,24 @@ class Moderation(commands.Cog):
         await LBGuild.filter(id=ctx.guild.id).update(joinMesg=None)
         await ctx.send('Successfully removed guild join message.')
 
+    @joinmsg.command(aliases=["setchannel"])
+    @commands.has_permissions(manage_guild=True)
+    async def channel(self, ctx, channel:discord.TextChannel):
+        ''' Set the channel for the custom join message. '''
+        myself = ctx.guild.get_member(ctx.bot.user.id)
+        if not channel.permissions_for(myself).send_messages:
+            return await ctx.send('This channel won\'t work - the bot can\'t speak in it.')
+        await LBGuild.filter(id=ctx.guild.id).update(joinMesgChannel=channel.id)
+        await ctx.send(f'Successfully set {channel.name} as the join message channel.')
+
+    @joinmsg.command()
+    @commands.has_permissions(manage_guild=True)
+    async def resetchannel(self, ctx):
+        ''' Reset to the default channel. '''
+        syschannel = ctx.guild.system_channel or "none"
+        await LBGuild.filter(id=ctx.guild.id).update(joinMesgChannel=None)
+        await ctx.send(f"Successfully reset the join message channel to {syschannel}.")
+
 
 def cog_unload(self):
     self.check_for_updates.cancel()
