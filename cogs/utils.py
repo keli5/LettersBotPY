@@ -56,12 +56,11 @@ class Utility(commands.Cog):
         uiembed.add_field(name="On mobile", value="Yes" if user.is_on_mobile() else "No")
         await ctx.send(embed=uiembed)
 
-    @commands.group()
+    @commands.group(invoke_without_command=True)
     async def db(self, ctx):
         ''' Database manipulation commands. '''
-        if ctx.invoked_subcommand is None:
-            size = os.path.getsize("../lettersbot_data.sqlite3") / 1000
-            await ctx.send(f"SQLite 3 database, {size} KB")
+        size = os.path.getsize("../lettersbot_data.sqlite3") / 1000
+        await ctx.send(f"SQLite 3 database, {size} KB")
 
     @db.command()
     @commands.is_owner()
@@ -76,7 +75,7 @@ class Utility(commands.Cog):
 
     @db.command()
     @commands.is_owner()
-        async def get(self, ctx, model, id):
+    async def get(self, ctx, model, id):
         ''' Get id from model in the database. '''
         modelnm = model
         model = modeltypes[model] or LBUser
