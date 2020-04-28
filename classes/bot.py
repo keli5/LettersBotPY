@@ -23,7 +23,9 @@ class LettersBot(commands.AutoShardedBot): # when you going
                 id=message.author.id,
                 balance=0,
                 canUseBot=True,
-                inventory=[]
+                inventory=[],
+                warnings=[],
+                banUntil=None
             )
             print(f"Created entry for {message.author}")
         try:
@@ -31,7 +33,8 @@ class LettersBot(commands.AutoShardedBot): # when you going
         except:
             guild = await LBGuild.create(
                 id=message.guild.id,
-                muteRole=0
+                muteRole=0,
+                joinMesg=None
             )
             print(f"Created entry for {message.guild}")
         if user.canUseBot == True:
@@ -40,7 +43,7 @@ class LettersBot(commands.AutoShardedBot): # when you going
     async def on_command_error(self, ctx, exception):
         if isinstance(exception, commands.CommandNotFound):
             return
-            
+
         errembed = discord.Embed(
             title="An error occurred.",
             description=str(exception),

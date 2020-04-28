@@ -2,11 +2,12 @@ from discord.ext import commands
 import discord
 import os
 from classes.dbmodels import LBUser, LBGuild
+import pkg_resources
 modeltypes = {
     "users": LBUser,
     "guilds": LBGuild
 }
-valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole"]
+valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole", "warnings", "banUntil", "joinMesg"]
 
 class Utility(commands.Cog):
     ''' Quick utility commands that provide mostly information '''
@@ -59,8 +60,11 @@ class Utility(commands.Cog):
     @commands.group(invoke_without_command=True)
     async def db(self, ctx):
         ''' Database manipulation commands. '''
+        tormver = pkg_resources.get_distribution("tortoise-orm").version
         size = os.path.getsize("../lettersbot_data.sqlite3") / 1000
-        await ctx.send(f"SQLite 3 database, {size} KB")
+        await ctx.send(f"SQLite 3 database, {size} KB\nUsing tortoise-orm {tormver}")
+        
+
 
     @db.command()
     @commands.is_owner()
@@ -72,6 +76,7 @@ class Utility(commands.Cog):
         if not item in valid_fields:
             return await ctx.send(f'Invalid item {item}')
         await model.filter(id=id).update(**{item: value})
+        await ctx.send(f"Set {modelnm}.{id}.{item} to {value}")
 
     @db.command()
     @commands.is_owner()
