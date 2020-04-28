@@ -40,6 +40,7 @@ class LettersBot(commands.AutoShardedBot): # when you going
     async def on_command_error(self, ctx, exception):
         if isinstance(exception, commands.CommandNotFound):
             return
+            
         errembed = discord.Embed(
             title="An error occurred.",
             description=str(exception),

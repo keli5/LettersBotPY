@@ -1,6 +1,12 @@
 from discord.ext import commands
 import discord
-
+import os
+from classes.dbmodels import LBUser, LBGuild
+modeltypes = {
+    "users": LBUser,
+    "guilds": LBGuild
+}
+valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole"]
 
 class Utility(commands.Cog):
     ''' Quick utility commands that provide mostly information '''
@@ -50,6 +56,43 @@ class Utility(commands.Cog):
         uiembed.add_field(name="On mobile", value="Yes" if user.is_on_mobile() else "No")
         await ctx.send(embed=uiembed)
 
+    @commands.group()
+    async def db(self, ctx):
+        ''' Database manipulation commands. '''
+        if ctx.invoked_subcommand is None:
+            size = os.path.getsize("../lettersbot_data.sqlite3") / 1000
+            await ctx.send(f"SQLite 3 database, {size} KB")
+
+    @db.command()
+    @commands.is_owner()
+    async def set(self, ctx, model, id, item, value):
+        ''' Set item of model id to value in the database. '''
+        modelnm = model
+        model = modeltypes[model] or LBUser
+        id = id or ctx.author.id
+        if not item in valid_fields:
+            return await ctx.send(f'Invalid item {item}')
+        await model.filter(id=id).update(**{item: value})
+
+    @db.command()
+    @commands.is_owner()
+        async def get(self, ctx, model, id):
+        ''' Get id from model in the database. '''
+        modelnm = model
+        model = modeltypes[model] or LBUser
+        id = id or ctx.author.id
+        result = await model.get(id=id)
+        getembed = discord.Embed(
+            title=f"{modelnm}.{id}"
+        )
+        for field in valid_fields:
+            attr = ""
+            try:
+                atr = getattr(result, field)
+                getembed.add_field(name=field, value=atr)
+            except AttributeError:
+                pass
+        await ctx.send(embed=getembed)
 
 def setup(bot):
     bot.add_cog(Utility(bot))

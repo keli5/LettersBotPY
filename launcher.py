@@ -2,7 +2,7 @@ from classes.bot import LettersBot
 import os
 import json
 
-extlist = ["jishaku", "cogs.utils", "cogs.db"] # Add extensions to this list by filename when you add one. Shocking I know
+extlist = ["jishaku", "utils", "db"] # Add extensions to this list by filename when you add one. Shocking I know
 # Remove jishaku from the list for deployment
 
 botowners = open("classes/botowners.txt", "r")
@@ -18,8 +18,11 @@ if not os.path.exists("lettersbot_data.sqlite3"):
     exec(open("utility/initdb.py").read())
 
 for extension in extlist:
+    prefix = "cogs."
+    if extension == "jishaku":
+        prefix = ""
     try:
-      bot.load_extension(extension)
+      bot.load_extension(prefix + extension)
       print('Successfully loaded extension ' + extension)
     except Exception as e:
       exc = '{}: {}'.format(type(e).__name__, e)
