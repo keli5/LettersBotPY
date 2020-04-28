@@ -11,3 +11,4 @@ class LBUser(Model):
 class LBGuild(Model):
     muteRole = fields.IntField()
     joinMesg = fields.CharField(max_length=1350, null=True)
+    joinMesgChannel = fields.IntField(null=True)
