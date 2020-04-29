@@ -7,7 +7,7 @@ modeltypes = {
     "users": LBUser,
     "guilds": LBGuild
 }
-valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole", "warnings", "banUntil", "joinMesg"]
+valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole", "warnings", "banUntil", "joinMesg", "joinMesgChannel"]
 
 class Utility(commands.Cog):
     ''' Quick utility commands that provide mostly information '''
@@ -97,6 +97,10 @@ class Utility(commands.Cog):
             except AttributeError:
                 pass
         await ctx.send(embed=getembed)
+
+    @commands.command()
+    async def bigmoji(self, ctx, emoji:discord.PartialEmoji):
+        await ctx.send(str(emoji.url))
 
 def setup(bot):
     bot.add_cog(Utility(bot))

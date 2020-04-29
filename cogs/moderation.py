@@ -1,12 +1,16 @@
-from discord.ext import commands, tasks
+from discord.ext import commands
 import discord
 from classes.dbmodels import LBUser, LBGuild
+import secrets
+from datetime import datetime
+alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
 def __init__(self, bot):
     self.bot = bot
-    self.check_for_updates.start()
+    self.check_tempbans.start()
 
 class Moderation(commands.Cog):
+
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
@@ -94,9 +98,36 @@ class Moderation(commands.Cog):
         await LBGuild.filter(id=ctx.guild.id).update(joinMesgChannel=None)
         await ctx.send(f"Successfully reset the join message channel to {syschannel}.")
 
+    @commands.group(invoke_without_command=True, aliases=["warns"])
+    @commands.has_permissions(manage_messages=True)
+    async def warn(self, ctx, user:discord.Member, *, reason:str = "No reason provided."):
+        """ Warn a user for something. """
+        issuer_top_role = ctx.author.top_role.position
+        victim_top_role = user.top_role.position
+        if victim_top_role >= issuer_top_role:
+            return await ctx.send('You can\'t warn someone with the same or a higher role than you.')
+        warnings = await LBUser.get_or_create(id=user.id)
+        warnings = warnings[0].warnings
+        if len(warnings) >= 25:
+            return await ctx.send('This user has too many warnings. Use `warns delete` to remove some.')
+        warningid = ''.join(secrets.choice(alphabet) for i in range(8))
+        warnings[warningid] = {
+            "issued_by": ctx.author.id,
+            "reason": reason,
+            "date": datetime.now().strftime("%m/%d/%Y") 
+        }
+        await LBUser.filter(id=user.id).update(warnings=warnings)
+        await ctx.send(f"Successfully warned {str(user)} (warning ID `{warningid}`)")
 
+    #@warn.command()
+    #@commands.has_permissions(manage_messages=True)
+    #async def list(self, ctx, user:discord.Member):
+        
+
+        
+        
 def cog_unload(self):
-    self.check_for_updates.cancel()
+    self.check_tempbans.cancel()
 
 def setup(bot):
     bot.add_cog(Moderation(bot))

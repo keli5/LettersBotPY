@@ -23,8 +23,8 @@ class LettersBot(commands.AutoShardedBot): # when you going
                 id=message.author.id,
                 balance=0,
                 canUseBot=True,
-                inventory=[],
-                warnings=[],
+                inventory={},
+                warnings={},
                 banUntil=None
             )
             print(f"Created entry for {message.author}")
