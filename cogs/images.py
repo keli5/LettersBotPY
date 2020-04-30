@@ -1,7 +1,7 @@
 from PIL import Image
 import requests # lol watch this
 import io
-from utility.funcs import image_from_url ## todo - why does this not import?..
+from utility.funcs import image_from_url
 from discord.ext import commands
 import discord
 imagetypes = {
