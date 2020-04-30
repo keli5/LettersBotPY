@@ -1,4 +1,7 @@
 import datetime
+from PIL import Image
+import io
+import requests
 import re
 from tortoise import Tortoise
 import tortoise.exceptions
@@ -48,3 +51,12 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
 
     if returns is True:
         return user
+
+async def image_from_url(source, ctx) -> Image:
+        if not source:
+            return await ctx.send("No image was provided.")
+        img = io.BytesIO(requests.get(source).content)
+        try:
+            img = Image.open(img)
+        except OSError:
+            return await ctx.send("There was an error opening the image.")
