@@ -2,11 +2,10 @@ from discord.ext import commands
 import discord
 
 
-def __init__(self, bot):
-    self.bot = bot
-
 
 class cogname(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
 
     @commands.command()
     async def command(self, ctx):

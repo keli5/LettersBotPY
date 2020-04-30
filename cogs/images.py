@@ -13,7 +13,6 @@ imagetypes = {
 def __init__(self, bot):
     self.bot = bot
 
-
 class Images(commands.Cog):
 
     @commands.command(aliases=["grayscale"])
@@ -21,8 +20,9 @@ class Images(commands.Cog):
         """ Convert an image to greyscale (Luminance) mode. """
         source = attachment or ctx.message.attachments[0].url or None
         out = io.BytesIO()
-        im = image_from_url(source)
-        im.convert("L")
+        im = await image_from_url(source)
+        im = im.convert("RGB")  # intermediate just in case
+        im = im.convert("L")
         im.save(out, "png")
         out.seek(0)
         await ctx.send(file=discord.File(out, filename=f"grayscale.png"))

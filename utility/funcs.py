@@ -52,7 +52,7 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
     if returns is True:
         return user
 
-def image_from_url(source) -> Image:
+async def image_from_url(source) -> Image:
     """ Takes a url of an image as `source`. Returns a Pillow image. """
     if not source:
         raise Exception('No image provided.')
@@ -61,3 +61,5 @@ def image_from_url(source) -> Image:
         img = Image.open(img)
     except OSError as exc:
         raise exc
+
+    return img
