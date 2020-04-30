@@ -1,8 +1,8 @@
 ![https://discord.gg/rXVnuTB](https://img.shields.io/discord/671897656003395595?color=blue&logo=discord)
 ![](https://img.shields.io/github/languages/code-size/keli5/LettersBotPY?logo=github&logoColor=black)
-![](https://img.shields.io/github/issues-raw/keli5/lettersbotpy)
-![](https://img.shields.io/github/commit-activity/w/keli5/LettersBotPY)
-![](https://img.shields.io/badge/license-CC%20BY--SA%204.0-informational)
+![https://github.com/keli5/LettersBotPY/issues](https://img.shields.io/github/issues-raw/keli5/lettersbotpy)
+![https://github.com/keli5/LettersBotPY/commits/master](https://img.shields.io/github/commit-activity/w/keli5/LettersBotPY)
+![https://creativecommons.org/licenses/by-sa/4.0/](https://img.shields.io/badge/license-CC%20BY--SA%204.0-informational)
 
 # LettersBotPY
 LettersBot 2.0, if you will. Marginally better &amp; rewritten in Python. dread
