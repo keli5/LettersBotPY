@@ -20,6 +20,7 @@ Make sure that you change the classes/botowners.txt to contain user IDs of peopl
 ### Deps
 - discord‏.‏py
 - tortoise-orm
+- pillow-simd (pillow will also work fine)
 - optionally, jishaku for debugging
 
 
