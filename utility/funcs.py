@@ -52,12 +52,12 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
     if returns is True:
         return user
 
-async def image_from_url(source, ctx) -> Image:
-        """ Takes a url of an image as `source`. Returns a Pillow image. """
-        if not source:
-            raise Exception('No image provided.')
-        img = io.BytesIO(requests.get(source).content)
-        try:
-            img = Image.open(img)
-        except OSError as exc:
-            raise exc
+def image_from_url(source, ctx) -> Image:
+    """ Takes a url of an image as `source`. Returns a Pillow image. """
+    if not source:
+        raise Exception('No image provided.')
+    img = io.BytesIO(requests.get(source).content)
+    try:
+        img = Image.open(img)
+    except OSError as exc:
+        raise exc
