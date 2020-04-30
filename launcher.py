@@ -2,7 +2,7 @@ from classes.bot import LettersBot
 import os
 import json
 
-extlist = ["jishaku", "utils", "moderation"]  # Add extensions to this list by filename when you add one. Shocking I know
+extlist = ["jishaku", "utils", "moderation", "images"]  # Add extensions to this list by filename when you add one. Shocking I know
 # Remove jishaku from the list for deployment
 
 with open("classes/botowners.txt", "r") as botowners:
