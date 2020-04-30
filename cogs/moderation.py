@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord
-from utility.funcs import dbForUser
+from utility.funcs import db_for_user
 from classes.dbmodels import LBUser, LBGuild
 import secrets
 from datetime import datetime
@@ -138,7 +138,6 @@ class Moderation(commands.Cog):
         wlembed = discord.Embed(
             title=f"Warnings for {user}"
         )
-
         warnings = await LBUser.get(id=user.id).warnings
         print(warnings)
         if isinstance(warnings, str):
