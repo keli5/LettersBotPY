@@ -53,6 +53,7 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
         return user
 
 async def image_from_url(source, ctx) -> Image:
+        """ Takes a url of an image as `source` and the `ctx` of the command. Returns a Pillow image. """
         if not source:
             return await ctx.send("No image was provided.")
         img = io.BytesIO(requests.get(source).content)
