@@ -1,8 +1,10 @@
 from discord.ext import commands
 import discord
 
+
 def __init__(self, bot):
     self.bot = bot
+
 
 class cogname(commands.Cog):
 
