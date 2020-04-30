@@ -1,4 +1,5 @@
 ![](https://img.shields.io/badge/discord-rXVnuTB-6666ee?logo=discord)
+![](https://img.shields.io/github/languages/code-size/keli5/LettersBotPY?logo=github&logoColor=black)
 
 # LettersBotPY
 LettersBot 2.0, if you will. Marginally better &amp; rewritten in Python. dread
