@@ -7,7 +7,7 @@ LettersBot 2.0, if you will. Marginally better &amp; rewritten in Python. dread
 ## Setup?
 Run launcher.py to start the bot - on first run, it will create a sqlite3 file<br>
 Should work on Python 3.6+<br>
-You'll need an environment variable called BOT_TOKEN, containing the token of the discord bot you want to run this as
+You'll need an environment variable called BOT_TOKEN, containing the token of the discord bot you want to run this as<br>
 Make sure that you change the classes/botowners.txt to contain user IDs of people who should be able to run owner-only commands and use Jishaku if installed
 ### Deps
 - discord‏.‏py
