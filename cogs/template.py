@@ -10,7 +10,7 @@ class cogname(commands.Cog):
 
     @commands.command()
     async def command(self, ctx):
-        ''' Docstring here '''
+        """ Docstring here """
 
 
 def setup(bot):
