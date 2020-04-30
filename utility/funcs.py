@@ -31,7 +31,7 @@ def timestr_to_seconds(tstr):
 # A timestr looks something like "5h30m" or "7d"
 
 
-async def dbForUser(id: int, returns: bool = False) -> dict:
+async def db_for_user(id: int, returns: bool = False) -> dict:
     """Tries to get the DB entry for user with id `id`, if it doesn't work, generates a DB entry for them.
     Also returns the user if `returns` is true."""
     try:

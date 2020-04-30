@@ -108,7 +108,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def warn(self, ctx, user: discord.Member, *, reason: str = "No reason provided."):
         """Warn a user for something."""
-        await dbForUser(user.id)
+        await db_for_user(user.id)
         issuer_top_role = ctx.author.top_role.position
         victim_top_role = user.top_role.position
         if victim_top_role >= issuer_top_role:
@@ -133,7 +133,7 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def list_warns(self, ctx, user: discord.Member = None):
         """List someone's warnings or see your own."""
-        await dbForUser(user.id)
+        await db_for_user(user.id)
         user = user or ctx.author
         wlembed = discord.Embed(
             title=f"Warnings for {user}"

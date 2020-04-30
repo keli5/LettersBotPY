@@ -15,8 +15,8 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if message.author.bot:
             return
 
-        user = await utility.dbForUser(message.author.id, True)
-        try:
+        user = await utility.db_for_user(message.author.id, True)
+        try: # todo: make this into a db_for_guild function
             await LBGuild.get(id=message.guild.id)
         except:
             await LBGuild.create(
