@@ -8,6 +8,10 @@
 LettersBot 2.0, if you will. Marginally better &amp; rewritten in Python. dread
 <br>Join the Discord: [Click here](https://discord.gg/rXVnuTB)
 
+### Thanks
+Thanks to [kaylynn234](https://github.com/kaylynn234) for commit https://github.com/keli5/LettersBotPY/commit/b308f5d6e5cb8f60ce90a73788b06689c9610293  <br>
+Thanks to [Litleck](https://github.com/Litleck) for something
+
 ## Setup?
 Run launcher.py to start the bot - on first run, it will create a sqlite3 file<br>
 Should work on Python 3.6+<br>
