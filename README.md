@@ -2,6 +2,7 @@
 ![](https://img.shields.io/github/languages/code-size/keli5/LettersBotPY?logo=github&logoColor=black)
 ![](https://img.shields.io/github/issues-raw/keli5/lettersbotpy)
 ![](https://img.shields.io/github/commit-activity/w/keli5/LettersBotPY)
+![](https://img.shields.io/badge/license-CC%20BY--SA%204.0-informational)
 
 # LettersBotPY
 LettersBot 2.0, if you will. Marginally better &amp; rewritten in Python. dread
