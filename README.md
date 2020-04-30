@@ -20,8 +20,10 @@ Make sure that you change the classes/botowners.txt to contain user IDs of peopl
 ### Deps
 - discord‏.‏py
 - tortoise-orm
-- pillow-simd (pillow will also work fine)
+- pillow-simd
 - optionally, jishaku for debugging
+<br>do `pip install -r requirements.txt` to automatically install these dependencies<br>
+if pillow-simd fails, manually install pillow as a replacement with `pip install pillow`
 
 
 ## License
