@@ -2,13 +2,13 @@ import discord
 import os
 from tortoise.models import Model
 from classes.dbmodels import LBGuild, LBUser
-from utility.funcs import setup
+import utility.funcs as utility
 import json
 from discord.ext import commands
 
 class LettersBot(commands.AutoShardedBot): # when you going
     async def on_ready(self):
-        await setup()
+        await utility.setup()
         await self.change_presence(activity=discord.Game(name='with your mind'))
         print("Ready!")
     
@@ -16,18 +16,7 @@ class LettersBot(commands.AutoShardedBot): # when you going
         if message.author.bot: return
         guild = ""
         user = ""
-        try:
-            user = await LBUser.get(id=message.author.id)
-        except:
-            user = await LBUser.create(
-                id=message.author.id,
-                balance=0,
-                canUseBot=True,
-                inventory={},
-                warnings={},
-                banUntil=None
-            )
-            print(f"Created entry for {message.author}")
+        user = await utility.dbForUser(message.author.id, True)
         try:
             guild = await LBGuild.get(id=message.guild.id)
         except:
@@ -37,6 +26,7 @@ class LettersBot(commands.AutoShardedBot): # when you going
                 joinMesg=None
             )
             print(f"Created entry for {message.guild}")
+        
         if user.canUseBot == True:
             await self.process_commands(message)
 

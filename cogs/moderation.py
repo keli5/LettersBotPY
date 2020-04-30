@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+from utility.funcs import dbForUser
 from classes.dbmodels import LBUser, LBGuild
 import secrets
 from datetime import datetime
@@ -98,10 +99,11 @@ class Moderation(commands.Cog):
         await LBGuild.filter(id=ctx.guild.id).update(joinMesgChannel=None)
         await ctx.send(f"Successfully reset the join message channel to {syschannel}.")
 
-    @commands.group(invoke_without_command=True, aliases=["warns"])
+    @commands.group(invoke_without_command=True)
     @commands.has_permissions(manage_messages=True)
     async def warn(self, ctx, user:discord.Member, *, reason:str = "No reason provided."):
         """ Warn a user for something. """
+        await dbForUser(user.id)
         issuer_top_role = ctx.author.top_role.position
         victim_top_role = user.top_role.position
         if victim_top_role >= issuer_top_role:
@@ -119,9 +121,30 @@ class Moderation(commands.Cog):
         await LBUser.filter(id=user.id).update(warnings=warnings)
         await ctx.send(f"Successfully warned {str(user)} (warning ID `{warningid}`)")
 
-    #@warn.command()
-    #@commands.has_permissions(manage_messages=True)
-    #async def list(self, ctx, user:discord.Member):
+    @warn.command()
+    @commands.has_permissions(manage_messages=True)
+    async def list(self, ctx, user:discord.Member=None):
+        ''' List someone's warnings or see your own. '''
+        await dbForUser(user.id)
+        user = user or ctx.author
+        wlembed = discord.Embed(
+            title=f"Warnings for {user}"
+        )
+        warnings = await LBUser.get(id=user.id)
+        print(warnings)
+        warnings = warnings.warnings
+        if type(warnings) == str: warnings = dict()
+        if bool(warnings) is False:
+            wlembed.description = f"{user} has a clean slate!"
+        else:
+            wlembed.description = "Dates are in mm/dd/yyyy format"
+            for warn in warnings.items():
+                issuer = ctx.bot.get_user(warn[1]["issued_by"])
+                date = warn[1]["date"]
+                reason = warn[1]["reason"]
+                wlembed.add_field(name=f"{warn[0]}, issued by {issuer} @ {date}", value=reason, inline=False)
+        await ctx.send(embed=wlembed)
+        
         
 
         
