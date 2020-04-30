@@ -39,7 +39,8 @@ class LettersBot(commands.AutoShardedBot): # when you going
             description=str(exception),
             color=0xAA0000
         )
-        await ctx.send(embed=errembed)
+        errmsg = await ctx.send(embed=errembed)
+        await errmsg.delete(delay=10)
 
     async def on_member_join(self, member):
         guild = member.guild
