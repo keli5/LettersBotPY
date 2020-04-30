@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/discord-rXVnuTB-6666ee?logo=discord)
+![https://discord.gg/rXVnuTB](https://img.shields.io/discord/671897656003395595?color=blue&logo=discord)
 ![](https://img.shields.io/github/languages/code-size/keli5/LettersBotPY?logo=github&logoColor=black)
 ![](https://img.shields.io/github/issues-raw/keli5/lettersbotpy)
 ![](https://img.shields.io/github/commit-activity/w/keli5/LettersBotPY)
