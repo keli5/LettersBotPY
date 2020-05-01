@@ -103,6 +103,7 @@ class Utility(commands.Cog):
 
     @commands.command()
     async def bigmoji(self, ctx, emoji: discord.PartialEmoji):
+        """ Get the full-size image of a custom emoji. """
         await ctx.send(str(emoji.url))
 
 

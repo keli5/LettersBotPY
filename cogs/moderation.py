@@ -101,13 +101,6 @@ class Moderation(commands.Cog):
         await LBGuild.filter(id=ctx.guild.id).update(joinMesgChannel=None)
         await ctx.send(f"Successfully reset the join message channel to {ctx.guild.system_channel}.".capitalize())
 
-    # @commands.group()
-    # @commands.has_permissions(manage_roles=True)
-    # async def muterole(self, ctx, role:discord.Role):
-    #     """ Manipulate the guild's mute role. """
-    #     await LBGuild.filter(id=ctx.guild.id).update(muteRole=role.id)
-    #     await ctx.send(f"Successfully set {role.name} to the guild mute role.")
-
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
