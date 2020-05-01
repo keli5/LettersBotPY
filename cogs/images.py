@@ -1,4 +1,3 @@
-from PIL import Image
 import io
 from utility.funcs import image_from_url
 from discord.ext import commands
@@ -36,11 +35,8 @@ class Images(commands.Cog):
         source = attachment or ctx.message.attachments[0].url or None
         out = io.BytesIO()
         image = await image_from_url(source)
-        processing = await ctx.send('Processing image...')
+        processing = await ctx.send('Processing image... (this could take a bit)')
         width, height = image.size
-        if max(width, height) > 800:
-            f = max(width, height) / 800
-            image = image.resize(int(width/f), int(height/f), resample=Image.NEAREST)
         image = image.quantize(colors=colors, kmeans=colors)
         image = image.convert("RGB")
         hexcodes = b""
