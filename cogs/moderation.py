@@ -133,12 +133,13 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def list_warns(self, ctx, user: discord.Member = None):
         """List someone's warnings or see your own."""
-        await db_for_user(user.id)
         user = user or ctx.author
+        await db_for_user(user.id)
         wlembed = discord.Embed(
             title=f"Warnings for {user}"
         )
-        warnings = await LBUser.get(id=user.id).warnings
+        warnings = await LBUser.get(id=user.id)
+        warnings = warnings.warnings  # just LBUser.get(...).warnings errors for some reason
         if isinstance(warnings, str): # empty warnings returns a string sometimes, e.g. modified by db set
             warnings = {}
         if not warnings:
