@@ -35,7 +35,8 @@ def timestr_to_seconds(tstr):
 
 
 async def db_for_user(id: int, returns: bool = False) -> dict:
-    """Tries to get the DB entry for user with id `id`, if it doesn't work, generates a DB entry for them.
+    """Tries to get the DB entry for user with id `id`, if it doesn't work,
+    generates a DB entry for them.
     Also returns the user if `returns` is true."""
     try:
         user = await LBUser.get(id=id)
@@ -51,7 +52,6 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
 
     if returns is True:
         return user
-
 
 
 async def image_from_url(source) -> Image:

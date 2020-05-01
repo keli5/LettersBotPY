@@ -11,10 +11,10 @@ class Moderation(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        #self.check_tempbans.start()
+        # self.check_tempbans.start()
 
     def cog_unload(self):
-        #self.check_tempbans.cancel()
+        # self.check_tempbans.cancel()
         ...
 
     @commands.command()
@@ -123,7 +123,7 @@ class Moderation(commands.Cog):
         warnings[warningid] = {
             "issued_by": ctx.author.id,
             "reason": reason,
-            "date": datetime.now().strftime("%m/%d/%Y") 
+            "date": datetime.now().strftime("%m/%d/%Y")
         }
 
         await LBUser.filter(id=user.id).update(warnings=warnings)
@@ -140,7 +140,7 @@ class Moderation(commands.Cog):
         )
         warnings = await LBUser.get(id=user.id)
         warnings = warnings.warnings  # just LBUser.get(...).warnings errors for some reason
-        if isinstance(warnings, str): # empty warnings returns a string sometimes, e.g. modified by db set
+        if isinstance(warnings, str):  # empty warnings returns a string sometimes, e.g. modified by db set
             warnings = {}
         if not warnings:
             wlembed.description = f"{user} has a clean slate!"

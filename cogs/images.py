@@ -1,4 +1,4 @@
-from PIL import Image, ImageSequence
+from PIL import Image
 import io
 from utility.funcs import image_from_url
 from discord.ext import commands
@@ -6,17 +6,18 @@ import discord
 imagetypes = {
     "RGBA": "RGB with Transparency",
     "L": "Grayscale",
-    "P": "8 bit color"    
+    "P": "8 bit color"
 }
 
 
 def __init__(self, bot):
     self.bot = bot
 
+
 class Images(commands.Cog):
 
     @commands.command(aliases=["grayscale"])
-    async def greyscale(self, ctx, attachment = None):  # Thank you Kaylynn!
+    async def greyscale(self, ctx, attachment=None):  # Thank you Kaylynn!
         """ Convert an image to greyscale (Luminance) mode. No transparency. """
         source = attachment or ctx.message.attachments[0].url or None
         out = io.BytesIO()
@@ -27,9 +28,8 @@ class Images(commands.Cog):
         out.seek(0)
         await ctx.send(file=discord.File(out, filename="grayscale.png"))
 
-
     @commands.command(aliases=["colors"])
-    async def resample(self, ctx, colors:int = 32, attachment = None):
+    async def resample(self, ctx, colors: int = 32, attachment=None):
         """ Sample an image down to <colors> colors. """
         if colors > 255:
             return await ctx.send('Maximum 255 colors.')
@@ -52,13 +52,12 @@ class Images(commands.Cog):
         await processing.delete()
         await ctx.send(files=[
             discord.File(out, filename=f"{colors}-colors.png"),
-            discord.File(hexcodes, filename="colors.txt")
+            discord.File(hexes, filename="colors.txt")
             ]
         )
-        
-    
+
     @commands.command()
-    async def imageinfo(self, ctx, attachment = None):
+    async def imageinfo(self, ctx, attachment=None):
         """ Gets information about a provided image. """
         source = attachment or ctx.message.attachments[0].url or None
         image = await image_from_url(source)
@@ -73,11 +72,11 @@ class Images(commands.Cog):
         iiembed.add_field(name="Format", value=image.format)
         try:
             mode = imagetypes[image.mode]
-        except:
+        except BaseException:
             mode = image.mode
         try:
             animated = image.is_animated
-        except:
+        except BaseException:
             animated = False
         iiembed.add_field(name="Color mode", value=mode)
         iiembed.add_field(name="Resolution", value=f"{image.size[0]} \u00d7 {image.size[1]}")

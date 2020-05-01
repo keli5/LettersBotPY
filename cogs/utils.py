@@ -7,14 +7,16 @@ modeltypes = {
     "users": LBUser,
     "guilds": LBGuild
 }
-valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole", "warnings", "banUntil", "joinMesg", "joinMesgChannel"]
+valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole",
+                "warnings", "banUntil", "joinMesg", "joinMesgChannel"]
+
 
 class Utility(commands.Cog):
     ''' Quick utility commands that provide mostly information '''
 
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.command()
     async def ping(self, ctx):
         ''' Show the bot's ping. '''
@@ -40,18 +42,18 @@ class Utility(commands.Cog):
             color=user.color,
             description="Dates are in mm/dd/yy HH:MM:SS format, UTC"
         )
-        uiembed.add_field( name="Joined guild at", value=user.joined_at.strftime("%m/%d/%Y %H:%M") + " UTC"
-        )
+        uiembed.add_field(name="Joined guild at", value=user.joined_at.strftime("%m/%d/%Y %H:%M") + " UTC")
         uiembed.set_thumbnail(url=str(user.avatar_url))
         uiembed.add_field(name="Nickname", value=user.nick or "No nickname")
         rolestring = ""
         nroles = []
-        for role in user.roles: nroles.append(role.name)
+        for role in user.roles:
+            nroles.append(role.name)
         if len(nroles) > 4:
             rolestring = f"{', '.join(nroles[1:4])} and {len(nroles) - 4} more"
         else:
             rolestring = ", ".join(nroles[1:4])
-        uiembed.add_field(name="Roles", value=rolestring, inline=len(nroles)<4)
+        uiembed.add_field(name="Roles", value=rolestring, inline=len(nroles) < 4)
         uiembed.add_field(name="ID", value=user.id)
         uiembed.add_field(name="Boosting?", value="Yes" if user.premium_since else "No")
         uiembed.add_field(name="On mobile", value="Yes" if user.is_on_mobile() else "No")
@@ -63,8 +65,6 @@ class Utility(commands.Cog):
         tormver = pkg_resources.get_distribution("tortoise-orm").version
         size = os.path.getsize("../lettersbot_data.sqlite3") / 1000
         await ctx.send(f"SQLite 3 database, {size} KB\nUsing tortoise-orm {tormver}")
-        
-
 
     @db.command()
     @commands.is_owner()
@@ -73,7 +73,7 @@ class Utility(commands.Cog):
         modelnm = model
         model = modeltypes[model] or LBUser
         id = id or ctx.author.id
-        if not item in valid_fields:
+        if item not in valid_fields:
             return await ctx.send(f'Invalid item {item}')
         await model.filter(id=id).update(**{item: value})
         await ctx.send(f"Set {modelnm}.{id}.{item} to {value}")
@@ -92,15 +92,16 @@ class Utility(commands.Cog):
         for field in valid_fields:
             attr = ""
             try:
-                atr = getattr(result, field)
-                getembed.add_field(name=field, value=atr)
+                attr = getattr(result, field)
+                getembed.add_field(name=field, value=attr)
             except AttributeError:
                 pass
         await ctx.send(embed=getembed)
 
     @commands.command()
-    async def bigmoji(self, ctx, emoji:discord.PartialEmoji):
+    async def bigmoji(self, ctx, emoji: discord.PartialEmoji):
         await ctx.send(str(emoji.url))
+
 
 def setup(bot):
     bot.add_cog(Utility(bot))

@@ -1,6 +1,4 @@
 from discord.ext import commands
-import discord
-
 
 
 class cogname(commands.Cog):
