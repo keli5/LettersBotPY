@@ -1,9 +1,6 @@
 from discord.ext import commands
 import discord
-from utility.funcs import db_for_user
-from classes.dbmodels import LBUser, LBGuild
-import secrets
-from datetime import datetime
+from classes.dbmodels import LBGuild
 alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
 
@@ -104,12 +101,12 @@ class Moderation(commands.Cog):
         await LBGuild.filter(id=ctx.guild.id).update(joinMesgChannel=None)
         await ctx.send(f"Successfully reset the join message channel to {ctx.guild.system_channel}.".capitalize())
 
-    #@commands.group()
-    #@commands.has_permissions(manage_roles=True)
-    async def muterole(self, ctx, role:discord.Role):
-        """ Manipulate the guild's mute role. """
-        await LBGuild.filter(id=ctx.guild.id).update(muteRole=role.id)
-        await ctx.send(f"Successfully set {role.name} to the guild mute role.") 
+    # @commands.group()
+    # @commands.has_permissions(manage_roles=True)
+    # async def muterole(self, ctx, role:discord.Role):
+    #     """ Manipulate the guild's mute role. """
+    #     await LBGuild.filter(id=ctx.guild.id).update(muteRole=role.id)
+    #     await ctx.send(f"Successfully set {role.name} to the guild mute role.")
 
 
 def setup(bot):
