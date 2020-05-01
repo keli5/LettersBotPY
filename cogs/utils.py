@@ -42,7 +42,10 @@ class Utility(commands.Cog):
             color=user.color,
             description="Dates are in mm/dd/yy HH:MM:SS format, UTC"
         )
-        uiembed.add_field(name="Joined guild at", value=user.joined_at.strftime("%m/%d/%Y %H:%M") + " UTC")
+        uiembed.add_field(
+            name="Joined guild at",
+            value=user.joined_at.strftime("%m/%d/%Y %H:%M") + " UTC"
+        )
         uiembed.set_thumbnail(url=str(user.avatar_url))
         uiembed.add_field(name="Nickname", value=user.nick or "No nickname")
         rolestring = ""

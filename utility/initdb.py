@@ -9,4 +9,5 @@ async def init():
     # Generate the schema
     await Tortoise.generate_schemas()
 
+
 run_async(init())

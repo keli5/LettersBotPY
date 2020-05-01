@@ -20,7 +20,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
-    async def kick(self, ctx, user: discord.Member, *, reason: str = "No reason provided"):
+    async def kick(self, ctx, user: discord.Member, *, reason: str = "No reason provided."):
         """Kick a user from the guild."""
         await ctx.guild.kick(user, reason=reason)
         kickembed = discord.Embed(

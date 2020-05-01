@@ -18,7 +18,7 @@ class Images(commands.Cog):
 
     @commands.command(aliases=["grayscale"])
     async def greyscale(self, ctx, attachment=None):  # Thank you Kaylynn!
-        """ Convert an image to greyscale (Luminance) mode. No transparency. """
+        """Convert an image to greyscale (Luminance) mode. No transparency."""
         source = attachment or ctx.message.attachments[0].url or None
         out = io.BytesIO()
         im = await image_from_url(source)

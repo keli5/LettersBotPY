@@ -1,6 +1,7 @@
 import discord
 from classes.dbmodels import LBGuild
 import utility.funcs as utility
+import tortoise.exceptions as te
 from discord.ext import commands
 
 
@@ -8,7 +9,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
 
     async def on_ready(self):
         await utility.setup()
-        await self.change_presence(activity=discord.Game(name='with your mind'))
+        await self.change_presence(activity=discord.Game(name='with you'))
         print("Ready!")
 
     async def on_message(self, message):
@@ -16,9 +17,9 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             return
 
         user = await utility.db_for_user(message.author.id, True)
-        try: # todo: make this into a db_for_guild function
+        try:  # todo: make this into a db_for_guild function
             await LBGuild.get(id=message.guild.id)
-        except:
+        except te.DoesNotExist:
             await LBGuild.create(
                 id=message.guild.id,
                 muteRole=0,
@@ -46,6 +47,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         guild = member.guild
         guilddb = await LBGuild.filter(id=guild.id).first()
         joinmsg = getattr(guilddb, "joinMesg")
-        joinmsgchannel = self.get_channel(getattr(guilddb, "joinMesgChannel")) or guild.system_channel
+        chid = getattr(guilddb, "joinMesgChannel")
+        joinmsgchannel = self.get_channel(chid) or guild.system_channel
         if (joinmsg is not None) and (joinmsgchannel is not None):
             await joinmsgchannel.send(f"{member.mention}\n{joinmsg}")
