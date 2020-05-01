@@ -5,7 +5,8 @@ from discord.ext import commands
 import discord
 imagetypes = {
     "RGBA": "RGB with Transparency",
-    "L": "Grayscale"
+    "L": "Grayscale",
+    "P": "8 bit color"    
 }
 
 
@@ -15,7 +16,7 @@ def __init__(self, bot):
 class Images(commands.Cog):
 
     @commands.command(aliases=["grayscale"])
-    async def greyscale(self, ctx, attachment = None): # Thank you Kaylynn!
+    async def greyscale(self, ctx, attachment = None):  # Thank you Kaylynn!
         """ Convert an image to greyscale (Luminance) mode. No transparency. """
         source = attachment or ctx.message.attachments[0].url or None
         out = io.BytesIO()
@@ -24,10 +25,41 @@ class Images(commands.Cog):
         im = im.convert("L")
         im.save(out, "png")
         out.seek(0)
-        await ctx.send(file=discord.File(out, filename=f"grayscale.png"))
+        await ctx.send(file=discord.File(out, filename="grayscale.png"))
+
+
+    @commands.command(aliases=["colors"])
+    async def resample(self, ctx, colors:int = 32, attachment = None):
+        """ Sample an image down to <colors> colors. """
+        if colors > 255:
+            return await ctx.send('Maximum 255 colors.')
+        source = attachment or ctx.message.attachments[0].url or None
+        out = io.BytesIO()
+        image = await image_from_url(source)
+        processing = await ctx.send('Processing image...')
+        width, height = image.size
+        if max(width, height) > 800:
+            f = max(width, height) / 800
+            image = image.resize(int(width/f), int(height/f), resample=Image.NEAREST)
+        image = image.quantize(colors=colors, kmeans=colors)
+        image = image.convert("RGB")
+        hexcodes = b""
+        for o, (r, g, b) in image.getcolors():
+            hexcodes += b'#%02x%02x%02x\n' % (r, g, b)
+        hexes = io.BytesIO(hexcodes)
+        image.save(out, "png")
+        out.seek(0)
+        await processing.delete()
+        await ctx.send(files=[
+            discord.File(out, filename=f"{colors}-colors.png"),
+            discord.File(hexcodes, filename="colors.txt")
+            ]
+        )
+        
     
     @commands.command()
     async def imageinfo(self, ctx, attachment = None):
+        """ Gets information about a provided image. """
         source = attachment or ctx.message.attachments[0].url or None
         image = await image_from_url(source)
         filename, ext = (source.split('/')[-1].split('.'))  # https://stackoverflow.com/a/25913757/
@@ -42,9 +74,13 @@ class Images(commands.Cog):
             mode = imagetypes[image.mode]
         except:
             mode = image.mode
+        try:
+            animated = image.is_animated
+        except:
+            animated = False
         iiembed.add_field(name="Color mode", value=mode)
         iiembed.add_field(name="Resolution", value=f"{image.size[0]} \u00d7 {image.size[1]}")
-        iiembed.add_field(name="Animated", value="Yes" if image.is_animated else "No")
+        iiembed.add_field(name="Animated", value="Yes" if animated else "No")
 
         await ctx.send(embed=iiembed)
 
