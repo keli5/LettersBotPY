@@ -79,9 +79,9 @@ class Moderation(commands.Cog):
         await LBGuild.filter(id=ctx.guild.id).update(joinMesg=joinmessage)
         await ctx.send("Successfully updated guild join message.")
 
-    @joinmsg.command(aliases=["delete", "reset"])
+    @joinmsg.command(name="remove", aliases=["delete", "reset"])
     @commands.has_permissions(manage_guild=True)
-    async def remove(self, ctx):
+    async def remove_cjm(self, ctx):
         """Remove the guild's custom join message."""
         await LBGuild.filter(id=ctx.guild.id).update(joinMesg=None)
         await ctx.send("Successfully removed guild join message.")
@@ -104,54 +104,12 @@ class Moderation(commands.Cog):
         await LBGuild.filter(id=ctx.guild.id).update(joinMesgChannel=None)
         await ctx.send(f"Successfully reset the join message channel to {ctx.guild.system_channel}.".capitalize())
 
-    @commands.group(invoke_without_command=True)
-    @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, user: discord.Member, *, reason: str = "No reason provided."):
-        """Warn a user for something."""
-        await db_for_user(user.id)
-        issuer_top_role = ctx.author.top_role.position
-        victim_top_role = user.top_role.position
-        if victim_top_role >= issuer_top_role:
-            return await ctx.send("You can't warn someone with the same or a higher role than you.")
-
-        warnings = await LBUser.get_or_create(id=user.id)
-        warnings = warnings[0].warnings
-        if len(warnings) >= 25:
-            return await ctx.send("This user has too many warnings. Use `warns delete` to remove some.")
-
-        warningid = ''.join(secrets.choice(alphabet) for i in range(8))
-        warnings[warningid] = {
-            "issued_by": ctx.author.id,
-            "reason": reason,
-            "date": datetime.now().strftime("%m/%d/%Y")
-        }
-
-        await LBUser.filter(id=user.id).update(warnings=warnings)
-        await ctx.send(f"Successfully warned {str(user)} (warning ID `{warningid}`)")
-
-    @warn.command(name="list")
-    @commands.has_permissions(manage_messages=True)
-    async def list_warns(self, ctx, user: discord.Member = None):
-        """List someone's warnings or see your own."""
-        user = user or ctx.author
-        await db_for_user(user.id)
-        wlembed = discord.Embed(
-            title=f"Warnings for {user}"
-        )
-        warnings = await LBUser.get(id=user.id)
-        warnings = warnings.warnings  # just LBUser.get(...).warnings errors for some reason
-        if isinstance(warnings, str):  # empty warnings returns a string sometimes, e.g. modified by db set
-            warnings = {}
-        if not warnings:
-            wlembed.description = f"{user} has a clean slate!"
-        else:
-            wlembed.description = "Dates are in mm/dd/yyyy format"
-            for key, value in warnings.items():
-                issuer = ctx.bot.get_user(value["issued_by"])
-                date = value["date"]
-                reason = value["reason"]
-                wlembed.add_field(name=f"{key}, issued by {issuer} @ {date}", value=reason, inline=False)
-        await ctx.send(embed=wlembed)
+    #@commands.group()
+    #@commands.has_permissions(manage_roles=True)
+    async def muterole(self, ctx, role:discord.Role):
+        """ Manipulate the guild's mute role. """
+        await LBGuild.filter(id=ctx.guild.id).update(muteRole=role.id)
+        await ctx.send(f"Successfully set {role.name} to the guild mute role.") 
 
 
 def setup(bot):
