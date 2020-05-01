@@ -68,6 +68,7 @@ class Images(commands.Cog):
         iiembed = discord.Embed(
             title=f"Image information"
         )
+        iiembed.set_thumbnail(url=source)
         iiembed.add_field(name="Filename", value=f"{filename}", inline=False if len(filename) > 16 else True)
         iiembed.add_field(name="Format", value=image.format)
         try:
