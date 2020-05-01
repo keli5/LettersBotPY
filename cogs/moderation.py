@@ -57,7 +57,6 @@ class Moderation(commands.Cog):
             title=f"Unbanned {str(userid)} from {str(ctx.guild)}",
             color=0x00AA00  # green because the victim has been freed
         )
-
         unbanembed.add_field(name="Reason", value=reason)
         unbanembed.add_field(name="ID", value=userid.id)
         await ctx.send(embed=unbanembed)
@@ -140,8 +139,7 @@ class Moderation(commands.Cog):
             title=f"Warnings for {user}"
         )
         warnings = await LBUser.get(id=user.id).warnings
-        print(warnings)
-        if isinstance(warnings, str):
+        if isinstance(warnings, str): # empty warnings returns a string sometimes, e.g. modified by db set
             warnings = {}
         if not warnings:
             wlembed.description = f"{user} has a clean slate!"
@@ -152,7 +150,6 @@ class Moderation(commands.Cog):
                 date = value["date"]
                 reason = value["reason"]
                 wlembed.add_field(name=f"{key}, issued by {issuer} @ {date}", value=reason, inline=False)
-
         await ctx.send(embed=wlembed)
 
 

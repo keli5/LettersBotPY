@@ -1,7 +1,7 @@
 import datetime
 from PIL import Image
 import io
-import requests
+import aiohttp
 import re
 from tortoise import Tortoise
 import tortoise.exceptions
@@ -52,14 +52,18 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
     if returns is True:
         return user
 
+
+
 async def image_from_url(source) -> Image:
     """ Takes a url of an image as `source`. Returns a Pillow image. """
-    if not source:
-        raise Exception('No image provided.')
-    img = io.BytesIO(requests.get(source).content)
-    try:
-        img = Image.open(img)
-    except OSError as exc:
-        raise exc
+    async with aiohttp.ClientSession() as session:
+        if not source:
+            raise Exception("No image provided.")
+        async with session.get(source) as resp:
+            img = await resp.content.read()
+        try:
+            img = Image.open(io.BytesIO(img))
+        except OSError as exc:
+            raise exc
 
     return img
