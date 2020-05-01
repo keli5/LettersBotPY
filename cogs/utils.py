@@ -23,7 +23,7 @@ class Utility(commands.Cog):
         await ctx.send(f"Ponged in **{round(self.bot.latency * 1000, 2)}ms.**")
 
     @commands.command()
-    async def avatar(self, ctx, user: discord.Member = None):
+    async def avatar(self, ctx, user: discord.User = None):
         ''' Get somebody's avatar, or your own. '''
         victim = user or ctx.author
         avatarembed = discord.Embed(
