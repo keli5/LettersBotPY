@@ -6,7 +6,7 @@ from discord.ext import commands
 
 
 class LettersBot(commands.AutoShardedBot):  # when you going
-
+    """ Welcome to the rewrite of LettersBot! """
     async def on_ready(self):
         await utility.setup()
         await self.change_presence(activity=discord.Game(name='with you'))

@@ -1,4 +1,5 @@
 import io
+from PIL import ImageEnhance
 from utility.funcs import image_from_url
 from discord.ext import commands
 import discord
@@ -51,6 +52,18 @@ class Images(commands.Cog):
             discord.File(hexes, filename="colors.txt")
             ]
         )
+
+    @commands.command()
+    async def saturate(self, ctx, amount: int = 2, attachment=None):
+        """ Saturate an image. There's no limit, so this can easily wreck an image. """
+        source = attachment or ctx.message.attachments[0].url or None
+        out = io.BytesIO()
+        image = await image_from_url(source)
+        image = image.convert("RGBA")  # make sure we can color shift it
+        image = ImageEnhance.Color(image).enhance(amount)
+        image.save(out, "png")
+        out.seek(0)
+        await ctx.send(file=discord.File(out, filename=f"saturated.png"))
 
     @commands.command()
     async def imageinfo(self, ctx, attachment=None):

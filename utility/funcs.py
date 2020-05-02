@@ -2,6 +2,7 @@ import datetime
 from PIL import Image
 import io
 import aiohttp
+import random
 import re
 from tortoise import Tortoise
 import tortoise.exceptions
@@ -67,3 +68,13 @@ async def image_from_url(source) -> Image:
             raise exc
 
     return img
+
+
+def shuffle_tuple(tuple):
+    """ Takes tuple `tuple` and returns the new, shuffled version of it. """
+    tl = []
+    for item in tuple:
+        tl.append(item)
+    shuffled = random.sample(tl, len(tl))
+    shuffled = (*shuffled, )  # "tuple" object is apparently not callable
+    return shuffled

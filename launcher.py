@@ -4,7 +4,12 @@ import json
 
 extlist = ["jishaku", "utility", "moderation", "images"]  # Add extensions to this list by filename when you add one.
 
-botprefix = os.environ['LB_PREFIX'] or "d::" 
+botprefix = ""
+
+try:
+    botprefix = os.environ['LB_PREFIX']
+except KeyError:
+    botprefix = "d::"
 
 with open("classes/botowners.txt", "r") as botowners:
     bot = LettersBot(  # create the bot
