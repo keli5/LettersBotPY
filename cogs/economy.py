@@ -3,6 +3,7 @@ import discord
 import random
 from classes.dbmodels import LBUser
 from utility.funcs import db_for_user
+from discord.ext.commands.cooldowns import BucketType
 
 
 class Economy(commands.Cog):
@@ -26,6 +27,7 @@ class Economy(commands.Cog):
         await ctx.send(embed=balembed)
 
     @commands.command()
+    @commands.cooldown(1, 30, BucketType.user)
     async def guess(self, ctx, guess: int):
         """ Play a guessing game for a chance to earn some money. """
         if guess > 100 or guess < 0:

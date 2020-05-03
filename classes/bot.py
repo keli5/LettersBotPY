@@ -41,7 +41,8 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             color=0xAA0000
         )
 
-        print(f"{excname}: {exception}")
+        if excname != "CommandOnCooldown":  # dont need cooldowns logged
+            print(f"{excname}: {exception}")
         errmsg = await ctx.send(embed=errembed)
         await errmsg.delete(delay=10)
 
