@@ -3,7 +3,7 @@ from tortoise import fields
 
 
 class LBUser(Model):
-    balance = fields.IntField()
+    balance = fields.FloatField()
     canUseBot = fields.BooleanField()
     inventory = fields.JSONField()
     warnings = fields.JSONField()

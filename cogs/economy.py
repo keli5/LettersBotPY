@@ -1,7 +1,6 @@
 from discord.ext import commands
 import discord
 import random
-import math
 from classes.dbmodels import LBUser
 from utility.funcs import db_for_user
 
@@ -12,22 +11,25 @@ class Economy(commands.Cog):
         self.bot = bot
         self.cur = "֏"
 
-    @commands.command()
+    @commands.command(aliases=["bal"])
     async def balance(self, ctx, user: discord.User = None):
         """ View your balance or someone else's. """
         user = user or ctx.author
         bal = await db_for_user(user.id, True)
         bal = bal.balance
+        formatted = "{:.2f}".format(bal)  # What is this doing? Couldn't tell you
         balembed = discord.Embed(
-            title=f"{user} has {self.cur}{bal}!",
+            title=f"{user} has {self.cur}{formatted}!",
             description=f"Get more money with {self.bot.command_prefix}guess.",
             color=discord.Color.green()
         )
         await ctx.send(embed=balembed)
 
     @commands.command()
-    async def guess(self, ctx, guess: int = 50):
+    async def guess(self, ctx, guess: int):
         """ Play a guessing game for a chance to earn some money. """
+        if guess > 100 or guess < 0:
+            await ctx.send('Guess may not be below 0 or above 100.')
         user = await db_for_user(ctx.author.id, True)
         userbal = user.balance
         value = random.randint(0, 100)

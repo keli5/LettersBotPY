@@ -31,16 +31,17 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             await self.process_commands(message)
 
     async def on_command_error(self, ctx, exception):
+        excname = type(exception).__name__
         if isinstance(exception, commands.CommandNotFound):
             return
 
         errembed = discord.Embed(
-            title="An error occurred.",
+            title=f"{excname} error",
             description=str(exception),
             color=0xAA0000
         )
 
-        print(exception)
+        print(f"{excname}: {exception}")
         errmsg = await ctx.send(embed=errembed)
         await errmsg.delete(delay=10)
 
