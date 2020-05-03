@@ -40,9 +40,10 @@ class Economy(commands.Cog):
         gembed.add_field(name="Actual number", value=value)
         if guess == value:
             gembed.add_field(name="JACKPOT!", value=f"You earned {self.cur}1,000!", inline=False)
+            gembed.color = discord.Color.magenta()
         else:
             gembed.add_field(name="Earnings", value=f"You earned {self.cur}{earnings}.")
-        await LBUser.filter(id=ctx.author.id).update(balance=userbal + earnings) # tortoise why
+        await LBUser.filter(id=ctx.author.id).update(balance=userbal + earnings)  # tortoise why
         await ctx.send(embed=gembed)
 
 
