@@ -22,7 +22,7 @@ class Moderation(commands.Cog):
         await ctx.guild.kick(user, reason=reason)
         kickembed = discord.Embed(
             title=f"Kicked {str(user)} from {str(ctx.guild)}",
-            color=0xAA0000
+            color=discord.Color.red()
         )
 
         kickembed.add_field(name="Reason", value=reason)
@@ -37,7 +37,7 @@ class Moderation(commands.Cog):
         await ctx.guild.ban(user, reason=reason)
         banembed = discord.Embed(
             title=f"Banned {str(user)} from {str(ctx.guild)}",
-            color=0xAA0000
+            color=discord.Color.red()
         )
 
         banembed.add_field(name="Reason", value=reason)
@@ -52,7 +52,7 @@ class Moderation(commands.Cog):
         await ctx.guild.unban(userid, reason=reason)
         unbanembed = discord.Embed(
             title=f"Unbanned {str(userid)} from {str(ctx.guild)}",
-            color=0x00AA00  # green because the victim has been freed
+            color=discord.Color.green()  # green because the victim has been freed
         )
         unbanembed.add_field(name="Reason", value=reason)
         unbanembed.add_field(name="ID", value=userid.id)
