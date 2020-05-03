@@ -2,8 +2,7 @@ from classes.bot import LettersBot
 import os
 import json
 
-extlist = ["jishaku", "utility", "moderation", "images"]  # Add extensions to this list by filename when you add one.
-
+extlist = ["jishaku", "utility", "moderation", "images", "economy"]  # Add extensions to this list by filename
 botprefix = ""
 
 try:
