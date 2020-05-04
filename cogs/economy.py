@@ -31,7 +31,7 @@ class Economy(commands.Cog):
     async def guess(self, ctx, guess: int):
         """ Play a guessing game for a chance to earn some money. """
         if guess > 100 or guess < 0:
-            await ctx.send('Guess may not be below 0 or above 100.')
+            return await ctx.send('Guess may not be below 0 or above 100.')
         user = await db_for_user(ctx.author.id, True)
         userbal = user.balance
         value = random.randint(0, 100)
@@ -47,8 +47,33 @@ class Economy(commands.Cog):
             gembed.color = discord.Color.magenta()
         else:
             gembed.add_field(name="Earnings", value=f"You earned {self.cur}{earnings}.")
-        await LBUser.filter(id=ctx.author.id).update(balance=userbal + earnings)  # tortoise why
+        await LBUser.filter(id=ctx.author.id).update(balance=userbal + float(earnings))  # tortoise why
         await ctx.send(embed=gembed)
+
+    @commands.command()
+    async def pay(self, ctx, user: discord.User, amount: float):
+        famount = "{:.2f}".format(round(amount, 2))
+        if amount <= 0 or famount == "0.00":
+            return await ctx.send('Amount may not be below or equal to 0.')
+        mybal = await db_for_user(ctx.author.id, True)
+        mybal = mybal.balance
+        userbal = await db_for_user(user.id, True)
+        userbal = userbal.balance
+        if amount > mybal:
+            return await ctx.send("You can't afford to pay that much!")
+        await LBUser.filter(id=ctx.author.id).update(balance=mybal - amount)
+        await LBUser.filter(id=user.id).update(balance=userbal + amount)
+        famount = "{:.2f}".format(round(amount, 2))
+        payembed = discord.Embed(
+            title="Transaction complete!",
+            description=f"{ctx.author} sent {self.cur}{famount} to {user}.",
+            color=discord.Color.green()
+        )
+        theyget = "{:.2f}".format(round(userbal + amount, 2))
+        youlose = "{:.2f}".format(round(mybal - amount, 2))
+        payembed.add_field(name=f"{user}'s new balance", value=f"{self.cur}{theyget}")
+        payembed.add_field(name=f"{ctx.author}'s new balance", value=f"{self.cur}{youlose}")
+        await ctx.send(embed=payembed)
 
 
 def setup(bot):
