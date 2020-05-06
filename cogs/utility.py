@@ -1,14 +1,6 @@
 from discord.ext import commands
 import discord
-import os
-from classes.dbmodels import LBUser, LBGuild
-import pkg_resources
-modeltypes = {
-    "users": LBUser,
-    "guilds": LBGuild
-}
-valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole",
-                "warnings", "banUntil", "joinMesg", "joinMesgChannel"]
+import typing
 
 
 class Utility(commands.Cog):
@@ -62,49 +54,18 @@ class Utility(commands.Cog):
         uiembed.add_field(name="On mobile", value="Yes" if user.is_on_mobile() else "No")
         await ctx.send(embed=uiembed)
 
-    @commands.group(invoke_without_command=True)
-    async def db(self, ctx):
-        ''' Database manipulation commands. '''
-        tormver = pkg_resources.get_distribution("tortoise-orm").version
-        size = os.path.getsize("../lettersbot_data.sqlite3") / 1000
-        await ctx.send(f"SQLite 3 database, {size} KB\nUsing tortoise-orm {tormver}")
-
-    @db.command()
-    @commands.is_owner()
-    async def set(self, ctx, model, id, item, value):
-        ''' Set item of model id to value in the database. '''
-        modelnm = model
-        model = modeltypes[model] or LBUser
-        id = id or ctx.author.id
-        if item not in valid_fields:
-            return await ctx.send(f'Invalid item {item}')
-        await model.filter(id=id).update(**{item: value})
-        await ctx.send(f"Set {modelnm}.{id}.{item} to {value}")
-
-    @db.command()
-    @commands.is_owner()
-    async def get(self, ctx, model, id):
-        ''' Get id from model in the database. '''
-        modelnm = model
-        model = modeltypes[model] or LBUser
-        id = id or ctx.author.id
-        result = await model.get(id=id)
-        getembed = discord.Embed(
-            title=f"{modelnm}.{id}"
-        )
-        for field in valid_fields:
-            attr = ""
-            try:
-                attr = getattr(result, field)
-                getembed.add_field(name=field, value=attr)
-            except AttributeError:
-                pass
-        await ctx.send(embed=getembed)
-
     @commands.command()
-    async def bigmoji(self, ctx, emoji: discord.PartialEmoji):
-        """ Get the full-size image of a custom emoji. """
-        await ctx.send(str(emoji.url))
+    async def bigmoji(self, ctx, emoji: typing.Union[discord.PartialEmoji, str]):
+        """ Get the full-size image of an emoji. """
+        if isinstance(emoji, discord.PartialEmoji):
+            url = emoji.url
+        else:
+            cpoint = str(hex(ord(emoji[0])))
+            cpoint = cpoint[2:]
+            if cpoint[0:2] != "1f":
+                return await ctx.send("Invalid emoji.")
+            url = f"https://twemoji.maxcdn.com/v/12.1.6/72x72/{cpoint}.png"
+        await ctx.send(url)
 
 
 def setup(bot):

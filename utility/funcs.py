@@ -78,3 +78,10 @@ def shuffle_tuple(tuple):
     shuffled = random.sample(tl, len(tl))
     shuffled = (*shuffled, )  # "tuple" object is apparently not callable
     return shuffled
+
+
+def image_to_byte_array(image: Image):
+    img_byte_arr = io.BytesIO()
+    image.save(img_byte_arr, format=image.format)
+    img_byte_arr = img_byte_arr.getvalue()
+    return list(img_byte_arr)

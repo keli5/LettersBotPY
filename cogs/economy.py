@@ -52,6 +52,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def pay(self, ctx, user: discord.User, amount: float):
+        """ Pay someone some of your money. """
         famount = "{:.2f}".format(round(amount, 2))
         if amount <= 0 or famount == "0.00":
             return await ctx.send('Amount may not be below or equal to 0.')

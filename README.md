@@ -16,6 +16,7 @@ Thanks to [Litleck](https://github.com/Litleck) for something
 Run launcher.py to start the bot - on first run, it will create a sqlite3 file<br>
 Should work on Python 3.6+<br>
 You'll need an environment variable called BOT_TOKEN, containing the token of the discord bot you want to run this as<br>
+You'll also need an environment variable called LB_PREFIX to set the bot prefix. Defaults to `d::`. <br>
 Make sure that you change the classes/botowners.txt to contain user IDs of people who should be able to run owner-only commands and use Jishaku if installed
 ### Deps
 - discord‏.‏py
