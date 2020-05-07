@@ -35,7 +35,9 @@ class Fun(commands.Cog):
         coinembed = discord.Embed(
             title=f"Flipped a coin and got {result}!"
         )
+        coinembed.color = discord.Color.green()
         if result == "side":
+            coinembed.color = discord.Color.red()
             coinembed.title = "Flipped a coin and got--"
             coinembed.description = "<:erred:683353051817443328> The coin landed on its side"
         await ctx.send(embed=coinembed)
