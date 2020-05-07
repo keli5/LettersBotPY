@@ -77,8 +77,8 @@ class Utility(commands.Cog):
     async def info(self, ctx):
         iembed = discord.Embed(
             title="LettersBot",
-            description="LettersBot started out as a little JavaScript bot hosted on my Chromebook " +
-                        ",now rewritten in Python with its own room among a few other great bots! " +
+            description="LettersBot started out as a little JavaScript bot hosted on my Chromebook, " +
+                        "now rewritten in Python with its own room among a few other great bots! " +
                         "Feel free to invite the bot to your server, play around with it, " +
                         "and tell me about bugs on the GitHub repo!",
             color=discord.Color.gold()
