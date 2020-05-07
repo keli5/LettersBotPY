@@ -1,10 +1,13 @@
 from discord.ext import commands
 from scipy.io import wavfile
 import numpy
+import random
 import secrets
 from utility.funcs import image_to_byte_array, image_from_url
 import discord
 from io import BytesIO
+coin = ["heads", "tails", "side"]
+weights = [50, 50, 0.00001]
 
 
 class Fun(commands.Cog):
@@ -24,6 +27,18 @@ class Fun(commands.Cog):
         filename = f"img2audio-{secrets.token_hex(nbytes=15)}.wav"  # generate a unique filename
         await ctx.send(file=discord.File(fp=buffer, filename=filename))
         await pcsmsg.delete()
+
+    @commands.command(aliases=["coin", "cointoss"])
+    async def coinflip(self, ctx):
+        result = random.choices(coin, weights=weights, k=1)
+        result = result[0]
+        coinembed = discord.Embed(
+            title=f"Flipped a coin and got {result}!"
+        )
+        if result == "side":
+            coinembed.title = "Flipped a coin and got--"
+            coinembed.description = "<:erred:683353051817443328> The coin landed on its side"
+        await ctx.send(embed=coinembed)
 
 
 def setup(bot):
