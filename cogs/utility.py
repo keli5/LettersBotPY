@@ -1,8 +1,6 @@
 from discord.ext import commands
 import discord
-from utility.funcs import image_from_url
 import typing
-import io
 
 
 class Utility(commands.Cog):
@@ -60,26 +58,44 @@ class Utility(commands.Cog):
     async def bigmoji(self, ctx, emoji: typing.Union[discord.PartialEmoji, str]):
         """ Get the full-size image of an emoji. """
         if isinstance(emoji, discord.PartialEmoji):
-            url = emoji.url
+            url = str(emoji.url)
         else:
             cpoint = str(hex(ord(emoji[0])))
             cpoint = cpoint[2:]
             if cpoint[0:2] != "1f":
                 return await ctx.send("Invalid emoji.")
             url = f"https://twemoji.maxcdn.com/v/12.1.6/72x72/{cpoint}.png"
-        image = await image_from_url(url)
-        out = io.BytesIO()
         bmembed = discord.Embed(
-            title=f"Full-size of {emoji}",
+            title=f"Full-size emoji",
             url=url,
             color=discord.Color.green()
         )
-        image.resize(size=(128, 128))
-        image.save(out, "png")
-        out.seek(0)
-        image = discord.File(out, filename="bigmoji.png")
-        bmembed.set_image(url="attachment://bigmoji.png")
+        bmembed.set_image(url=url)
         await ctx.send(embed=bmembed)
+
+    @commands.command()
+    async def info(self, ctx):
+        iembed = discord.Embed(
+            title="LettersBot",
+            description="LettersBot started out as a little JavaScript bot hosted on my Chromebook " +
+                        "now rewritten in Python with its own room among a few other great bots! " +
+                        "Feel free to invite the bot to your server, play around with it, " +
+                        "and tell me about bugs on the GitHub repo!",
+            color=discord.Color.gold()
+        )
+        iembed.set_thumbnail(url=ctx.bot.user.avatar_url)
+        iembed.add_field(name="Home/support server", value="https://discord.gg/rXVnuTB")
+        iembed.add_field(
+            name="Invite the bot",
+            value="https://cutt.ly/lettersbot"
+        )
+        iembed.add_field(name="Patreon", value='https://patreon.com/lettersbot', inline=False)
+        letters = ctx.bot.get_user(556614860931072012)
+        iembed.set_footer(
+            text=f"Made by Letters ({letters})",
+            icon_url=letters.avatar_url
+        )
+        await ctx.send(embed=iembed)
 
 
 def setup(bot):

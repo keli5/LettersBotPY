@@ -13,7 +13,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         await utility.setup()
         await self.change_presence(activity=discord.Activity(
             type=discord.ActivityType.watching,
-            name=f"{user_count} users | {prefix}invite"
+            name=f"{user_count} users | {prefix}info"
             )
         )
         print("Ready!")
