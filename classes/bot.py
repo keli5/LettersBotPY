@@ -8,8 +8,14 @@ from discord.ext import commands
 class LettersBot(commands.AutoShardedBot):  # when you going
     """ Welcome to the rewrite of LettersBot! """
     async def on_ready(self):
+        user_count = utility.tally_users(self)
+        prefix = self.command_prefix
         await utility.setup()
-        await self.change_presence(activity=discord.Game(name='with you'))
+        await self.change_presence(activity=discord.Activity(
+            type=discord.ActivityType.watching,
+            name=f"{user_count} users | {prefix}invite"
+            )
+        )
         print("Ready!")
 
     async def on_message(self, message):

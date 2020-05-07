@@ -1,6 +1,8 @@
 from discord.ext import commands
 import discord
+from utility.funcs import image_from_url
 import typing
+import io
 
 
 class Utility(commands.Cog):
@@ -65,7 +67,19 @@ class Utility(commands.Cog):
             if cpoint[0:2] != "1f":
                 return await ctx.send("Invalid emoji.")
             url = f"https://twemoji.maxcdn.com/v/12.1.6/72x72/{cpoint}.png"
-        await ctx.send(url)
+        image = await image_from_url(url)
+        out = io.BytesIO()
+        bmembed = discord.Embed(
+            title=f"Full-size of {emoji}",
+            url=url,
+            color=discord.Color.green()
+        )
+        image.resize(size=(128, 128))
+        image.save(out, "png")
+        out.seek(0)
+        image = discord.File(out, filename="bigmoji.png")
+        bmembed.set_image(url="attachment://bigmoji.png")
+        await ctx.send(embed=bmembed)
 
 
 def setup(bot):
