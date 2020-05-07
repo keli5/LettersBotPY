@@ -87,9 +87,11 @@ class Utility(commands.Cog):
         iembed.add_field(name="Home/support server", value="https://discord.gg/rXVnuTB")
         iembed.add_field(
             name="Invite the bot",
-            value="https://cutt.ly/lettersbot"
+            value="https://cutt.ly/lettersbot",
+            inline=False
         )
         iembed.add_field(name="Patreon", value='https://patreon.com/lettersbot', inline=False)
+        iembed.add_field(name="GitHub", value="https://github.com/keli5/LettersBotPY")
         letters = ctx.bot.get_user(556614860931072012)
         iembed.set_footer(
             text=f"Made by Letters ({letters})",
