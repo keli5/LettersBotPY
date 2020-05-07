@@ -16,6 +16,7 @@ class Fun(commands.Cog):
 
     @commands.command(aliases=["image2audio", "imagetowav"])
     async def image2wav(self, ctx, attachment=None):
+        """ Pipe the raw bytes from an image into a .wav file. """
         source = attachment or ctx.message.attachments[0].url or None
         image = await image_from_url(source)
         imgbytes = image_to_byte_array(image)
@@ -30,6 +31,7 @@ class Fun(commands.Cog):
 
     @commands.command(aliases=["coin", "cointoss"])
     async def coinflip(self, ctx):
+        """ Flip a coin. """
         result = random.choices(coin, weights=weights, k=1)
         result = result[0]
         coinembed = discord.Embed(
