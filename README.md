@@ -19,11 +19,8 @@ You'll need an environment variable called BOT_TOKEN, containing the token of th
 You'll also need an environment variable called LB_PREFIX to set the bot prefix. Defaults to `d::`. <br>
 Make sure that you change the classes/botowners.txt to contain user IDs of people who should be able to run owner-only commands and use Jishaku if installed
 ### Deps
-- discord‏.‏py
-- tortoise-orm
-- pillow-simd
-- optionally, jishaku for debugging
-<br>do `pip install -r requirements.txt` to automatically install these dependencies<br>
+do `pip install -r requirements.txt` to automatically install required dependencies
+for extra debugging commands, do `pip install jishaku`
 
 
 ## License
