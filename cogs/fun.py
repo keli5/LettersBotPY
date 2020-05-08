@@ -10,6 +10,7 @@ coin = ["heads", "tails", "side"]
 weights = [50, 50, 0.00001]
 
 
+
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

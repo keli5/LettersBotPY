@@ -7,6 +7,10 @@ import re
 from tortoise import Tortoise
 import tortoise.exceptions
 from classes.dbmodels import LBUser
+import markovify
+with open("corpus.txt") as f:
+    corpus = f.read()
+markov = markovify.Text(corpus)
 
 
 async def setup():
@@ -96,3 +100,10 @@ def tally_users(bot) -> int:
                 users_seen.append(member.id)
                 count += 1
     return count
+
+
+def call_markov(length=None) -> str:
+    if length:
+        return markov.make_short_sentence(length)
+    else:
+        return markov.make_sentence()
