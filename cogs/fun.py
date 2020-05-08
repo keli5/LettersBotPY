@@ -44,6 +44,18 @@ class Fun(commands.Cog):
             coinembed.description = "<:erred:683353051817443328> The coin landed on its side"
         await ctx.send(embed=coinembed)
 
+    @commands.command(aliases=["roll"])
+    async def diceroll(self, ctx, amount: int = 1, sides: int = 6):
+        """ Roll some dice. """
+        if amount > 50:
+            return await ctx.send("You cannot roll more than 50 dice at a time.")
+        if sides > 100:
+            return await ctx.send("You cannot roll a dice with more than 100 sides.")
+        roll = 0
+        for i in range(amount):
+            roll += random.randint(1, sides)
+        await ctx.send(f"Rolled {amount}d{sides} and got {roll}.")
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))
