@@ -3,12 +3,11 @@ from scipy.io import wavfile
 import numpy
 import random
 import secrets
-from utility.funcs import image_to_byte_array, image_from_url
+from utility.funcs import image_to_byte_array, image_from_url, call_markov
 import discord
 from io import BytesIO
 coin = ["heads", "tails", "side"]
 weights = [50, 50, 0.00001]
-
 
 
 class Fun(commands.Cog):
@@ -56,6 +55,12 @@ class Fun(commands.Cog):
         for i in range(amount):
             roll += random.randint(1, sides)
         await ctx.send(f"Rolled {amount}d{sides} and got {roll}.")
+
+    @commands.command(aliases=["mkv"])
+    async def markov(self, ctx, length: int = 600):
+        if length > 1000:
+            return await ctx.send("Max markov length is 1,000 characters.")
+        await ctx.send(call_markov(length))
 
 
 def setup(bot):

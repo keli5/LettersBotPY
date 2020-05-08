@@ -102,8 +102,6 @@ def tally_users(bot) -> int:
     return count
 
 
-def call_markov(length=None) -> str:
-    if length:
-        return markov.make_short_sentence(length)
-    else:
-        return markov.make_sentence()
+def call_markov(maxlength) -> str:
+    sentence = markov.make_short_sentence(maxlength)
+    return sentence
