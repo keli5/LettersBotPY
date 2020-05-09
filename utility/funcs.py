@@ -4,13 +4,12 @@ import io
 import aiohttp
 import random
 import re
+import typing
 from tortoise import Tortoise
 import tortoise.exceptions
 from classes.dbmodels import LBUser
 import markovify
-with open("corpus.txt") as f:
-    corpus = f.read()
-markov = markovify.Text(corpus)
+markov = None
 
 
 async def setup():
@@ -102,6 +101,29 @@ def tally_users(bot) -> int:
     return count
 
 
+def reload_markov():
+    with open("corpus.txt") as f:
+        corpus = f.read()
+    try:
+        global markov
+        markov = markovify.NewlineText(corpus)
+    except Exception as e:
+        print("Markov is disabled - an error occurred:")
+        print(e)
+
+
 def call_markov(maxlength) -> str:
     sentence = markov.make_short_sentence(maxlength)
     return sentence
+
+
+def enumerate_list(list_items: typing.Union[list, tuple], max_shown: int) -> str:
+    newlist = []
+    string = ""
+    for item in list_items:  # in case we have a tuple
+        newlist.append(item)
+    if len(newlist) > max_shown:
+        string = f"{', '.join(newlist[0:max_shown])} and {len(newlist) - max_shown} more"
+    else:
+        string = ", ".join(newlist[0:max_shown])
+    return string
