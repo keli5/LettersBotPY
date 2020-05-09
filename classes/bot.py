@@ -4,6 +4,7 @@ import utility.funcs as utility
 import tortoise.exceptions as te
 from discord.ext import commands
 import re
+import random
 corpus = open("corpus.txt", "a")
 
 
@@ -27,6 +28,9 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         swregex = r"(^\W|d::|^```)"
         if len(message.content) > 8 and not re.match(swregex, message.content):
             corpus.write(message.content.lower() + "\n")
+
+        if (self.user in message.mentions) or (random.random() < 0.1):
+            await message.channel.send(utility.call_markov(900))
 
         user = await utility.db_for_user(message.author.id, True)
         try:  # todo: make this into a db_for_guild function
