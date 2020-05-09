@@ -132,8 +132,9 @@ dmypy.json
 .theia/
 core.Microsoft.Pytho.*
 # safekeeping
-devbottoken.txt
 bot.sh
+corpus.txt
+
 # ignore dbs
 *.sqlite3*
 
