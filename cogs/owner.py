@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 from classes.dbmodels import LBUser, LBGuild
+from utility.funcs import reload_markov
 import os
 import pkg_resources
 
@@ -67,6 +68,12 @@ class Owner(commands.Cog):
             except AttributeError:
                 pass
         await ctx.send(embed=getembed)
+
+    @commands.command(aliases=["reloadmkv"])
+    @commands.is_owner()
+    async def reloadmarkov(self, ctx):
+        reload_markov()
+        await ctx.send('Done')
 
 
 def setup(bot):

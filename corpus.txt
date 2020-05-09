@@ -1,70 +1,385 @@
-Glass is a non-crystalline, often transparent amorphous solid, that has widespread practical, technological, and decorative use in, for example, window panes, tableware, and optics. Glass is most often formed by rapid cooling (quenching) of the molten form; some glasses such as volcanic glass are naturally occurring. The most familiar, and historically the oldest, types of manufactured glass are "silicate glasses" based on the chemical compound silica (silicon dioxide, or quartz), the primary constituent of sand. Soda-lime glass, containing around % silica, account for around % of manufactured glass. The term glass, in popular usage, is often used to refer only to this type of material, although silica-free glasses often have desirable properties for applications in modern communications technology. Some objects, such as drinking glasses and eyeglasses, are so commonly made of silicate-based glass that they are simply called by the name of the material.
-Although brittle, silicate glass is extremely durable, and many examples of glass fragments exist from early glass-making cultures. Archaeological evidence suggests glass-making dates back to at least , BCE in Mesopotamia, Egypt, or Syria. The earliest known glass objects were beads, perhaps created accidentally during metal-working or the production of faience. Due to its ease of formability into any shape, glass has been traditionally used for vessels: bowls, vases, bottles, jars and drinking glasses. In its most solid forms, it has also been used for paperweights and marbles. Glass can be coloured by adding metal salts or painted and printed with vitreous enamels, leading to its use in stained glass windows and other glass art objects.
-The refractive, reflective and transmission properties of glass make glass suitable for manufacturing optical lenses, prisms, and optoelectronics materials. Extruded glass fibres have application as optical fibres in communications networks, thermal insulating material when matted as glass wool so as to trap air, or in glass-fibre reinforced plastic (fibreglass).
-For melt quenching, if the cooling is sufficiently rapid (relative to the characteristic crystallization time) then crystallization is prevented and instead the disordered atomic configuration of the supercooled liquid is frozen into the solid state at Tg. The tendency for a material to form a glass while quenched is called glass-forming ability. This ability can be predicted by the rigidity theory. Generally, a glass exists in a structurally metastable state with respect to its crystalline form, although in certain circumstances, for example in atactic polymers, there is no crystalline analogue of the amorphous phase.
-Glass is sometimes considered to be a liquid due to its lack of a first-order phase transition where certain thermodynamic variables such as volume, entropy and enthalpy are discontinuous through the glass transition range. The glass transition may be described as analogous to a second-order phase transition where the intensive thermodynamic variables such as the thermal expansivity and heat capacity are discontinuous. Nonetheless, the equilibrium theory of phase transformations does not entirely hold for glass, and hence the glass transition cannot be classed as one of the classical equilibrium phase transformations in solids.
-Windows 10 is a series of operating systems produced by Microsoft and released as part of its Windows NT family of operating systems. It is the successor to Windows 8.1, released nearly two years earlier, and was released to manufacturing on July 15, 2015, and broadly released for retail sale on July 29, 2015. Windows 10 receives new builds on an ongoing basis, which are available at no additional cost to users, in addition to additional test builds of Windows 10 which are available to Windows Insiders. Devices in enterprise environments can receive these updates at a slower pace, or use long-term support milestones that only receive critical updates, such as security patches, over their ten-year lifespan of extended support.
-One of Windows 10's most notable features is its support for universal apps, an expansion of the Metro-style apps first introduced in Windows 8. Universal apps can be designed to run across multiple Microsoft product families with nearly identical code‍—‌including PCs, tablets, smartphones, embedded systems, Xbox One, Surface Hub and Mixed Reality. The Windows user interface was revised to handle transitions between a mouse-oriented interface and a touchscreen-optimized interface based on available input devices‍—‌particularly on 2-in-1 PCs, both interfaces include an updated Start menu which incorporates elements of Windows 7's traditional Start menu with the tiles of Windows 8. Windows 10 also introduced the Microsoft Edge web browser, a virtual desktop system, a window and desktop management feature called Task View, support for fingerprint and face recognition login, new security features for enterprise environments, and DirectX 12.
-Windows 10 received mostly positive reviews upon its original release in July 2015. Critics praised Microsoft's decision to provide a desktop-oriented interface in line with previous versions of Windows, contrasting the tablet-oriented approach of 8, although Windows 10's touch-oriented user interface mode was criticized for containing regressions upon the touch-oriented interface of Windows 8. Critics also praised the improvements to Windows 10's bundled software over Windows 8.1, Xbox Live integration, as well as the functionality and capabilities of the Cortana personal assistant and the replacement of Internet Explorer with Edge. However, media outlets have been critical of changes to operating system behaviors, including mandatory update installation, privacy concerns over data collection performed by the OS for Microsoft and its partners and the adware-like tactics used to promote the operating system on its release.
-Microsoft aimed to have Windows 10 installed on over a billion devices within three years of its release; this goal was ultimately reached in March 2020. By April 2020 an estimated 70.98% of traditional PCs running Windows are running Windows 10 (and almost all of the rest of Windows users run unsupported versions), and thus 55% of all traditional PCs use it. Across all platforms (PC, mobile, tablet and console), 35% of devices run some kind of Windows, Windows 10 or older.
-Windows 7 is an operating system that was produced by Microsoft as part of the Windows NT family of operating systems. It was released to manufacturing on July 22, 2009, and became generally available on October 22, that year, less than three years after the release of its predecessor, Windows Vista. Windows 7's server counterpart, Windows Server 2008 R2, was released at the same time. Microsoft ended mainstream support for Windows 7 on January 13, 2015 and extended support ended on January 14, 2020. At the end of January, same year, Microsoft had ended support for websites on Internet Explorer 11. IE11 is only supported on Windows Server 2012 and Windows Embedded 8 Standard, followed by a bow week later.
-Windows 7 was primarily intended to be an incremental upgrade to Microsoft Windows, addressing Windows Vista's poor critical reception while maintaining hardware and software compatibility. Windows 7 continued improvements on Windows Aero (the user interface introduced in Windows Vista) with the addition of a redesigned taskbar that allows applications to be "pinned" to it, and new window management features. Other new features were added to the operating system, including libraries, the new file sharing system HomeGroup, and support for multitouch input. A new "Action Center" interface was also added to provide an overview of system security and maintenance information, and tweaks were made to the User Account Control system to make it less intrusive. Windows 7 also shipped with updated versions of several stock applications, including Internet Explorer 8, Windows Media Player, and Windows Media Center.
-In contrast to Windows Vista, Windows 7 was generally praised by critics, who considered the operating system to be a major improvement over its predecessor due to its increased performance, its more intuitive interface (with particular praise devoted to the new taskbar), fewer User Account Control popups, and other improvements made across the platform. Windows 7 was a major success for Microsoft; even prior to its official release, pre-order sales for the operating system on the online retailer Amazon.com had surpassed previous records. In just six months, over 100 million copies had been sold worldwide, increasing to over 630 million licenses by July 2012. As of April 2020, 21.21% of traditional PCs running Windows are running Windows 7 (and thus 16% of all traditional PCs), which still has well over 50% market share in some countries.
-Minkinator is a one of the kind nightmare that will help you along your journeys. He is the digitalized form of the rat god, Minky. Allow Minkinator to take control of your life whenever the time comes.
-Swiss cheese is the name of several related varieties of cheese that resemble Emmental cheese, a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. Some types of Swiss cheese have a distinctive appearance, as the blocks or rounds of the cheese are riddled with holes known as "eyes". Swiss cheese without eyes is known as "blind".
-Swiss cheese is now manufactured in many countries, including the United States, Finland, Estonia, and Ireland. It is sometimes made with pasteurized or part-skim milk, unlike the original from Switzerland made with raw milk. The United States Department of Agriculture uses the terms Swiss cheese and Emmentaler cheese interchangeably. In Australia, both terms are used, along with Swiss-style cheese, in some cases differentiating the two. The term Swiss cheese is sometimes used in India, although it is also often referred to as Emmental, which is the more common name in Europe.
-Three types of bacteria are used in the production of Emmental cheese: Streptococcus salivarius subspecies thermophilus (also known as Streptococcus thermophilus), Lactobacillus (Lactobacillus helveticus or Lactobacillus delbrueckii subspecies bulgaricus), and Propionibacterium (Propionibacterium freudenreichii subspecies shermani). In a late stage of cheese production, the propionibacteria consume the lactic acid excreted by the other bacteria and release acetate, propionic acid, and carbon dioxide gas. The carbon dioxide slowly forms the bubbles that develop the "eyes". The acetate and propionic acid give Swiss its nutty and sweet flavor. A hypothesis proposed by Swiss researchers in 2015 notes that particulate matter may also play a role in the holes' development and that modern sanitation eliminated debris such as hay dust in the milk played a role in reduced hole size in Swiss cheeses, or even "blind cheese". Historically, the holes were seen as a sign of imperfection and cheese makers originally tried to avoid them by pressing during production. In modern times, the holes have become an identifier of the cheese.
-In general, the larger the eyes in a Swiss cheese, the more pronounced its flavor because a longer fermentation period gives the bacteria more time to act. This poses a problem, however, because cheese with large eyes does not slice well and comes apart in mechanical slicers. As a result, U.S. industry regulators have reduced the minimum eye size with which Swiss cheese can receive the Grade A stamp.
-In 2014, 297.8 million pounds of Swiss cheese was reportedly produced in the United States.
-Marshall Bruce Mathers III (born October 17, 1972), known professionally as Eminem (/ˌɛmɪˈnɛm/; often stylized as EMINƎM), is an American rapper, songwriter, and record producer. In addition to his solo career, Eminem was a member of the hip hop group D12. He is also known for collaborations with fellow Detroit-based rapper Royce da 5'9"; the two are collectively known as Bad Meets Evil.
-After his debut album Infinite (1996) and the extended play Slim Shady EP (1997), Eminem signed with Dr. Dre's Aftermath Entertainment and subsequently achieved mainstream popularity in 1999 with The Slim Shady LP. His next two releases The Marshall Mathers LP (2000) and The Eminem Show (2002) were worldwide successes and were both nominated for the Grammy Award for Album of the Year. As a result of being a leading figure in a form of black music and being credited for popularizing hip hop to a Middle American audience, Eminem was subject to comparisons with Elvis Presley at the time. After the release of what was considered to be his final album, Encore (2004), Eminem went on hiatus in 2005 partly due to a prescription drug addiction. He returned to the music industry five years later with the release of Relapse (2009), and Recovery was released the following year; both albums won Grammy Awards for Best Rap Album. Recovery was the best-selling album worldwide of 2010, making it Eminem's second album, after The Eminem Show in 2002, to be the best-selling album of the year worldwide. In the following years, he released the US number one albums The Marshall Mathers LP 2, Revival, Kamikaze and Music to Be Murdered By.
-A nuclear weapon (also called an atom bomb, nuke, atomic bomb, nuclear warhead, A-bomb, or nuclear bomb) is an explosive device that derives its destructive force from nuclear reactions, either fission (fission bomb) or from a combination of fission and fusion reactions (thermonuclear bomb). Both bomb types release large quantities of energy from relatively small amounts of matter. The first test of a fission ("atomic") bomb released an amount of energy approximately equal to 20,000 tons of TNT (84 TJ). The first thermonuclear ("hydrogen") bomb test released energy approximately equal to 10 million tons of TNT (42 PJ). A thermonuclear weapon weighing little more than 2,400 pounds (1,100 kg) can release energy equal to more than 1.2 million tons of TNT (5.0 PJ). A nuclear device no larger than traditional bombs can devastate an entire city by blast, fire, and radiation. Since they are weapons of mass destruction, the proliferation of nuclear weapons is a focus of international relations policy.
-Nuclear weapons have been used twice in war, both times by the United States against Japan near the end of World War II. On August 6, 1945, the U.S. Army Air Forces detonated a uranium gun-type fission bomb nicknamed "Little Boy" over the Japanese city of Hiroshima; three days later, on August 9, the U.S. Army Air Forces detonated a plutonium implosion-type fission bomb nicknamed "Fat Man" over the Japanese city of Nagasaki. These bombings caused injuries that resulted in the deaths of approximately 200,000 civilians and military personnel. The ethics of these bombings and their role in Japan's surrender are subjects of debate.
-A biological agent (also called bio-agent, biological threat agent, biological warfare agent, biological weapon, or bioweapon) is a bacterium, virus, protozoan, parasite, or fungus that can be used purposefully as a weapon in bioterrorism or biological warfare (BW). In addition to these living or replicating pathogens, toxins and biotoxins are also included among the bio-agents. More than 1,200 different kinds of potentially weaponizable bio-agents have been described and studied to date.
-Biological agents have the ability to adversely affect human health in a variety of ways, ranging from relatively mild allergic reactions to serious medical conditions, including serious injury, as well as serious or permanent disability or even death. Many of these organisms are ubiquitous in the natural environment where they are found in water, soil, plants, or animals. Bio-agents may be amenable to "weaponization" to render them easier to deploy or disseminate. Genetic modification may enhance their incapacitating or lethal properties, or render them impervious to conventional treatments or preventives. Since many bio-agents reproduce rapidly and require minimal resources for propagation, they are also a potential danger in a wide variety of occupational settings.
-Coronavirus disease 2019 (COVID-19) is an infectious disease caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). It was first identified in December 2019 in Wuhan, the capital of China's Hubei province, and has since spread globally, resulting in an ongoing pandemic. As of 7 May 2020, more than 3.83 million cases have been reported across 187 countries and territories, resulting in more than 268,000 deaths. More than 1.27 million people have recovered.
-Common symptoms include fever, cough, fatigue, shortness of breath, and loss of smell and taste. While the majority of cases result in mild symptoms, some progress to viral pneumonia, multi-organ failure, or cytokine storm. The time from exposure to onset of symptoms is typically around five days but may range from two to fourteen days.
-The virus is primarily spread between people during close contact,[a] often via small droplets produced by coughing,[b] sneezing, and talking. The droplets usually fall to the ground or onto surfaces rather than remaining in the air over long distances. People may also become infected by touching a contaminated surface and then touching their face.
-Finland (Finnish: Suomi [ˈsuo̯mi] (About this soundlisten); Swedish: Finland [ˈfɪ̌nland] (About this soundlisten), Finland Swedish: [ˈfinlɑnd]), officially the Republic of Finland (Finnish: Suomen tasavalta, Swedish: Republiken Finland (About this soundlisten to all)),[note 1] is a Nordic country in Northern Europe bordering the Baltic Sea, Gulf of Bothnia, and Gulf of Finland, between Sweden to the west, Russia to the east, Estonia to the south, and north-eastern Norway to the north. The capital and largest city is Helsinki. Other major cities are Espoo, Tampere, Vantaa, Oulu, Turku, Jyväskylä, Lahti and Kuopio.
-Finland's population is 5.53 million as of March 2020, the majority of whom live in the central and south of the country and speak Finnish, a Finnic language from the Uralic language family, unrelated to the Scandinavian languages. Finland is the eighth-largest country in Europe and the most sparsely populated country in the European Union. It is a parliamentary republic of 310 municipalities, and includes an autonomous region, the Åland Islands. Over 1.4 million people live in the Greater Helsinki metropolitan area, which produces one third of the country's GDP. Swedish is the second official language of Finland, which is mainly spoken in certain coastal areas and on Åland. A large majority of Finns are members of the Evangelical Lutheran Church.
-The Montreal Impact (French: Impact de Montréal) is a Canadian professional soccer team based in Montreal, Quebec. The Impact competes as a member of the Eastern Conference in Major League Soccer (MLS). The team began play in 2012 as an expansion team of the league, being the league's third Canadian club, and replaced the North American Soccer League team of the same name.
-In 2015, the Impact became the second MLS club, and first Canadian club, to advance to the final of the CONCACAF Champions League, in its current name since 2008, where they finished runners-up in the two-game aggregate goal series against Club América. The Impact won the Canadian Championship in 2013, 2014 and 2019. The club plays its home games at Saputo Stadium and is coached by Thierry Henry.
-Linux is a family of open source Unix-like operating systems based on the Linux kernel, an operating system kernel first released on September 17, 1991, by Linus Torvalds. Linux is typically packaged in a Linux distribution.
-Distributions include the Linux kernel and supporting system software and libraries, many of which are provided by the GNU Project. Many Linux distributions use the word "Linux" in their name, but the Free Software Foundation uses the name GNU/Linux to emphasize the importance of GNU software, causing some controversy.
-Popular Linux distributions include Debian, Fedora, and Ubuntu. Commercial distributions include Red Hat Enterprise Linux and SUSE Linux Enterprise Server. Desktop Linux distributions include a windowing system such as X11 or Wayland, and a desktop environment such as GNOME or KDE Plasma. Distributions intended for servers may omit graphics altogether, or include a solution stack such as LAMP. Because Linux is freely redistributable, anyone may create a distribution for any purpose.
-Linux was originally developed for personal computers based on the Intel x86 architecture, but has since been ported to more platforms than any other operating system. Linux is the leading operating system on servers and other big iron systems such as mainframe computers, and the only OS used on TOP500 supercomputers (since November 2017, having gradually eliminated all competitors). It is used by around 2.3 percent of desktop computers. The Chromebook, which runs the Linux kernel-based Chrome OS, dominates the US K–12 education market and represents nearly 20 percent of sub-$300 notebook sales in the US.
-Ubuntu is a free and open-source Linux distribution based on Debian. Ubuntu is officially released in three editions: Desktop, Server, and Core for the internet of things devices and robots. All the editions can run on the computer alone, or in a virtual machine. Ubuntu is a popular operating system for cloud computing, with support for OpenStack.
-Ubuntu is released every six months, with long-term support (LTS) releases every two years. As of 23 April 2020, the latest release and also the most recent long-term support release is 20.04 ("Focal Fossa"), which is supported until 2025 under public support and until 2030 as a paid option.
-Ubuntu is developed by Canonical, and a community of other developers, under a meritocratic governance model. Canonical provides security updates and support for each Ubuntu release, starting from the release date and until the release reaches its designated end-of-life (EOL) date. Canonical generates revenue through the sale of premium services related to Ubuntu.
-Moths are a polyphyletic group of insects that includes all members of the order Lepidoptera that are not butterflies, with moths making up the vast majority of the order. There are thought to be approximately 160,000 species of moth, many of which have yet to be described. Most species of moth are nocturnal, but there are also crepuscular and diurnal species.
-While the butterflies form a monophyletic group, the moths, comprising the rest of the Lepidoptera, do not. Many attempts have been made to group the superfamilies of the Lepidoptera into natural groups, most of which fail because one of the two groups is not monophyletic: Microlepidoptera and Macrolepidoptera, Heterocera and Rhopalocera, Jugatae and Frenatae, Monotrysia and Ditrysia.
-Although the rules for distinguishing moths from butterflies are not well established, one very good guiding principle is that butterflies have thin antennae and (with the exception of the family Hedylidae) have small balls or clubs at the end of their antennae. Moth antennae are usually feathery with no ball on the end. The divisions are named by this principle: "club-antennae" (Rhopalocera) or "varied-antennae" (Heterocera).
-An alphabet is a standardized set of basic written symbols or graphemes (called letters) that represent the phonemes of certain spoken languages. Not all writing systems represent language in this way; in a syllabary, each character represents a syllable, for instance, and logographic systems use characters to represent words, morphemes, or other semantic units).
-The first fully phonemic script, the Proto-Canaanite script, later known as the Phoenician alphabet, is considered to be the first alphabet, and is the ancestor of most modern alphabets, including Arabic, Greek, Latin, Cyrillic, Hebrew, and possibly Brahmic. Peter T. Daniels, however, distinguishes an abugida or alphasyllabary, a set of graphemes that represent consonantal base letters which diacritics modify to represent vowels (as in Devanagari and other South Asian scripts), an abjad, in which letters predominantly or exclusively represent consonants (as in the original Phoenician, Hebrew or Arabic), and an "alphabet", a set of graphemes that represent both vowels and consonants. In this narrow sense of the word the first "true" alphabet was the Greek alphabet, which was developed on the basis of the earlier Phoenician alphabet.
-The programming language Python was conceived in the late 1980s, and its implementation was started in December 1989 by Guido van Rossum at CWI in the Netherlands as a successor to ABC capable of exception handling and interfacing with the Amoeba operating system. Van Rossum is Python's principal author, and his continuing central role in deciding the direction of Python is reflected in the title given to him by the Python community, Benevolent Dictator for Life (BDFL). (However, van Rossum stepped down as leader on July 12, 2018.) Python was named for the BBC TV show Monty Python's Flying Circus.
-Python 2.0 was released on October 16, 2000, with many major new features, including a cycle-detecting garbage collector (in addition to reference counting) for memory management and support for Unicode. However, the most important change was to the development process itself, with a shift to a more transparent and community-backed process.
-Python 3.0, a major, backwards-incompatible release, was released on December 3, 2008 after a long period of testing. Many of its major features have also been backported to the backwards-compatible, while by now unsupported, Python 2.6 and 2.7.
-In February 1991, Van Rossum published the code (labeled version 0.9.0) to alt.sources. Already present at this stage in development were classes with inheritance, exception handling, functions, and the core datatypes of list, dict, str and so on. Also in this initial release was a module system borrowed from Modula-3; Van Rossum describes the module as "one of Python's major programming units". Python's exception model also resembles Modula-3's, with the addition of an else clause. In 1994 comp.lang.python, the primary discussion forum for Python, was formed, marking a milestone in the growth of Python's userbase.
-Node.js is an open-source, cross-platform, JavaScript runtime environment that executes JavaScript code outside of a web browser. Node.js lets developers use JavaScript to write command line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser. Consequently, Node.js represents a "JavaScript everywhere" paradigm, unifying web-application development around a single programming language, rather than different languages for server- and client-side scripts.
-Though .js is the standard filename extension for JavaScript code, the name "Node.js" doesn't refer to a particular file in this context and is merely the name of the product. Node.js has an event-driven architecture capable of asynchronous I/O. These design choices aim to optimize throughput and scalability in web applications with many input/output operations, as well as for real-time Web applications (e.g., real-time communication programs and browser games).
-The Node.js distributed development project was previously governed by the Node.js Foundation, and has now merged with the JS Foundation to form the OpenJS Foundation, which is facilitated by the Linux Foundation's Collaborative Projects program.
-Corporate users of Node.js software include GoDaddy, Groupon, IBM, LinkedIn, Microsoft, Netflix, PayPal, Rakuten, SAP, Voxer, Walmart, and Yahoo!.
-The Higgs boson is an elementary particle in the Standard Model of particle physics, produced by the quantum excitation of the Higgs field, one of the fields in particle physics theory. It is named after physicist Peter Higgs, who in 1964, along with five other scientists, proposed the Higgs mechanism to explain why particles have mass. This mechanism implies the existence of the Higgs boson. The Higgs boson was initially discovered as a new particle in 2012 by the ATLAS and CMS collaborations based on collisions in the LHC at CERN, and the new particle was subsequently confirmed to match the expected properties of a Higgs boson over the following years.
-On December 10, 2013, two of the physicists, Peter Higgs and François Englert, were awarded the Nobel Prize in Physics for their theoretical predictions. Although Higgs's name has come to be associated with this theory (the Higgs mechanism), several researchers between about 1960 and 1972 independently developed different parts of it.
-In mainstream media the Higgs boson has often been called the "God particle", from a 1993 book on the topic, although the nickname is strongly disliked by many physicists, including Higgs himself, who regard it as sensationalism.
-Discord is a proprietary freeware VoIP application and digital distribution platform designed for creating communities ranging from gamers to education. Discord specializes in text, image, video and audio communication between users in a chat channel. Discord runs on Windows, macOS, Android, iOS, Linux, and in web browsers. As of 21 July 2019, there are over 250 million users of the software.
-The concept of Discord came from Jason Citron, who had founded OpenFeint, a social gaming platform for mobile games. He eventually sold OpenFeint to GREE in 2011 for US$104 million, which he used to found Hammer & Chisel, a game development studio, in 2012. Their first product was Fates Forever, released in 2014, which Citron anticipated to be the first MOBA game on mobile platforms, but it did not become commercially successful. However, during the development process, Citron noticed how difficult it was for his team to work out tactics in games like Final Fantasy XIV and League of Legends using available voice over IP (VoIP) software. He found that some VoIP options required players to type in IP addresses just to connect, while others were resource-heavy and had known security problems. This led the developers to develop a chat service that was much friendlier to use and based on more modern technology.
-To develop Discord, Hammer & Chisel gained additional funding from YouWeb's 9+ incubator, which had also funded the startup of Hammer & Chisel, and from Benchmark capital and Tencent.
-The first-generation iPhone SE is a smartphone that was designed and marketed by Apple Inc. It is part of the 9th generation of the iPhone alongside the higher-end iPhone 6S and 6S Plus. It was announced on March 21, 2016 at the Town Hall auditorium in the Apple Campus by Apple executive Greg Joswiak, with pre-orders beginning on March 24, 2016. It was officially released on March 31, 2016.
-It was re-released almost a year later on March 24, 2017 with larger storage capacities. The iPhone SE shares the same physical design and dimensions as the iPhone 5S, but has upgraded internal hardware, including the newer Apple A9 system-on-chip, greater battery capacity, and a 12-megapixel rear camera that can record up to 4K video at 30 frames per second. The nickname SE is an acronym for Special Edition. The iPhone SE was discontinued by Apple on September 12, 2018.
-Its successor, the second-generation iPhone SE, was announced on April 15, 2020.
-The iPhone 8 and iPhone 8 Plus are smartphones designed, developed, and marketed by Apple Inc. It is the eleventh generation of the iPhone. They were announced on September 12, 2017, alongside the higher-end iPhone X, at the Steve Jobs Theater in the Apple Park campus, and were released on September 22, 2017, succeeding iPhone 7 and iPhone 7 Plus. The iPhone 8 and iPhone 8 Plus were discontinued by Apple on April 15, 2020 with the release of the second-generation iPhone SE.
-Besides the addition of a glass back, the designs of iPhone 8 and 8 Plus are largely similar to that of their predecessors. Notable changes include the addition of inductive charging, a faster processor, and improved cameras and displays. The iPhone 8 and 8 Plus share most of their internal hardware with the iPhone X.
-Reception of the phones was generally positive, with reviewers praising the addition of inductive charging and the new Apple A11 processor, while criticizing the aging design.
-The LG G series is a line of high-end Android devices produced by LG Electronics. The "G" designation was first introduced in 2012 as a branch of the LG Optimus series for flagship devices, but LG announced in July 2013 that the "Optimus" name would be discontinued for future flagships in favor of maintaining "G" and "Vu" as distinct brands. The first purely G-branded phone, the LG G2, was unveiled in August 2013.
-LG's first two smartwatches, the LG G Watch and the LG G Watch R, were also part of the LG G series. Starting with the LG Watch Urbane, LG dropped the "G" branding from the device's name, thus eliminating the watches from the G series.
-The 6800 ("sixty-eight hundred") is an 8-bit microprocessor designed and first manufactured by Motorola in 1974. The MC6800 microprocessor was part of the M6800 Microcomputer System that also included serial and parallel interface ICs, RAM, ROM and other support chips. A significant design feature was that the M6800 family of ICs required only a single five-volt power supply at a time when most other microprocessors required three voltages. The M6800 Microcomputer System was announced in March 1974 and was in full production by the end of that year.
-The 6800 has a 16-bit address bus that can directly access 64 kB of memory and an 8-bit bi-directional data bus. It has 72 instructions with seven addressing modes for a total of 197 opcodes. The original MC6800 could have a clock frequency of up to 1 MHz. Later versions had a maximum clock frequency of 2 MHz.
-Samsung Galaxy S9 and S9+ are Android-based smartphones unveiled, manufactured, released and marketed by Samsung Electronics as part of the Samsung Galaxy S series. The devices were revealed at the Mobile World Congress in Barcelona on 25 February 2018, as the successors to the Samsung Galaxy S8 and S8+.
-The Galaxy S9 and S9+ have nearly identical features to the S8 batch, with the same display size and aspect ratio, just like their predecessor. One highly regarded change to distinguish between the models is the location of the fingerprint sensor. While the S8's is found beside the camera, the S9's is directly underneath it. Most notably, however, the S9 line is equipped with several camera improvements over the S8.
-The phone has received generally favorable reviews, with critics mostly noting the enhanced camera and better positioned fingerprint scanner. Critics, however, still criticize the lack of improvement to other features compared to its predecessor. It is available in seven colours (Lilac Purple, Midnight Black, Titanium Gray, Coral Blue, Sunrise Gold, Burgundy Red, and Polaris Blue). It was succeeded by the Samsung Galaxy S10 in March 2019.
+you are a little minker
+yes you are
+a silly little minky minker
+12321h3j12hjrfgqdjw3fsd
+are you alive
+why are you not alive
+ok thank you
+broccoli bits
+what will it do
+why are you
+user generated markov!
+id leave it the same
+man noises
+manly man noise
+why are you
+its suffering trying to do a do
+haha'ufsdj
+cause it has so little data
+its suffering and screaming
+suffering liek i do
+i know what youre thinking nicholas
+its not broken
+its because this is the corpus
+i dont think
+thats kind of evident just from talking to you
+thinking isnt your strong suit
+ima add object support
+anyone can tell that
+object support
+why the fuck would you do this to me nicholas
+src\commands\utility
+ew windows filepaths
+src/commands/utility
+that is better
+but windows has to be stupid
+why are you a moth
+i dont know!
+why were you created this way
+whyyyyyyy
+no items are present
+why are no items present nicholas
+i opened it up a bit
+ok so it still doesnt know much
+what the fuck is a chicago
+sounds like hell
+why are the currency symbols so
+they are mink bucks!
+it looks weird
+it looks different for me
+it doesnt look like that on my phone
+mine looks like a fukcing fork\
+why are different systems so bad at making shit look the same
+i do not know
+i hear the locusts.
+they are loud'
+fucking locusts
+aaaaaaaaaaaaaaaaaaaa
+shut them up
+why are you so useless
+dont moths eat locusts
+i dont know
+theyre so loud
+you should make the amount it clears +1 so it also clears the command
+invalid form body
+they will meow
+kitter meow
+i wonder if
+shoudl i set the title to
+you wondering things is never good
+its always just a fucking recipe for disaster
+why is kitter in box
+funky kitty
+discord.py typing is so much cleaner
+instead of start and stop typing funcs with js
+it just stops typing automatically after everything in the `with` is done
+that is hoot!
+i can just wrap the process commands in typing
+message.channel.send('run')
+now watch this!
+oh no it typing
+lol broke
+ok im probably gonna keep typing for expensive commands instead
+thats funky
+oh no what the fuck
+shut the fuck down
+it is fast
+shut up letterbot
+why are you so stupid
+they are you can you please send me the address and i will send you a picture of the year
+typing forever
+are you not gonna include
+customizable prefix
+why aren't they present nicholas
+it still `functions`
+i must spawn a function to reload the markov
+im making my code c l e a n e r
+it literally worked fine
+android app
+lol and you called mine broken
+yours just pastes xml
+cause theres no good libraries for markov
+markov strings worked fine for me
+its your data
+wherever youre getting this from
+i had 4000 strings and it still generated shit
+cause a lot of it was code already
+and i removed it all
+and its still shit
+well obviously not!
+im gonna smack you
+i dont know!
+i dont know!
+why are you so fucking stupid
+why are you unable to say anything else
+it learns from you kieht.
+why are you making me angry
+shut up it learns from you too
+you made it like this.
+it learns from the both of us nicholas.
+it is you keith
+it's learned from you too.
+in 1 month
+itll be sentient
+while yours is trying to write an android app
+no error is good
+minky be like
+it does a lot of that functioning!
+he soun like rat
+down down down
+gethreufk
+did you know
+you cannot do reloadmkv
+piece of shit
+if i can get object support
+itll be much sexier
+i can organizer stuff better
+embed can be an object
+spotify at max volume
+my headphones s h a k e
+why are you trying to blow your ears out
+remember nicholas
+high volumes for long periods of time may damage your hearing
+ok android
+i like how you just
+know that message
+you saw it and you just
+immediately recognized it
+i eat hari
+hairy hairs
+my headphones have sexy touch controls
+i can swipe
+and touch
+you can caress them
+scope in python is funky
+https://stackoverflow.com/questions/55765372/python-error-global-declared-variable-is-not-declared-in-the-global-scope
+i dont want to read it
+discord.py is smarter than discord.js
+you dont have to convert back and forth from member
+member subclasses user
+why des it sometimes
+maybe related to the reason it sometimes reloads in -20 ms
+the code for it just
+subtracts the timestamps
+reloadmessage.createdtimestamp - message.createdtimestamp
+4 second connectipn ing
+why is the gateway field even there
+it looks cool
+if its not `wss://gateway.discord.gg/` your bot wont be responding
+more info
+discord bot library in brainfuck
+theoretically if i do this about 10,000 times i should get the third one
+that was a glitch
+somehow that happened
+it wasnt in the code
+the coin lands on its 5th side
+flip a 4d coin
+klein bottle
+time. docter freeman
+is it really that time again
+go away gman
+idk if its really rare
+i dont see negatives
+time will tell
+what now keith
+earning you ₼9.09 puts your balance at ₼1009.09
+earning you ₼20.00 puts your balance at ₼1020.00
+not this shit again
+this isnt real
+oh than kgod
+it did that
+cause of repeat
+repeat being funky
+you want my love?
+your currency
+fuckbucks
+i think its some armenian currency symbol
+watch this!
+that nobody uses
+why is it
+for pretty embed
+i wouldnt suggest
+and the code for side landing
+using guild emoji
+cause if someone else clones it
+it would just err
+then thats their problem :)
+you evil little man
+theres literally a 90% chance your bot errors on `npm install` with no indication on how to fix it so
+dword (32)
+the dword
+you are you
+10 lil crips
+by snoop dogg
+oh i forgot spotify does that with the fucking artists
+it just sends them as one thicc string seperated with ;
+you just split it at `; `
+blueberry yum yum
+my blueberry yum yum
+yeah fuck you too
+my bluebarry yum yum
+this will dynamically get the spotify activity!
+did you know
+const markovtries = guildconfig.markovtries;
+    const markovscore = guildconfig.markovscore;
+i knew that
+do you like when i react
+without me
+artist eminem
+track id 31iu4y3iu2y5tiu24hygi42utgu43oug\
+i see minky
+look at it
+lol it takes d:: commands
+prefixes are funky!
+im trying to figure out how to get it to ignore that stuff
+i had to add a special case in my bots regex for commands that start with d::
+i use this
+it catches code blocks
+and anything that doesnt start with a letter or number
+please dont tell me you pasted it with the r""
+i can see when they started listening
+i wont though cause utc lol
+oh dear god
+wifi dying
+it splits it up
+well thats funky!
+why is it a string
+why is rap game so long
+i never noticed its almost 6 min
+this rap game
+this rap game
+i aint selling my soul for this rap game
+i am debugging
+i will debug your skull
+to see if this works
+make your own channel you little funker
+and your messages
+triger it
+it will triger in all chanel
+now it shouldnt write prefixes to data
+at least i `hope`
+wheres the atomic bomb
+minkinator isnt
+show me your regex
+im not using a fuckign regfyhbex
+you could generate one from the guild ignores
+im gonna generate a gun in your skull
+my code is all flake8 compliant!
+is all your code eslint compliant nicholas!?
+youre going senile
+this is on shuffle and it played 2 songs in the order they come in the album
+it played stepdad - intro and then stepdad
+and my liked songs is like
+willy helped me
+im not your dad im your
+try some commands
+dont say any text
+just commands
+its ignoring them
+now it works
+i am proud
+well that is really all you need huh!
+how you be spending
+your corny time
+corny teen
+neanderthal
+my next pc
+might be amd
+adms gotten a lot better
+since my laptop
+i dont care nicholas.
+forgive me
+that isnt right
+ipads bad
+there we go
+crts dont ahve a native resolution
+they can if you try.
+they do not render individual pixels in the traditional way
+they operate with scanlines nicholas
+well `teh`
+well `teh`
+i dont kno
+i might add like
+me write a sexy funk
+a commands object
+to the database
+and then add a way
+to toggle their usage
+store the command
+temporariltjerik
+have an object
+in the db
+keyed by command name
+you could just have an array in the guild db
+and if the command is in the array
+disable it
+the real slim shady
+the fake lsiomfdis
+ma yas mas
+ma yas mas
+jumbo joespeh
+discord.py has a built in type for spotify presences
+https://discordpy.readthedocs.io/en/latest/api.html#discord.spotify
+youre cute
+my message.js event is 229 lines
+jesus fucking christ
+it do smart things
+discords light mode could maybe be usable if the background color wasnt literally #ffffff
+is darker
+than that
+kiki is here!
+youre the kind of person that uses compact mode and light mode
+kiki is atop me
+kiki is on my head
+on two feet
+kikis fingers are sharp
+its the func i added
+in that commit
+kikis fingers
+they are sharp
+kikis `sac`
+you should probably like
+make artists
+if its one
+did you know
+https://open.spotify.com/track/4k26z0ncagq6jisqblscom?si=dscrrzyuq2ccs0rpjkoztw
+https://open.spotify.com/track/4k26z0ncagq6jisqblscom
+that works
+kiki is purring violently
+she is tearing her lungs
+she leaksblood
+but she is purring
+through it
+kiki will purr
+no matter one
+imma make title not inline
+to draw attention to it and also cause some certain artists have really long titles.
+kiki is concretin
+kiki is hardening
+helphleph
+kiki is hardening
+wait i can make the title field a link instead of desc
+kiki has funny light spots
+they are funny
+click on the link!
+what the fuck
+how did you get the link name
+to be hyper link
+you can shit markdown in it
+what `kind`
+what does it s u p p o r
+i think it supports
+it supports
+my fucking
+toe flicker
+it supports the normal ***bold and italic** and
+> this thing
+plus hyperlinks
+kiki is on my desk
+did you know
+hyper text transfer protocol secure
+kiki is dense
+kiki rests her `sac` on the desk
+her `sac` rests on the esk
+it is a big `sac`
+her `sac`

@@ -3,7 +3,7 @@ from scipy.io import wavfile
 import numpy
 import random
 import secrets
-from utility.funcs import image_to_byte_array, image_from_url, call_markov
+from utility.funcs import image_to_byte_array, image_from_url, call_markov, enumerate_list
 import discord
 from io import BytesIO
 coin = ["heads", "tails", "side"]
@@ -58,9 +58,37 @@ class Fun(commands.Cog):
 
     @commands.command(aliases=["mkv"])
     async def markov(self, ctx, length: int = 600):
+        """ Generate a Markov chain. """
         if length > 1000:
             return await ctx.send("Max markov length is 1,000 characters.")
         await ctx.send(call_markov(length))
+
+    @commands.command()
+    async def spotify(self, ctx, user: discord.Member = None):
+        """ See a user's Spotify information. Uses presences, so offline users / non-connected Spotify won't work. """
+        user = user or ctx.author
+        sembed = discord.Embed(
+            title=f"Spotify for {user}"
+        )
+        spotify = None
+        for activity in user.activities:
+            if str(activity) == "Spotify":
+                spotify = activity
+        if not spotify:
+            sembed.color = discord.Color.red()
+            sembed.description = f"{user} is not listening to Spotify."
+        else:
+            sembed.color = spotify.color
+            sembed.add_field(
+                             name="Title",
+                             value=f"[{spotify.title}](https://open.spotify.com/track/{spotify.track_id})",
+                             inline=False
+                            )
+            sembed.add_field(name="Artists", value=enumerate_list(spotify.artists, 3))
+            sembed.add_field(name="Album", value=spotify.album)
+            sembed.set_thumbnail(url=spotify.album_cover_url)
+
+        await ctx.send(embed=sembed)
 
 
 def setup(bot):

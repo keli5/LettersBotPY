@@ -3,11 +3,14 @@ from classes.dbmodels import LBGuild
 import utility.funcs as utility
 import tortoise.exceptions as te
 from discord.ext import commands
+import re
+corpus = open("corpus.txt", "a")
 
 
 class LettersBot(commands.AutoShardedBot):  # when you going
     """ Welcome to the rewrite of LettersBot! """
     async def on_ready(self):
+        utility.reload_markov()
         user_count = utility.tally_users(self)
         prefix = self.command_prefix
         await utility.setup()
@@ -21,6 +24,9 @@ class LettersBot(commands.AutoShardedBot):  # when you going
     async def on_message(self, message):
         if message.author.bot:
             return
+        swregex = r"(^\W|d::|^```)"
+        if len(message.content) > 8 and not re.match(swregex, message.content):
+            corpus.write(message.content.lower() + "\n")
 
         user = await utility.db_for_user(message.author.id, True)
         try:  # todo: make this into a db_for_guild function
