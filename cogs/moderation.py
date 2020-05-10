@@ -15,6 +15,17 @@ class Moderation(commands.Cog):
         ...
 
     @commands.command()
+    @commands.bot_has_permissions(manage_messages=True)
+    @commands.has_permissions(manage_messages=True)
+    async def purge(self, ctx, amount: int = 10):
+        """ Delete <amount> messages in this channel. """
+        if amount > 100:
+            await ctx.send("Max amount is 100.")
+        if amount < 2:
+            await ctx.send("Minimum amount is 2.")
+        await ctx.channel.purge(limit=amount)
+
+    @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
     async def kick(self, ctx, user: discord.Member, *, reason: str = "No reason provided."):

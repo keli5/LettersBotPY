@@ -37,21 +37,22 @@ class Images(commands.Cog):
         out = io.BytesIO()
         image = await image_from_url(source)
         processing = await ctx.send('Processing image... (this could take a bit)')
-        width, height = image.size
-        image = image.quantize(colors=colors, kmeans=colors)
-        image = image.convert("RGB")
-        hexcodes = b""
-        for o, (r, g, b) in image.getcolors():
-            hexcodes += b'#%02x%02x%02x\n' % (r, g, b)
-        hexes = io.BytesIO(hexcodes)
-        image.save(out, "png")
-        out.seek(0)
-        await processing.delete()
-        await ctx.send(files=[
-            discord.File(out, filename=f"{colors}-colors.png"),
-            discord.File(hexes, filename="colors.txt")
-            ]
-        )
+        async with ctx.channel.typing():
+            width, height = image.size
+            image = image.quantize(colors=colors, kmeans=colors)
+            image = image.convert("RGB")
+            hexcodes = b""
+            for o, (r, g, b) in image.getcolors():
+                hexcodes += b'#%02x%02x%02x\n' % (r, g, b)
+            hexes = io.BytesIO(hexcodes)
+            image.save(out, "png")
+            out.seek(0)
+            await processing.delete()
+            await ctx.send(files=[
+                discord.File(out, filename=f"{colors}-colors.png"),
+                discord.File(hexes, filename="colors.txt")
+                ]
+            )
 
     @commands.command()
     async def saturate(self, ctx, amount: int = 2, attachment=None):

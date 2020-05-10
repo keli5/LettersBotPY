@@ -22,12 +22,13 @@ class Fun(commands.Cog):
         imgbytes = image_to_byte_array(image)
         samplingrate = 7000
         pcsmsg = await ctx.send('Processing... this may take a few minutes')
-        buffer = BytesIO()
-        bytes = numpy.array(imgbytes, dtype=numpy.int8)  # we'll feed this to our wav file
-        wavfile.write(buffer, samplingrate, bytes)  # this is a bad idea
-        filename = f"img2audio-{secrets.token_hex(nbytes=15)}.wav"  # generate a unique filename
-        await ctx.send(file=discord.File(fp=buffer, filename=filename))
-        await pcsmsg.delete()
+        async with ctx.channel.typing():
+            buffer = BytesIO()
+            bytes = numpy.array(imgbytes, dtype=numpy.int8)  # we'll feed this to our wav file
+            wavfile.write(buffer, samplingrate, bytes)  # this is a bad idea
+            filename = f"img2audio-{secrets.token_hex(nbytes=15)}.wav"  # generate a unique filename
+            await ctx.send(file=discord.File(fp=buffer, filename=filename))
+            await pcsmsg.delete()
 
     @commands.command(aliases=["coin", "cointoss"])
     async def coinflip(self, ctx):
@@ -41,7 +42,7 @@ class Fun(commands.Cog):
         if result == "side":
             coinembed.color = discord.Color.red()
             coinembed.title = "Flipped a coin and got--"
-            coinembed.description = "<:erred:683353051817443328> The coin landed on its side"
+            coinembed.description = "❌ The coin landed on its side"
         await ctx.send(embed=coinembed)
 
     @commands.command(aliases=["roll"])
