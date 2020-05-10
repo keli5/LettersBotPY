@@ -7,7 +7,7 @@ import re
 import typing
 from tortoise import Tortoise
 import tortoise.exceptions
-from classes.dbmodels import LBUser
+from classes.dbmodels import LBUser, LBGuild
 import markovify
 markov = None
 
@@ -56,6 +56,23 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
 
     if returns is True:
         return user
+
+
+async def db_for_guild(id: int, returns: bool = False) -> dict:
+    """ Tries to get the DB entry for guild with id `id`, if it doesn't work,
+    generates a DB entry for it.
+    Also returns the guild if `returns` is true. """
+    try:
+        guild = await LBGuild.get(id=id)
+    except tortoise.exceptions.DoesNotExist:
+        guild = await LBGuild.create(
+            id=id,
+            muteRole=0,
+            joinMesg=None
+        )
+
+    if returns is True:
+        return guild
 
 
 async def image_from_url(source) -> Image:
@@ -112,8 +129,20 @@ def reload_markov():
         print(e)
 
 
-def call_markov(maxlength) -> str:
-    sentence = markov.make_short_sentence(maxlength)
+def call_markov(maxlength, startword: str = None) -> str:
+    try:
+        if startword:
+            sentence = markov.make_sentence_with_start(
+                startword,
+                max_chars=maxlength,
+                strict=True,
+                tries=200
+                )
+        else:
+            sentence = markov.make_short_sentence(maxlength)
+    except KeyError:
+        sentence = f"`{startword}` does not appear enough in the corpus."
+    sentence = sentence or "Failed to generate a sentence."
     return sentence
 
 

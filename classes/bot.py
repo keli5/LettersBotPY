@@ -1,7 +1,6 @@
 import discord
 from classes.dbmodels import LBGuild
 import utility.funcs as utility
-import tortoise.exceptions as te
 from discord.ext import commands
 import re
 import random
@@ -50,16 +49,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             await message.channel.send(utility.call_markov(900))
         user = await utility.db_for_user(message.author.id, True)
         if message.channel.type is not discord.ChannelType.private:
-            try:  # todo: make this into a db_for_guild function
-                await LBGuild.get(id=message.guild.id)
-            except te.DoesNotExist:
-                await LBGuild.create(
-                    id=message.guild.id,
-                    muteRole=0,
-                    joinMesg=None
-                )
-                print(f"Created entry for {message.guild}")
-
+            await utility.db_for_guild(message.guild.id)
         if user.canUseBot:
             await self.process_commands(message)
 
