@@ -25,7 +25,6 @@ class Owner(commands.Cog):
         random.seed(a=seed, version=2)
         await ctx.message.add_reaction("✅")
 
-
     @commands.command()
     @commands.is_owner()
     async def botban(self, ctx, victim: discord.User):
