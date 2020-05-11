@@ -49,9 +49,7 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
             id=id,
             balance=0,
             canUseBot=True,
-            inventory={},
-            warnings={},
-            banUntil=None
+            inventory={}
         )
 
     if returns is True:
@@ -68,7 +66,9 @@ async def db_for_guild(id: int, returns: bool = False) -> dict:
         guild = await LBGuild.create(
             id=id,
             muteRole=0,
-            joinMesg=None
+            joinMesg=None,
+            disabledCommands=[],
+            blacklisted=False
         )
 
     if returns is True:

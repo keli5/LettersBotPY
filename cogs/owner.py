@@ -3,6 +3,7 @@ import discord
 from classes.dbmodels import LBUser, LBGuild
 from utility.funcs import reload_markov
 import os
+import random
 import pkg_resources
 
 modeltypes = {
@@ -10,12 +11,20 @@ modeltypes = {
     "guilds": LBGuild
 }
 valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole",
-                "warnings", "banUntil", "joinMesg", "joinMesgChannel"]
+                "warnings", "banUntil", "joinMesg", "joinMesgChannel",
+                "blacklisted", "disabledCommands"]
 
 
 class Owner(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command()
+    @commands.is_owner()
+    async def seedrng(self, ctx, seed):
+        random.seed(a=seed, version=2)
+        await ctx.message.add_reaction("✅")
+
 
     @commands.command()
     @commands.is_owner()
@@ -34,7 +43,10 @@ class Owner(commands.Cog):
     async def db(self, ctx):
         ''' Database manipulation commands. '''
         tormver = pkg_resources.get_distribution("tortoise-orm").version
-        size = os.path.getsize("../lettersbot_data.sqlite3") / 1000
+        shm = os.path.getsize("../lettersbot_data.sqlite3-shm")
+        wal = os.path.getsize("../lettersbot_data.sqlite3-wal")
+        base = os.path.getsize("../lettersbot_data.sqlite3")
+        size = (shm + wal + base) / 1000
         await ctx.send(f"SQLite 3 database, {size} KB\nUsing tortoise-orm {tormver}")
 
     @db.command()
