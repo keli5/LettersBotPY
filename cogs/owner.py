@@ -1,10 +1,11 @@
 from discord.ext import commands
 import discord
 from classes.dbmodels import LBUser, LBGuild
-from utility.funcs import reload_markov
+from utility.funcs import reload_markov, call_markov
 import os
 import random
 import pkg_resources
+import typing
 
 modeltypes = {
     "users": LBUser,
@@ -42,11 +43,24 @@ class Owner(commands.Cog):
     async def db(self, ctx):
         ''' Database manipulation commands. '''
         tormver = pkg_resources.get_distribution("tortoise-orm").version
-        shm = os.path.getsize("../lettersbot_data.sqlite3-shm")
-        wal = os.path.getsize("../lettersbot_data.sqlite3-wal")
-        base = os.path.getsize("../lettersbot_data.sqlite3")
+        shm = os.path.getsize("lettersbot_data.sqlite3-shm")
+        wal = os.path.getsize("lettersbot_data.sqlite3-wal")
+        base = os.path.getsize("lettersbot_data.sqlite3")
         size = (shm + wal + base) / 1000
         await ctx.send(f"SQLite 3 database, {size} KB\nUsing tortoise-orm {tormver}")
+
+    @commands.command()
+    @commands.is_owner()
+    async def dm(self, ctx, channel: typing.Union[discord.User, discord.TextChannel], markov: bool, *,
+                 content: str = None):
+
+        if markov:
+            content = call_markov(900)
+        await channel.send(content)
+        if isinstance(channel, discord.User):
+            await ctx.send(f"`Sent DM to {channel}`:\n{content}")
+        else:
+            await ctx.send(f"`Sent message in {channel.guild}/#{channel.name}`:\n{content}")
 
     @db.command()
     @commands.is_owner()

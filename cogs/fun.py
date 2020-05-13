@@ -8,6 +8,9 @@ import discord
 from io import BytesIO
 coin = ["heads", "tails", "side"]
 weights = [50, 50, 0.00001]
+noun = ["cat", "dog", "friend", "closest friend", "TV", "computer", "phone", "bed", "wall", "doorknob", "liver",
+        "toes", "fingers", "legs"]
+verb = ["stomp", "ignite", "eviscerate", "disappear", "compress", "stretch", "destroy", "steal", "pour water on"]
 
 
 class Fun(commands.Cog):
@@ -44,6 +47,14 @@ class Fun(commands.Cog):
             coinembed.title = "Flipped a coin and got--"
             coinembed.description = "❌ The coin landed on its side"
         await ctx.send(embed=coinembed)
+
+    @commands.command()
+    async def insult(self, ctx):
+        """ Generate an... interesting insult. """
+        v = random.choice(verb)
+        n = random.choice(noun)
+        end = random.choice(["!", "."])
+        await ctx.send(f"I will {v} your {n}{end}")
 
     @commands.command(aliases=["roll"])
     async def diceroll(self, ctx, amount: int = 1, sides: int = 6):

@@ -14,6 +14,10 @@ class Utility(commands.Cog):
         ''' Show the bot's ping. '''
         await ctx.send(f"Ponged in **{round(self.bot.latency * 1000, 2)}ms.**")
 
+    @commands.command()
+    async def test(self, ctx, *, arg: dict):
+        await ctx.send(isinstance(arg, dict))
+
     @commands.command(aliases=["a"])
     async def avatar(self, ctx, user: discord.User = None):
         ''' Get somebody's avatar, or your own. '''

@@ -1,14 +1,13 @@
 import datetime
-from PIL import Image
 import io
 import aiohttp
 import random
 import re
 import typing
-from tortoise import Tortoise
-import tortoise.exceptions
-from classes.dbmodels import LBUser, LBGuild
 import markovify
+from PIL import Image
+from tortoise import Tortoise
+from classes.dbmodels import LBUser, LBGuild
 markov = None
 
 
@@ -43,8 +42,8 @@ async def db_for_user(id: int, returns: bool = False) -> dict:
     generates a DB entry for them.
     Also returns the user if `returns` is true."""
     try:
-        user = await LBUser.get(id=id)
-    except tortoise.exceptions.DoesNotExist:
+        user = await LBUser[id]
+    except KeyError:
         user = await LBUser.create(
             id=id,
             balance=0,
@@ -61,8 +60,8 @@ async def db_for_guild(id: int, returns: bool = False) -> dict:
     generates a DB entry for it.
     Also returns the guild if `returns` is true. """
     try:
-        guild = await LBGuild.get(id=id)
-    except tortoise.exceptions.DoesNotExist:
+        guild = await LBGuild[id]
+    except KeyError:
         guild = await LBGuild.create(
             id=id,
             muteRole=0,

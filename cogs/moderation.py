@@ -55,6 +55,12 @@ class Moderation(commands.Cog):
         banembed.add_field(name="ID", value=user.id)
         await ctx.send(embed=banembed)
 
+    @commands.command()
+    @commands.has_permissions(mute_members=True)
+    @commands.bot_has_permissions(mute_members=True)
+    async def mute(self, ctx, user: discord.Member, *, reason: str = "No reason provided"):
+        ...
+
     @commands.command(aliases=["pardon"])
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)

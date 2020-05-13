@@ -52,8 +52,11 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if message.channel.type is not discord.ChannelType.private:
             guild = await utility.db_for_guild(message.guild.id, True)
 
-        if not user.canUseBot or guild.blacklisted:
+        if not user.canUseBot:
             return
+        if guild:
+            if guild.blacklisted:
+                return
 
         await self.process_commands(message)
 
@@ -76,16 +79,20 @@ class LettersBot(commands.AutoShardedBot):  # when you going
                 type_to_be = string[2]
                 argument = string[6]
                 argument = argument[0:len(argument)-1]
-                if typedescs[type_to_be]:
+                try:
                     errembed.add_field(
                         name="How to fix it?",
                         value=f"Argument {argument} failed to convert; it needs to be a {typedescs[type_to_be]}."
                     )
-                if type_examples[type_to_be]:
+                except KeyError:
+                    pass
+                try:
                     errembed.add_field(
                         name=f"Example of {type_to_be}",
                         value=type_examples[type_to_be]
                     )
+                except KeyError:
+                    pass
 
         if excname != "CommandOnCooldown":  # dont need cooldowns logged
             print(f"{excname}: {exception}")
