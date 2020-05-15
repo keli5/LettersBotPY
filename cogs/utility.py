@@ -1,6 +1,13 @@
 from discord.ext import commands
 import discord
 import typing
+import platform as p
+import pkg_resources
+
+
+def version(package_name):
+    """ A tiny function to shorten getting package versions. """
+    return pkg_resources.get_distribution(package_name).version
 
 
 class Utility(commands.Cog):
@@ -14,9 +21,22 @@ class Utility(commands.Cog):
         ''' Show the bot's ping. '''
         await ctx.send(f"Ponged in **{round(self.bot.latency * 1000, 2)}ms.**")
 
-    @commands.command()
-    async def test(self, ctx, *, arg: dict):
-        await ctx.send(isinstance(arg, dict))
+    @commands.group(invoke_without_command=True, aliases=["os"])
+    async def osinfo(self, ctx):
+        """ Show some info about what the bot's running on, package versions, and more. """
+        packages_for_info = ["discord.py", "tortoise-orm", "markovify", "pillow"]
+        osembed = discord.Embed(
+            title=ctx.bot.user.name,
+            color=discord.Color.purple()
+        )
+        py_ver = p.python_version()
+        osembed.add_field(name="Python version", value=py_ver, inline=False)
+        for package in packages_for_info:
+            osembed.add_field(name=f"**{package}** version", value=version(package))
+        os_ver = f"{p.system()} {p.release()}"
+        osembed.add_field(name="OS type", value=os_ver)
+        osembed.add_field(name="Architecture", value=p.processor())
+        await ctx.send(embed=osembed)
 
     @commands.command(aliases=["a"])
     async def avatar(self, ctx, user: discord.User = None):

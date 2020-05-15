@@ -62,9 +62,9 @@ class Owner(commands.Cog):
         else:
             await ctx.send(f"`Sent message in {channel.guild}/#{channel.name}`:\n{content}")
 
-    @db.command()
+    @db.command(name="set")
     @commands.is_owner()
-    async def set(self, ctx, model, id, item, value):
+    async def set_db_item(self, ctx, model, id, item, value):
         ''' Set item of model id to value in the database. '''
         modelnm = model
         model = modeltypes[model] or LBUser
@@ -74,14 +74,20 @@ class Owner(commands.Cog):
         await model.filter(id=id).update(**{item: value})
         await ctx.send(f"Set {modelnm}.{id}.{item} to {value}")
 
-    @db.command()
+    @commands.command()
     @commands.is_owner()
-    async def get(self, ctx, model, id):
+    async def echo(self, ctx, *, content):
+        await ctx.message.delete()
+        await ctx.send(content)
+
+    @db.command(name="get")
+    @commands.is_owner()
+    async def get_db_item(self, ctx, model, id):
         ''' Get id from model in the database. '''
         modelnm = model
         model = modeltypes[model] or LBUser
         id = id or ctx.author.id
-        result = await model.get(id=id)
+        result = await model[id]
         getembed = discord.Embed(
             title=f"{modelnm}.{id}"
         )

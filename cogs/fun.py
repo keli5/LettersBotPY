@@ -48,6 +48,21 @@ class Fun(commands.Cog):
             coinembed.description = "❌ The coin landed on its side"
         await ctx.send(embed=coinembed)
 
+    @commands.command(aliases=["thiscatdoesnotexist"])
+    async def aicat(self, ctx):
+        """ Gets a cat that doesn't exist.
+
+        Pull a fake cat from thiscatdoesnotexist.com. Some of them are good, and some of them.. aren't.
+        """
+        aicembed = discord.Embed(
+            title="Fake cat  😳",
+            color=discord.Color.greyple()
+        )
+        iid = random.randint(1, 6000000000)
+        aicembed.set_image(url=f"https://thiscatdoesnotexist.com/?{iid}")
+        aicembed.set_footer(text="Retrieved from thiscatdoesnotexist.com")
+        await ctx.send(embed=aicembed)
+
     @commands.command()
     async def insult(self, ctx):
         """ Generate an... interesting insult. """
@@ -95,7 +110,7 @@ class Fun(commands.Cog):
                              value=f"[{spotify.title}](https://open.spotify.com/track/{spotify.track_id})",
                              inline=False
                             )
-            sembed.add_field(name="Artists", value=enumerate_list(spotify.artists, 3))
+            sembed.add_field(name="Artists", value=enumerate_list(spotify.artists, 3), inline=False)
             sembed.add_field(name="Album", value=spotify.album)
             sembed.set_thumbnail(url=spotify.album_cover_url)
 
