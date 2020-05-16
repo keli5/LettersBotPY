@@ -128,10 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# GitPod files
-.theia/
-core.Microsoft.Pytho.*
-# safekeeping
+
+# uuuuh
+.vscode/
 bot.sh
 corpus.txt
 
