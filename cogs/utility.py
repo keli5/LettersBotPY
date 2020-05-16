@@ -90,7 +90,7 @@ class Utility(commands.Cog):
                 return await ctx.send("Invalid emoji.")
             url = f"https://twemoji.maxcdn.com/v/12.1.6/72x72/{cpoint}.png"
         bmembed = discord.Embed(
-            title=f"Full-size emoji",
+            title="Full-size emoji",
             url=url,
             color=discord.Color.green()
         )
