@@ -8,11 +8,6 @@ class Moderation(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        # self.check_tempbans.start()
-
-    def cog_unload(self):
-        # self.check_tempbans.cancel()
-        ...
 
     @commands.command()
     @commands.bot_has_permissions(manage_messages=True)

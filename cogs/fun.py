@@ -3,7 +3,7 @@ from scipy.io import wavfile
 import numpy
 import random
 import secrets
-from utility.funcs import image_to_byte_array, image_from_url, call_markov, enumerate_list
+import utility.funcs as f
 import discord
 from io import BytesIO
 coin = ["heads", "tails", "side"]
@@ -21,8 +21,8 @@ class Fun(commands.Cog):
     async def image2wav(self, ctx, attachment=None):
         """ Pipe the raw bytes from an image into a .wav file. """
         source = attachment or ctx.message.attachments[0].url or None
-        image = await image_from_url(source)
-        imgbytes = image_to_byte_array(image)
+        image = await f.image_from_url(source)
+        imgbytes = f.image_to_byte_array(image)
         samplingrate = 7000
         pcsmsg = await ctx.send('Processing... this may take a few minutes')
         async with ctx.channel.typing():
@@ -87,7 +87,12 @@ class Fun(commands.Cog):
     async def markov(self, ctx, start: str = None):
         """ Generate a Markov chain. """
         start = start or None
-        await ctx.send(call_markov(1600, start))
+        await ctx.send(f.call_markov(1600, start))
+
+    @commands.command()
+    async def trivia(self, ctx):
+        """ Trivia question. Occasionally worth a little money. """
+
 
     @commands.command()
     async def spotify(self, ctx, user: discord.Member = None):
@@ -110,7 +115,7 @@ class Fun(commands.Cog):
                              value=f"[{spotify.title}](https://open.spotify.com/track/{spotify.track_id})",
                              inline=False
                             )
-            sembed.add_field(name="Artists", value=enumerate_list(spotify.artists, 3), inline=False)
+            sembed.add_field(name="Artists", value=f.enumerate_list(spotify.artists, 3), inline=False)
             sembed.add_field(name="Album", value=spotify.album)
             sembed.set_thumbnail(url=spotify.album_cover_url)
 

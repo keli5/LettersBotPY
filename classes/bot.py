@@ -20,7 +20,10 @@ corpus = open("corpus.txt", "a")
 class LettersBot(commands.AutoShardedBot):  # when you going
     """ Welcome to the rewrite of LettersBot! """
     async def on_ready(self):
+        self.queues = {}
         utility.reload_markov()
+        for guild in self.guilds:
+            self.queues[guild.id] = []
         user_count = utility.tally_users(self)
         prefix = self.command_prefix
         await utility.setup()
