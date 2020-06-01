@@ -1,7 +1,7 @@
 import discord
 from classes.dbmodels import LBGuild
 import utility.funcs as utility
-from discord.ext import commands
+from discord.ext import commands, tasks
 import re
 import random
 typedescs = {
@@ -32,7 +32,17 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             name=f"{user_count} users | {prefix}info"
             )
         )
+        self.update_status.start()
         print("Ready!")
+
+    @tasks.loop(minutes=15.0)
+    async def update_status(self):
+        user_count = utility.tally_users(self)
+        await self.change_presence(activity=discord.Activity(
+            type=discord.ActivityType.watching,
+            name=f"{user_count} users | {self.command_prefix}info"
+            )
+        )
 
     async def on_message(self, message):
         owner = self.owner_ids[0] or self.owner_id or None
