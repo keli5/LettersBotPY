@@ -89,18 +89,6 @@ async def image_from_url(source) -> Image:
     return img
 
 
-async def get_from_url(url):
-    """ Gets the raw response from a URL. """
-    res = None
-    async with aiohttp.ClientSession() as session:
-        if not url:
-            raise Exception("No URL provided.")
-        async with session.get as response:
-            res = response
-
-    return res
-
-
 def shuffle_tuple(tuple):
     """ Takes tuple `tuple` and returns the new, shuffled version of it. """
     tl = []

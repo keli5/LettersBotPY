@@ -2,6 +2,7 @@ from discord.ext import commands
 from scipy.io import wavfile
 import numpy
 import random
+import aiohttp
 import secrets
 import utility.funcs as f
 import discord
@@ -89,10 +90,14 @@ class Fun(commands.Cog):
         start = start or None
         await ctx.send(f.call_markov(1600, start))
 
-    @commands.command()
-    async def trivia(self, ctx):
-        """ Trivia question. Occasionally worth a little money. """
-
+    # @commands.command()
+    # async def trivia(self, ctx):
+    #     """ Trivia question. Occasionally worth a little money. """
+    #     global triviares
+    #     triviares = None
+    #     async with aiohttp.ClientSession() as session:
+    #         async with session.get as response:
+    #             print(response)
 
     @commands.command()
     async def spotify(self, ctx, user: discord.Member = None):
