@@ -64,7 +64,7 @@ class Images(commands.Cog):
         image = ImageEnhance.Color(image).enhance(amount)
         image.save(out, "png")
         out.seek(0)
-        await ctx.send(file=discord.File(out, filename=f"saturated.png"))
+        await ctx.send(file=discord.File(out, filename="saturated.png"))
 
     @commands.command()
     async def imageinfo(self, ctx, attachment=None):
@@ -75,7 +75,7 @@ class Images(commands.Cog):
         filename = filename + "." + ext
         filename = filename.split("?")[0]
         iiembed = discord.Embed(
-            title=f"Image information"
+            title="Image information"
         )
         iiembed.set_thumbnail(url=source)
         iiembed.add_field(name="Filename", value=f"{filename}", inline=False if len(filename) > 16 else True)

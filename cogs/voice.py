@@ -14,8 +14,6 @@ class Voice(commands.Cog):
         else:
             await ctx.send("You are not in a voice channel.")
 
-    
-
 
 def setup(bot):
     bot.add_cog(Voice(bot))

@@ -1,5 +1,6 @@
 from discord.ext import commands
 from scipy.io import wavfile
+from classes.dbmodels import LBUser
 import utility.funcs as f
 import numpy
 import random
@@ -20,6 +21,7 @@ verb = ["stomp", "ignite", "eviscerate", "disappear", "compress", "stretch", "de
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.cur = "֏"
 
     @commands.command(aliases=["image2audio", "imagetowav"])
     async def image2wav(self, ctx, attachment=None):
@@ -96,6 +98,9 @@ class Fun(commands.Cog):
     @commands.command()
     async def trivia(self, ctx):
         """ Trivia question. Occasionally worth some money. """
+        earn = 0
+        if random.choice([True, False, False, False]):
+            earn = random.randint(10, 50)
         q = json.loads(requests.get("https://opentdb.com/api.php?amount=1").content)["results"][0]
         category = q["category"]
         tembed = discord.Embed(
@@ -108,6 +113,8 @@ class Fun(commands.Cog):
         answers.append(q["correct_answer"])
         random.shuffle(answers)
         tembed.description = html.unescape(q["question"])
+        if earn != 0:
+            tembed.description += f"\nThis question is worth **{self.cur}{earn}!**"
         idx = 0
         correct_letter = None
         for answer in answers:
@@ -140,12 +147,18 @@ class Fun(commands.Cog):
                         winners.remove(u)
             for u in winners:
                 winnerpings.append(u.mention)
+                winnerdb = await f.db_for_user(u.id, True)
+                mybal = winnerdb.balance
+                await LBUser.filter(id=u.id).update(balance=mybal + earn)
             winnerpings = f.enumerate_list(winnerpings, 30)
         winnerembed = discord.Embed(
             title="Winners",
             color=discord.Color.green()
         )
         winnerembed.description = f"Congratulations to {winnerpings}! The answer was {cor}."
+        if earn != 0:
+            winnerembed.description += f"\nYou all earned {self.cur}{earn}!"
+            winnerembed.description += f"\nCheck your balance with {self.bot.command_prefix}bal."
         await ctx.send(embed=winnerembed)
 
     @commands.command()
