@@ -1,10 +1,13 @@
 from discord.ext import commands
 from scipy.io import wavfile
+import utility.funcs as f
 import numpy
 import random
-import aiohttp
+import html
+import requests  # i know this is blocking, but that's intended
+import asyncio
 import secrets
-import utility.funcs as f
+import json
 import discord
 from io import BytesIO
 coin = ["heads", "tails", "side"]
@@ -90,14 +93,61 @@ class Fun(commands.Cog):
         start = start or None
         await ctx.send(f.call_markov(1600, start))
 
-    # @commands.command()
-    # async def trivia(self, ctx):
-    #     """ Trivia question. Occasionally worth a little money. """
-    #     global triviares
-    #     triviares = None
-    #     async with aiohttp.ClientSession() as session:
-    #         async with session.get as response:
-    #             print(response)
+    @commands.command()
+    async def trivia(self, ctx):
+        """ Trivia question. Occasionally worth some money. """
+        q = json.loads(requests.get("https://opentdb.com/api.php?amount=1").content)["results"][0]
+        category = q["category"]
+        tembed = discord.Embed(
+            title=f"Category: {category}",
+            color=discord.Color.greyple()
+        )
+        answers = q["incorrect_answers"]
+        letters = ["A", "B", "C", "D"]
+        reacts = ["🇦", "🇧", "🇨", "🇩"]
+        answers.append(q["correct_answer"])
+        random.shuffle(answers)
+        tembed.description = html.unescape(q["question"])
+        idx = 0
+        correct_letter = None
+        for answer in answers:
+            idx += 1
+            tembed.add_field(name=letters[idx - 1], value=html.unescape(answer))
+            if answer == q["correct_answer"]:
+                correct_letter = reacts[idx - 1]
+
+        qmsg = await ctx.send(embed=tembed)
+        for i in range(idx):
+            await qmsg.add_reaction(reacts[i])
+        await asyncio.sleep(15)
+        qmsg = await ctx.fetch_message(qmsg.id)
+        cor = q["correct_answer"]
+        winners = []
+        for reaction in qmsg.reactions:
+            winnerpings = []
+            if reaction.emoji == correct_letter:
+                winners = await reaction.users().flatten()
+                winners = winners[1:]
+                if not winners:
+                    return await ctx.send(embed=discord.Embed(
+                        title=f"Nobody got it right! The answer was {cor}.",
+                        color=discord.Color.red()
+                    ))
+            if reaction.emoji != correct_letter:
+                losers = await reaction.users().flatten()
+                for u in losers:
+                    if u in winners:
+                        winners.remove(u)
+            for u in winners:
+                winnerpings.append(u.mention)
+            winnerpings = f.enumerate_list(winnerpings, 30)
+        winnerembed = discord.Embed(
+            title="Winners",
+            color=discord.Color.green()
+        )
+        winnerembed.description = f"Congratulations to {winnerpings}! The answer was {cor}."
+        await ctx.send(embed=winnerembed)
+
 
     @commands.command()
     async def spotify(self, ctx, user: discord.Member = None):
