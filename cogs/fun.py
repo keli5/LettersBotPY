@@ -148,7 +148,6 @@ class Fun(commands.Cog):
         winnerembed.description = f"Congratulations to {winnerpings}! The answer was {cor}."
         await ctx.send(embed=winnerembed)
 
-
     @commands.command()
     async def spotify(self, ctx, user: discord.Member = None):
         """ See a user's Spotify information. Uses presences, so offline users / non-connected Spotify won't work. """
