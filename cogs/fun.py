@@ -1,6 +1,7 @@
 from discord.ext import commands
 from scipy.io import wavfile
 from classes.dbmodels import LBUser
+from gtts import gTTS
 import utility.funcs as f
 import numpy
 import random
@@ -187,6 +188,16 @@ class Fun(commands.Cog):
             sembed.set_thumbnail(url=spotify.album_cover_url)
 
         await ctx.send(embed=sembed)
+
+    @commands.command(aliases=["gtts"])
+    async def tts(self, ctx, *, text):
+        """ Reads out some text with the same voice as Google Translate. """
+        out = BytesIO()
+        processing = await ctx.send("Processing...")
+        gTTS(text=text).write_to_fp(out)
+        out.seek(0)
+        await processing.delete()
+        await ctx.send(file=discord.File(out, filename="tts.mp3"))
 
 
 def setup(bot):
