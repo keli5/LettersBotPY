@@ -38,6 +38,19 @@ class Utility(commands.Cog):
         osembed.add_field(name="Architecture", value=p.processor())
         await ctx.send(embed=osembed)
 
+    @osinfo.command(aliases=["pkg"])
+    async def packages(self, ctx):
+        pkgembed = discord.Embed(
+            title="Required packages",
+            color=discord.Color.purple()
+        )
+        with open("requirements.txt") as f:
+            packages = f.read().split(" ")[0::2][0::2]
+            for pkg in packages:
+                pkgembed.add_field(name=pkg, value=version(pkg))
+
+        await ctx.send(embed=pkgembed)
+
     @commands.command(aliases=["a"])
     async def avatar(self, ctx, user: discord.User = None):
         ''' Get somebody's avatar, or your own. '''
