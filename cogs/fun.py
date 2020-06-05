@@ -6,7 +6,7 @@ import utility.funcs as f
 import numpy
 import random
 import html
-import requests  # i know this is blocking, but that's intended
+import requests
 import asyncio
 import secrets
 import json
@@ -198,6 +198,17 @@ class Fun(commands.Cog):
         out.seek(0)
         await processing.delete()
         await ctx.send(file=discord.File(out, filename="tts.mp3"))
+
+    @commands.command(name="8ball")
+    async def magic8ball(self, ctx, *, question):
+        m8embed = discord.Embed(
+            title="🎱 Magic 8 ball",
+            color=discord.Color.greyple()
+        )
+        m8embed.add_field(name="❓ Question", value=question)
+        m8embed.add_field(name="🎱 Answer", value=f.super_secret_8ball())
+        await ctx.send(embed=m8embed)
+
 
 
 def setup(bot):

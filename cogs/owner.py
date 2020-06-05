@@ -1,8 +1,9 @@
 from discord.ext import commands
 import discord
 from classes.dbmodels import LBUser, LBGuild
-from utility.funcs import reload_markov, call_markov
+from utility.funcs import reload_markov, call_markov, image_from_url
 import os
+import io
 import random
 import pkg_resources
 import typing
@@ -105,6 +106,16 @@ class Owner(commands.Cog):
     async def reloadmarkov(self, ctx):
         reload_markov()
         await ctx.send('Done')
+
+    @commands.command(aliases=["editpfp"])
+    @commands.is_owner()
+    async def setpfp(self, ctx, attachment=None):
+        source = attachment or ctx.message.attachments[0].url or None
+        out = io.BytesIO()
+        image = await image_from_url(source)
+        image.save(out, "png")
+        out.seek(0)
+        await ctx.bot.user.edit(avatar=out)
 
 
 def setup(bot):

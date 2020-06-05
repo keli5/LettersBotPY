@@ -11,6 +11,30 @@ from classes.dbmodels import LBUser, LBGuild
 markov = None
 
 
+eightball = [
+    "Don't count on it",
+    "My reply is no",
+    "My sources say no",
+    "Outlook not so good",
+    "Very doubtful",
+    "Reply hazy, try again",
+    "Ask again later",
+    "Better not tell you now",
+    "Cannot predict now",
+    "Concentrate and ask again",
+    "As I see it, yes",
+    "It is certain",
+    "It is decidedly so",
+    "Most likely",
+    "Outlook good",
+    "Signs point to yes",
+    "Without a doubt",
+    "Yes",
+    "Yes - definitely",
+    "You may rely on it",
+]
+
+
 async def setup():
     await Tortoise.init(
         db_url='sqlite://lettersbot_data.sqlite3',
@@ -24,6 +48,10 @@ conv_dict = {
     's': 'seconds',
 }
 pat = r"[0-9]+[s|m|h|d]{1}"
+
+
+def super_secret_8ball():
+    return random.choice(eightball)
 
 
 def timestr_to_dict(tstr):
