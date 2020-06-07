@@ -125,7 +125,7 @@ class Owner(commands.Cog):
             if safe:
                 guildstring += f"{guild.name}\n"
             else:
-                guildstring += f"{guild.name}, owned by {guild.owner.tag}\n"
+                guildstring += f"{guild.name}, owned by {guild.owner}\n"
                 guildstring += f"ID {guild.id}\n"
             guildstring += f"{len(guild.members)} members\n"
             guildstring += "\n"  # padding
