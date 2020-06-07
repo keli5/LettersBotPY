@@ -129,6 +129,7 @@ class Owner(commands.Cog):
                 guildstring += f"ID {guild.id}\n"
             guildstring += f"{len(guild.members)} members\n"
             guildstring += "\n\n"  # padding
+        await ctx.send(guildstring)
 
 
 def setup(bot):
