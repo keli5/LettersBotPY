@@ -210,6 +210,5 @@ class Fun(commands.Cog):
         await ctx.send(embed=m8embed)
 
 
-
 def setup(bot):
     bot.add_cog(Fun(bot))

@@ -117,6 +117,19 @@ class Owner(commands.Cog):
         out.seek(0)
         await ctx.bot.user.edit(avatar=out)
 
+    @commands.command()
+    @commands.is_owner()
+    async def guilds(self, ctx, safe: bool = True):
+        guildstring = ""
+        for guild in ctx.bot.guilds:
+            if safe:
+                guildstring += f"{guild.name}\n"
+            else:
+                guildstring += f"{guild.name}, owned by {guild.owner.tag}\n"
+                guildstring += f"ID {guild.id}\n"
+            guildstring += f"{len(guild.members)} members\n"
+            guildstring += "\n\n"  # padding
+
 
 def setup(bot):
     bot.add_cog(Owner(bot))
