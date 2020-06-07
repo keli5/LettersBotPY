@@ -128,7 +128,7 @@ class Owner(commands.Cog):
                 guildstring += f"{guild.name}, owned by {guild.owner.tag}\n"
                 guildstring += f"ID {guild.id}\n"
             guildstring += f"{len(guild.members)} members\n"
-            guildstring += "\n\n"  # padding
+            guildstring += "\n"  # padding
         await ctx.send(guildstring)
 
 
