@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 from classes.dbmodels import LBUser, LBGuild
-from utility.funcs import reload_markov, call_markov, image_from_url
+from utility.funcs import reload_markov, call_markov, image_from_url, tally_users
 import os
 import io
 import random
@@ -129,6 +129,8 @@ class Owner(commands.Cog):
                 guildstring += f"ID {guild.id}\n"
             guildstring += f"{len(guild.members)} members\n"
             guildstring += "\n"  # padding
+        guildstring += f"Adds up to {tally_users(ctx.bot)} unique users "
+        guildstring += f"and {len(ctx.bot.guilds)} guilds"
         await ctx.send(guildstring)
 
 
