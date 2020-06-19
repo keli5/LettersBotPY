@@ -96,6 +96,11 @@ class Fun(commands.Cog):
         start = start or None
         await ctx.send(f.call_markov(1600, start))
 
+    @commands.command(aliases=["cmkv"])
+    async def cmarkov(self, ctx):
+        """ Generate a character-based Markov chain. Can have interesting results. """
+        await ctx.send(f.call_cmarkov(1600))
+
     @commands.command()
     async def trivia(self, ctx):
         """ Trivia question. Occasionally worth some money. """

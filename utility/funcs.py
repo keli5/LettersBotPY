@@ -8,7 +8,9 @@ import markovify
 from PIL import Image
 from tortoise import Tortoise
 from classes.dbmodels import LBUser, LBGuild
+from classes.cmarkov import CharacterText
 markov = None
+cmarkov = None
 
 
 eightball = [
@@ -150,7 +152,9 @@ def reload_markov():
         corpus = f.read()
     try:
         global markov
+        global cmarkov
         markov = markovify.NewlineText(corpus)
+        cmarkov = CharacterText(corpus, state_size=2)
     except Exception as e:
         print("Markov is disabled - an error occurred:")
         print(e)
@@ -167,6 +171,23 @@ def call_markov(maxlength, startword: str = None) -> str:
                 )
         else:
             sentence = markov.make_short_sentence(maxlength)
+    except KeyError:
+        sentence = f"`{startword}` does not appear enough in the corpus."
+    sentence = sentence or "Failed to generate a sentence."
+    return sentence
+
+
+def call_cmarkov(maxlength, startword: str = None) -> str:
+    try:
+        if startword:
+            sentence = cmarkov.make_sentence_with_start(
+                startword,
+                max_chars=maxlength,
+                strict=True,
+                tries=200
+                )
+        else:
+            sentence = cmarkov.make_short_sentence(maxlength)
     except KeyError:
         sentence = f"`{startword}` does not appear enough in the corpus."
     sentence = sentence or "Failed to generate a sentence."
