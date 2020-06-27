@@ -98,7 +98,7 @@ class Fun(commands.Cog):
 
     @commands.command(aliases=["cmkv"])
     async def cmarkov(self, ctx):
-        """ Generate a character-based Markov chain. Can have interesting results. """
+        """ Generates a character-based Markov chain. Can have interesting results. """
         await ctx.send(f.call_cmarkov(1600))
 
     @commands.command()
