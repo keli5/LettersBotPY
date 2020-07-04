@@ -34,8 +34,8 @@ class Utility(commands.Cog):
         for package in packages_for_info:
             osembed.add_field(name=f"**{package}** version", value=version(package))
         os_ver = f"{p.system()} {p.release()}"
-        osembed.add_field(name="OS type", value=os_ver)
-        osembed.add_field(name="Architecture", value=p.processor())
+        osembed.add_field(name="OS type", value=os_ver or "Unknown")
+        osembed.add_field(name="Architecture", value=p.processor() or "Unknown")
         await ctx.send(embed=osembed)
 
     @osinfo.command(aliases=["pkg"])

@@ -133,6 +133,8 @@ dmypy.json
 .vscode/
 bot.sh
 corpus.txt
+.directory
+
 
 # ignore dbs
 *.sqlite3*
