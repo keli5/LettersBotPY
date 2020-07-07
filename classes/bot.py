@@ -47,6 +47,13 @@ class LettersBot(commands.AutoShardedBot):  # when you going
     async def on_message(self, message):
         owner = self.owner_ids[0] or self.owner_id or None
         owner = self.get_user(owner)
+        guild = None
+        if message.channel.type is not discord.ChannelType.private:
+            guild = await utility.db_for_guild(message.guild.id, True)
+
+        if guild:
+            if guild.blacklisted:
+                return
         user = None
         user = await utility.db_for_user(message.author.id, True)
         if message.author.bot:
@@ -61,16 +68,8 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if (message.channel.type == discord.ChannelType.private) and owner:
             if message.author is not owner:
                 await owner.send(f"`DM from {message.author} ({message.author.id}):`\n{message.content}")
-        guild = None
         if (self.user in message.mentions) or (random.random() < 0.01):
             await message.channel.send(utility.call_markov(900))
-        user = await utility.db_for_user(message.author.id, True)
-        if message.channel.type is not discord.ChannelType.private:
-            guild = await utility.db_for_guild(message.guild.id, True)
-
-        if guild:
-            if guild.blacklisted:
-                return
 
         await self.process_commands(message)
 
