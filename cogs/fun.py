@@ -204,6 +204,20 @@ class Fun(commands.Cog):
         await processing.delete()
         await ctx.send(file=discord.File(out, filename="tts.mp3"))
 
+    @commands.group(invoke_without_command=True, aliases=["scramble"])
+    async def shuffle(self, ctx, *, string):
+        """ Randomly scramble a string of words. """
+        s = string.split(" ")
+        random.shuffle(s)
+        await ctx.send(" ".join(s))
+
+    @shuffle.command(aliases=["char"])
+    async def character(self, ctx, *, string):
+        """ Less coherent version of shuffle. Splits by character. """
+        s = list(string)
+        random.shuffle(s)
+        await ctx.send("".join(s))
+
     @commands.command(name="8ball")
     async def magic8ball(self, ctx, *, question):
         m8embed = discord.Embed(
