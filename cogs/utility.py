@@ -38,7 +38,7 @@ class Utility(commands.Cog):
         osembed.add_field(name="Architecture", value=p.processor() or "Unknown")
         await ctx.send(embed=osembed)
 
-    @osinfo.command(aliases=["pkg"])
+    @osinfo.command(aliases=["pkg", "pkgs", "package"])
     async def packages(self, ctx):
         pkgembed = discord.Embed(
             title="Required packages",
