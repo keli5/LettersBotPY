@@ -107,7 +107,7 @@ class Fun(commands.Cog):
         earn = 0
         if random.choice([True, False, False, False]):
             earn = random.randint(10, 50)
-        q = json.loads(requests.get("https://opentdb.com/api.php?amount=1").content)["results"][0]
+        q = json.loads(requests.get("https://opentdb.com/api.php?amount=1&type=boolean").content)["results"][0]
         category = q["category"]
         tembed = discord.Embed(
             title=f"Category: {category}",
@@ -118,6 +118,8 @@ class Fun(commands.Cog):
         reacts = ["🇦", "🇧", "🇨", "🇩"]
         answers.append(q["correct_answer"])
         random.shuffle(answers)
+        if len(answers) == 2 and answers[1] == "True":
+            answers.reverse()
         tembed.description = html.unescape(q["question"])
         if earn != 0:
             tembed.description += f"\nThis question is worth **{self.cur}{earn}!**"
@@ -161,7 +163,7 @@ class Fun(commands.Cog):
             title="Winners",
             color=discord.Color.green()
         )
-        winnerembed.description = f"Congratulations to {winnerpings}! The answer was {cor}."
+        winnerembed.description = f"Congratulations to {winnerpings}! The answer was {html.unescape(cor)}."
         if earn != 0:
             winnerembed.description += f"\nYou all earned {self.cur}{earn}!"
             winnerembed.description += f"\nCheck your balance with {self.bot.command_prefix}bal."
