@@ -154,7 +154,7 @@ def reload_markov():
         global markov
         global cmarkov
         markov = markovify.NewlineText(corpus)
-        cmarkov = CharacterText(corpus, state_size=2)
+        cmarkov = CharacterText(corpus, state_size=3)
     except Exception as e:
         print("Markov is disabled - an error occurred:")
         print(e)
