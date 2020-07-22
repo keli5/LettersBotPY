@@ -107,7 +107,7 @@ class Fun(commands.Cog):
         earn = 0
         if random.choice([True, False, False, False]):
             earn = random.randint(10, 50)
-        q = json.loads(requests.get("https://opentdb.com/api.php?amount=1&type=boolean").content)["results"][0]
+        q = json.loads(requests.get("https://opentdb.com/api.php?amount=1").content)["results"][0]
         category = q["category"]
         tembed = discord.Embed(
             title=f"Category: {category}",
