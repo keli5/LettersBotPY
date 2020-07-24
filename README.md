@@ -6,7 +6,8 @@
 
 # LettersBotPY
 LettersBot 2.0, if you will. Marginally better &amp; rewritten in Python. dread
-<br>Join the Discord: [Click here](https://discord.gg/rXVnuTB)
+<br>Join the Discord: [Click here](https://discord.gg/rXVnuTB)<br>
+Or, invite the bot to your own Discord: [Click here](https://cutt.ly/lettersbot)
 
 ### Thanks
 Thanks to [kaylynn234](https://github.com/kaylynn234) for a lot but commit [`b308f5d`](https://github.com/keli5/LettersBotPY/commit/b308f5d6e5cb8f60ce90a73788b06689c9610293) in particular  <br>
