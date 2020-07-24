@@ -59,7 +59,10 @@ class Economy(commands.Cog):
             wheelembed.color = discord.Color.darker_grey()
         wheelembed.description = f"You {gl} {self.cur}{winnings}."
         await msg.edit(embed=wheelembed)
-        await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings)
+        if userdb.balance + winnings <= 0:
+            await LBUser.filter(id=ctx.author.id).update(balance=0)
+        else:
+            await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings)
 
     @commands.command()
     @commands.cooldown(1, 30, BucketType.user)
