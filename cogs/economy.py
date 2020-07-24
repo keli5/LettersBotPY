@@ -30,7 +30,11 @@ class Economy(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 45, BucketType.user)
     async def wheel(self, ctx, wager: float):
-        """ Spin the wheel. Will you triple your wager, or lose it all? 45 second cooldown. """
+        """ Spin the wheel. Will you triple your wager, or lose it all? 45 second cooldown.
+THIS IS AN EXTREMELY DANGEROUS GAME FOR YOUR BALANCE! You can win 3x your bet, or you can lose 3x your bet.
+If you lose 3x your bet, this WILL eat into your existing balance! Wagering a
+third of your balance can reset you back to zero if you're very unlucky!
+         """
         userdb = await db_for_user(ctx.author.id, True)
         if userdb.balance <= 0 or userdb.balance <= wager:
             await ctx.send("You can't afford that!")
