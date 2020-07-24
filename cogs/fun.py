@@ -138,7 +138,7 @@ class Fun(commands.Cog):
         qmsg = await ctx.fetch_message(qmsg.id)
         cor = q["correct_answer"]
         winners = []
-        for reaction in qmsg.reactions:
+        async for reaction in qmsg.reactions:
             winnerpings = []
             if reaction.emoji == correct_letter:
                 winners = await reaction.users().flatten()
@@ -153,7 +153,7 @@ class Fun(commands.Cog):
                 for u in losers:
                     if u in winners:
                         winners.remove(u)
-            for u in winners:
+            async for u in winners:
                 winnerpings.append(u.mention)
                 winnerdb = await f.db_for_user(u.id, True)
                 mybal = winnerdb.balance
