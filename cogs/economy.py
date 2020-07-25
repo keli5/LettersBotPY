@@ -77,7 +77,7 @@ third of your balance can reset you back to zero if you're very unlucky!
         lbembed.set_footer(text=f"Page {page}")
         start = ((page - 1) * 10) + 1
         stop = page * 10
-        users = await LBUser.filter(balance__gte=0)
+        users = await LBUser.filter(balance__gt=0)
         leaders = sorted(users, key=lambda user: user.balance, reverse=True)
         page = leaders[start-1:stop]
         if len(page) == 0:
