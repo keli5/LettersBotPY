@@ -86,7 +86,8 @@ third of your balance can reset you back to zero if you're very unlucky!
         for user in page:
             name = await ctx.bot.fetch_user(user.id)
             name = name or user.id
-            lbembed.add_field(name=name, value=self.cur + str(user.balance), inline=False)
+            bal = str(round(user.balance, 2))
+            lbembed.add_field(name=name, value=self.cur + bal, inline=False)
         await ctx.send(embed=lbembed)
 
     @commands.command()
