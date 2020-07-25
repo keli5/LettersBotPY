@@ -19,7 +19,7 @@ class Economy(commands.Cog):
         user = user or ctx.author
         bal = await db_for_user(user.id, True)
         bal = bal.balance
-        formatted = "{:.2f}".format(bal)  # What is this doing? Couldn't tell you
+        formatted = f"{round(bal, 2):,}"  # What is this doing? Couldn't tell you
         balembed = discord.Embed(
             title=f"{user} has {self.cur}{formatted}!",
             description=f"Get more money with {self.bot.command_prefix}guess.",
@@ -61,7 +61,7 @@ third of your balance can reset you back to zero if you're very unlucky!
         else:
             gl = "got"
             wheelembed.color = discord.Color.darker_grey()
-        wheelembed.description = f"You {gl} {self.cur}{winnings}."
+        wheelembed.description = f"You {gl} {self.cur}{round(winnings, 2):,}."
         await msg.edit(embed=wheelembed)
         if userdb.balance + winnings <= 0:
             await LBUser.filter(id=ctx.author.id).update(balance=0)
@@ -86,8 +86,8 @@ third of your balance can reset you back to zero if you're very unlucky!
         for user in page:
             name = await ctx.bot.fetch_user(user.id)
             name = name or user.id
-            bal = str(round(user.balance, 2))
-            lbembed.add_field(name=name, value=self.cur + bal, inline=False)
+            bal = user.balance
+            lbembed.add_field(name=name, value=self.cur + f"{round(bal, 2):,}", inline=False)
         await ctx.send(embed=lbembed)
 
     @commands.command()
