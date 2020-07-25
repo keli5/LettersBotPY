@@ -68,7 +68,7 @@ third of your balance can reset you back to zero if you're very unlucky!
         else:
             await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings)
 
-    @commands.command()
+    @commands.command(aliases=["lb"])
     async def leaderboard(self, ctx, page: int = 1):
         lbembed = discord.Embed(
             title=f"{self.cur} Leaderboard {self.cur}",
