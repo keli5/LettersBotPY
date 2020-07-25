@@ -69,6 +69,27 @@ third of your balance can reset you back to zero if you're very unlucky!
             await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings)
 
     @commands.command()
+    async def leaderboard(self, ctx, page: int = 1):
+        lbembed = discord.Embed(
+            title=f"{self.cur} Leaderboard {self.cur}",
+            color=discord.Color.gold()
+        )
+        lbembed.set_footer(text=f"Page {page}")
+        start = ((page - 1) * 10) + 1
+        stop = page * 10
+        users = await LBUser.filter(balance__gt=0)
+        leaders = sorted(users, key=lambda user: user.balance, reverse=True)
+        page = leaders[start-1:stop]
+        if len(page) == 0:
+            await ctx.send("This page doesn't exist!")
+            return
+        for user in page:
+            name = await ctx.bot.fetch_user(user.id)
+            name = name or user.id
+            lbembed.add_field(name=name, value=self.cur + str(user.balance), inline=False)
+        await ctx.send(embed=lbembed)
+
+    @commands.command()
     @commands.cooldown(1, 30, BucketType.user)
     async def guess(self, ctx, guess: int):
         """ Play a guessing game for a chance to earn some money. 30 sec cooldown. """
