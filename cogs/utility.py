@@ -3,6 +3,8 @@ import discord
 import typing
 import platform as p
 import pkg_resources
+import aiohttp
+import json
 
 
 def version(package_name):
@@ -109,6 +111,68 @@ class Utility(commands.Cog):
         )
         bmembed.set_image(url=url)
         await ctx.send(embed=bmembed)
+
+    @commands.group(aliases=["pypi"], invoke_without_command=True)
+    async def pip(self, ctx, package: str = "discord.py"):
+        """Get information about a package from PyPI."""
+        packageinfo = None
+        if len(package.split()) > 1:
+            return await ctx.send("Package names cannot contain spaces.")
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://pypi.org/pypi/{package}/json") as r:
+                r = await r.content.read()
+                packageinfo = json.loads(r)
+                packageinfo = packageinfo["info"]
+        gpiembed = discord.Embed(
+            title=package,
+            color=0x4B8BBE,
+            description=packageinfo["summary"],
+            url=packageinfo["package_url"]
+        )
+        gpiembed.add_field(name="Author", value=packageinfo["author"])
+        gpiembed.add_field(name="Python version", value=packageinfo["requires_python"] or "Unknown")
+        gpiembed.add_field(name="Package version", value=packageinfo["version"])
+        if packageinfo["docs_url"]:
+            gpiembed.add_field(name="Docs", value=packageinfo["docs_url"], inline=False)
+
+        otherdocs = None  # why must it be this way
+        if packageinfo["project_urls"] is not None:
+            if "Documentation" in packageinfo["project_urls"]:
+                otherdocs = packageinfo["project_urls"]["Documentation"]
+            if "Docs" in packageinfo["project_urls"]:
+                otherdocs = packageinfo["project_urls"]["Docs"]
+
+        if otherdocs:
+            gpiembed.add_field(name="Docs", value=otherdocs, inline=False)
+        if packageinfo["license"]:
+            gpiembed.add_field(name="License", value=packageinfo["license"])
+
+        await ctx.send(embed=gpiembed)
+
+    @pip.command(aliases=["downloads", "files", "releases"])
+    async def release(self, ctx, package: str = "discord.py", version=None):
+        return await ctx.send("This is not done")
+
+        packageinfo = None
+        if len(package.split()) > 1:
+            return await ctx.send("Package names cannot contain spaces.")
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://pypi.org/pypi/{package}/json") as r:
+                r = await r.content.read()
+                packageinfo = json.loads(r)
+                packageinfo = packageinfo["info"]
+        ver = version or packageinfo["version"]
+        releases = packageinfo["releases"]
+        if ver not in releases:
+            return await ctx.send(f"Version {ver} does not exist.")
+        release = packageinfo["releases"][ver]  # ????
+
+        rlembed = discord.Embed(
+            title=f"{package} v{ver}",
+            color=0x4B8BBE,
+            description=f"{package} has {len(releases)} releases"
+        )
+        await ctx.send(embed=rlembed)
 
     @commands.command()
     async def info(self, ctx):
