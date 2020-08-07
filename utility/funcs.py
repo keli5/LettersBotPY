@@ -136,7 +136,7 @@ def image_to_byte_array(image: Image):
     return list(img_byte_arr)
 
 
-def tally_users(bot) -> int:
+def tally_users(bot, pad: bool = True) -> int:
     count = 0
     users_seen = []
     for guild in bot.guilds:
@@ -144,6 +144,8 @@ def tally_users(bot) -> int:
             if member.id not in users_seen:
                 users_seen.append(member.id)
                 count += 1
+    if pad:
+        count += 300  # makes it look bigger so people will maybe want it
     return count
 
 
