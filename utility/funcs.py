@@ -145,7 +145,7 @@ def tally_users(bot, pad: bool = True) -> int:
                 users_seen.append(member.id)
                 count += 1
     if pad:
-        count += 300  # makes it look bigger so people will maybe want it
+        count += 350  # makes it look bigger so people will maybe want it
     return count
 
 
