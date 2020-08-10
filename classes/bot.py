@@ -37,9 +37,10 @@ class LettersBot(commands.AutoShardedBot):  # when you going
 
     @tasks.loop(minutes=15.0)
     async def update_status(self):
-        user_count = utility.tally_users(self)
+        user_count = utility.call_cmarkov(20)
+
         await self.change_presence(activity=discord.Activity(
-            type=discord.ActivityType.watching,
+            type=discord.ActivityType.playing,
             name=f"{user_count} users | {self.command_prefix}info"
             )
         )
