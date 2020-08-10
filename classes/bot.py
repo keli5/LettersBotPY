@@ -24,20 +24,17 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         utility.reload_markov()
         for guild in self.guilds:
             self.queues[guild.id] = []
-        user_count = utility.tally_users(self)
-        prefix = self.command_prefix
         await utility.setup()
-        await self.change_presence(activity=discord.Activity(
-            type=discord.ActivityType.watching,
-            name=f"{user_count} users | {prefix}info"
-            )
-        )
         self.update_status.start()
         print("Ready!")
 
-    @tasks.loop(minutes=15.0)
+    @tasks.loop(minutes=5.0)
     async def update_status(self):
-        user_count = utility.call_cmarkov(25)
+        try:
+            user_count = utility.call_cmarkov(25)
+        except Exception as e:
+            e = e  # there, now it's used
+            user_count = "with you"
 
         await self.change_presence(activity=discord.Activity(
             type=discord.ActivityType.playing,
