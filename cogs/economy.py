@@ -1,7 +1,6 @@
 from discord.ext import commands
 import discord
 import random
-import asyncio
 from classes.dbmodels import LBUser
 from utility.funcs import db_for_user
 from discord.ext.commands.cooldowns import BucketType
@@ -26,47 +25,6 @@ class Economy(commands.Cog):
             color=discord.Color.green()
         )
         await ctx.send(embed=balembed)
-
-    @commands.command()
-    @commands.cooldown(1, 45, BucketType.user)
-    async def wheel(self, ctx, wager: float):
-        """ Spin the wheel. Will you triple your wager, or lose it all? 45 second cooldown.
-THIS IS AN EXTREMELY DANGEROUS GAME FOR YOUR BALANCE! You can win 3x your bet, or you can lose 3x your bet.
-If you lose 3x your bet, this WILL eat into your existing balance! Wagering a
-third of your balance can reset you back to zero if you're very unlucky!
-         """
-        userdb = await db_for_user(ctx.author.id, True)
-        if userdb.balance <= 0 or userdb.balance <= wager:
-            await ctx.send("You can't afford that!")
-            return
-        wheelembed = discord.Embed(
-            title="Spin the Wheel!"
-        )
-        wheelembed.color = discord.Color.magenta()
-        msg = await ctx.send(embed=wheelembed)
-        wheelembed.description = "Spinning..."
-        await msg.edit(embed=wheelembed)
-        multiplier = 1
-        await asyncio.sleep(random.randint(10, 30)/10)
-        multiplier = round(random.randint(-300, 300) / 100, 2)
-        wheelembed.title = f"You won {multiplier}x your bet."
-        winnings = round(wager * multiplier, 2)
-        gl = ""
-        if winnings > 0:
-            gl = "earned"
-            wheelembed.color = discord.Color.green()
-        elif winnings < 0:
-            gl = "lost"
-            wheelembed.color = discord.Color.red()
-        else:
-            gl = "got"
-            wheelembed.color = discord.Color.darker_grey()
-        wheelembed.description = f"You {gl} {self.cur}{round(winnings, 2):,}."
-        await msg.edit(embed=wheelembed)
-        if userdb.balance + winnings <= 0:
-            await LBUser.filter(id=ctx.author.id).update(balance=0)
-        else:
-            await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings)
 
     @commands.command(aliases=["lb"])
     async def leaderboard(self, ctx, page: int = 1):

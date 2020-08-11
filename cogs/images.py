@@ -1,8 +1,12 @@
 import io
 from PIL import ImageEnhance
-from utility.funcs import image_from_url
+from utility.funcs import image_from_url, image_to_byte_array
+from scipy.io import wavfile
 from discord.ext import commands
 import discord
+import numpy
+import secrets
+
 imagetypes = {
     "RGBA": "RGB with Transparency",
     "L": "Grayscale",
@@ -27,6 +31,22 @@ class Images(commands.Cog):
         im.save(out, "png")
         out.seek(0)
         await ctx.send(file=discord.File(out, filename="grayscale.png"))
+
+    @commands.command(aliases=["image2audio", "imagetowav"])
+    async def image2wav(self, ctx, attachment=None):
+        """ Pipe the raw bytes from an image into a .wav file. """
+        source = attachment or ctx.message.attachments[0].url or None
+        image = await image_from_url(source)
+        imgbytes = image_to_byte_array(image)
+        samplingrate = 7000
+        pcsmsg = await ctx.send('Processing... this may take a few minutes')
+        async with ctx.channel.typing():
+            buffer = io.BytesIO()
+            bytes = numpy.array(imgbytes, dtype=numpy.int8)  # we'll feed this to our wav file
+            wavfile.write(buffer, samplingrate, bytes)  # this is a bad idea
+            filename = f"img2audio-{secrets.token_hex(nbytes=15)}.wav"  # generate a unique filename
+            await ctx.send(file=discord.File(fp=buffer, filename=filename))
+            await pcsmsg.delete()
 
     @commands.command(aliases=["colors"])
     async def resample(self, ctx, colors: int = 32, attachment=None):

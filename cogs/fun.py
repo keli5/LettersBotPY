@@ -1,14 +1,12 @@
 from discord.ext import commands
-from scipy.io import wavfile
+from discord.ext.commands.cooldowns import BucketType
 from classes.dbmodels import LBUser
 from gtts import gTTS
+import asyncio
 import utility.funcs as f
-import numpy
 import random
 import html
 import requests
-import asyncio
-import secrets
 import json
 import discord
 from io import BytesIO
@@ -24,21 +22,42 @@ class Fun(commands.Cog):
         self.bot = bot
         self.cur = "֏"
 
-    @commands.command(aliases=["image2audio", "imagetowav"])
-    async def image2wav(self, ctx, attachment=None):
-        """ Pipe the raw bytes from an image into a .wav file. """
-        source = attachment or ctx.message.attachments[0].url or None
-        image = await f.image_from_url(source)
-        imgbytes = f.image_to_byte_array(image)
-        samplingrate = 7000
-        pcsmsg = await ctx.send('Processing... this may take a few minutes')
-        async with ctx.channel.typing():
-            buffer = BytesIO()
-            bytes = numpy.array(imgbytes, dtype=numpy.int8)  # we'll feed this to our wav file
-            wavfile.write(buffer, samplingrate, bytes)  # this is a bad idea
-            filename = f"img2audio-{secrets.token_hex(nbytes=15)}.wav"  # generate a unique filename
-            await ctx.send(file=discord.File(fp=buffer, filename=filename))
-            await pcsmsg.delete()
+    @commands.command()
+    @commands.cooldown(1, 45, BucketType.user)
+    async def wheel(self, ctx, wager: float):
+        """ Play the wheel. Lose it all, or double it? What'll you get? """
+        userdb = await f.db_for_user(ctx.author.id, True)
+        if userdb.balance <= 0 or userdb.balance <= wager:
+            await ctx.send("You can't afford that!")
+            return
+        wheelembed = discord.Embed(
+            title="Spin the Wheel!"
+        )
+        wheelembed.color = discord.Color.magenta()
+        msg = await ctx.send(embed=wheelembed)
+        wheelembed.description = "Spinning..."
+        await msg.edit(embed=wheelembed)
+        multiplier = 1
+        await asyncio.sleep(random.randint(10, 30)/10)
+        multiplier = round(random.randint(-300, 300) / 100, 2)
+        wheelembed.title = f"You won {multiplier}x your bet."
+        winnings = round(wager * multiplier, 2)
+        gl = ""
+        if winnings > 0:
+            gl = "earned"
+            wheelembed.color = discord.Color.green()
+        elif winnings < 0:
+            gl = "lost"
+            wheelembed.color = discord.Color.red()
+        else:
+            gl = "got"
+            wheelembed.color = discord.Color.darker_grey()
+        wheelembed.description = f"You {gl} {self.cur}{round(winnings, 2):,}."
+        await msg.edit(embed=wheelembed)
+        if userdb.balance + winnings <= 0:
+            await LBUser.filter(id=ctx.author.id).update(balance=0)
+        else:
+            await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings)
 
     @commands.command(aliases=["coin", "cointoss"])
     async def coinflip(self, ctx):
