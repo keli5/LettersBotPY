@@ -30,6 +30,7 @@ class Fun(commands.Cog):
         if userdb.balance <= 0 or userdb.balance <= wager:
             await ctx.send("You can't afford that!")
             return
+        LBUser.filter(id=ctx.author.id).update(balance=userdb.balance - wager)
         wheelembed = discord.Embed(
             title="Spin the Wheel!"
         )
@@ -39,25 +40,12 @@ class Fun(commands.Cog):
         await msg.edit(embed=wheelembed)
         multiplier = 1
         await asyncio.sleep(random.randint(10, 30)/10)
-        multiplier = round(random.randint(-300, 300) / 100, 2)
+        multiplier = round(random.randint(0, 200) / 100, 2)
         wheelembed.title = f"You won {multiplier}x your bet."
         winnings = round(wager * multiplier, 2)
-        gl = ""
-        if winnings > 0:
-            gl = "earned"
-            wheelembed.color = discord.Color.green()
-        elif winnings < 0:
-            gl = "lost"
-            wheelembed.color = discord.Color.red()
-        else:
-            gl = "got"
-            wheelembed.color = discord.Color.darker_grey()
-        wheelembed.description = f"You {gl} {self.cur}{round(winnings, 2):,}."
+        wheelembed.description = f"You got {self.cur}{round(winnings, 2):,}."
         await msg.edit(embed=wheelembed)
-        if userdb.balance + winnings <= 0:
-            await LBUser.filter(id=ctx.author.id).update(balance=0)
-        else:
-            await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings)
+        await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings - wager)
 
     @commands.command(aliases=["coin", "cointoss"])
     async def coinflip(self, ctx):
