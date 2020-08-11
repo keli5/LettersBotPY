@@ -119,10 +119,13 @@ class Utility(commands.Cog):
         if len(package.split()) > 1:
             return await ctx.send("Package names cannot contain spaces.")
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://pypi.org/pypi/{package}/json") as r:
-                r = await r.content.read()
-                packageinfo = json.loads(r)
-                packageinfo = packageinfo["info"]
+            try:
+                async with session.get(f"https://pypi.org/pypi/{package}/json") as r:
+                    r = await r.content.read()
+                    packageinfo = json.loads(r)
+                    packageinfo = packageinfo["info"]
+            except Exception    :
+                return await ctx.send(f"Couldn't get package {package} from PyPI.")
         gpiembed = discord.Embed(
             title=package,
             color=0x4B8BBE,
