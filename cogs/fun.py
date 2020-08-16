@@ -32,18 +32,30 @@ class Fun(commands.Cog):
             return
         LBUser.filter(id=ctx.author.id).update(balance=userdb.balance - wager)
         wheelembed = discord.Embed(
-            title="Spin the Wheel!"
+            title="Spin the Wheel!",
+            color=discord.Color.magenta()
         )
-        wheelembed.color = discord.Color.magenta()
         msg = await ctx.send(embed=wheelembed)
         wheelembed.description = "Spinning..."
         await msg.edit(embed=wheelembed)
         multiplier = 1
         await asyncio.sleep(random.randint(10, 30)/10)
         multiplier = round(random.randint(0, 200) / 100, 2)
-        wheelembed.title = f"You won {multiplier}x your bet."
+        wheelembed.title = f"You got {multiplier}x your bet."
         winnings = round(wager * multiplier, 2)
-        wheelembed.description = f"You got {self.cur}{round(winnings, 2):,}."
+        text = ""
+        if winnings - wager > 0:
+            text = "won"
+            wheelembed.color = discord.Color.green()
+        elif winnings - wager < 0:
+            text = "lost"
+            wheelembed.color = discord.Color.red()
+        else:
+            text = "got"
+            wheelembed.color = discord.Color.greyple()
+        fmoney = abs(round(winnings - wager, 2))
+        fmoney = f"{fmoney:,}"
+        wheelembed.description = f"You {text} {self.cur}{fmoney}."
         await msg.edit(embed=wheelembed)
         await LBUser.filter(id=ctx.author.id).update(balance=userdb.balance + winnings - wager)
 
