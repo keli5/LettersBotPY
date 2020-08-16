@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 import random
 from classes.dbmodels import LBUser
-from utility.funcs import db_for_user
+from utility.funcs import db_for_user, paginate_list
 from discord.ext.commands.cooldowns import BucketType
 
 
@@ -33,11 +33,9 @@ class Economy(commands.Cog):
             color=discord.Color.gold()
         )
         lbembed.set_footer(text=f"Page {page}")
-        start = ((page - 1) * 10) + 1
-        stop = page * 10
         users = await LBUser.filter(balance__gt=0)
         leaders = sorted(users, key=lambda user: user.balance, reverse=True)
-        page = leaders[start-1:stop]
+        page = paginate_list(leaders, 10, page)
         if len(page) == 0:
             await ctx.send("This page doesn't exist!")
             return

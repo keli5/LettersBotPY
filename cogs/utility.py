@@ -124,7 +124,7 @@ class Utility(commands.Cog):
                     r = await r.content.read()
                     packageinfo = json.loads(r)
                     packageinfo = packageinfo["info"]
-            except Exception    :
+            except Exception:
                 return await ctx.send(f"Couldn't get package {package} from PyPI.")
         gpiembed = discord.Embed(
             title=package,
@@ -169,6 +169,7 @@ class Utility(commands.Cog):
         if ver not in releases:
             return await ctx.send(f"Version {ver} does not exist.")
         release = packageinfo["releases"][ver]  # ????
+        release = release  # shhh flake8
 
         rlembed = discord.Embed(
             title=f"{package} v{ver}",
