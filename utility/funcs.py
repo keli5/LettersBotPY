@@ -196,6 +196,13 @@ def call_cmarkov(maxlength, startword: str = None) -> str:
     return sentence
 
 
+def paginate_list(list_items: typing.Union[list, tuple],
+                  per_page: int, page: int = 1) -> typing.List[list]:
+    start = ((page - 1) * per_page) + 1
+    stop = page * 10
+    return list_items[start-1:stop]
+
+
 def enumerate_list(list_items: typing.Union[list, tuple], max_shown: int) -> str:
     newlist = []
     string = ""
