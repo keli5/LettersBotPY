@@ -124,7 +124,7 @@ class Utility(commands.Cog):
                     r = await r.content.read()
                     packageinfo = json.loads(r)
                     packageinfo = packageinfo["info"]
-            except Exception    :
+            except Exception:
                 return await ctx.send(f"Couldn't get package {package} from PyPI.")
         gpiembed = discord.Embed(
             title=package,
@@ -154,27 +154,35 @@ class Utility(commands.Cog):
 
     @pip.command(aliases=["downloads", "files", "releases"])
     async def release(self, ctx, package: str = "discord.py", version=None):
-        return await ctx.send("This is not done")
+        # return await ctx.send("This is not done")
 
         packageinfo = None
+        packageval = None
         if len(package.split()) > 1:
             return await ctx.send("Package names cannot contain spaces.")
         async with aiohttp.ClientSession() as session:
             async with session.get(f"https://pypi.org/pypi/{package}/json") as r:
                 r = await r.content.read()
-                packageinfo = json.loads(r)
-                packageinfo = packageinfo["info"]
+                packageval = json.loads(r)
+                packageinfo = packageval["info"]
         ver = version or packageinfo["version"]
-        releases = packageinfo["releases"]
+        releases = packageval["releases"]
         if ver not in releases:
             return await ctx.send(f"Version {ver} does not exist.")
-        release = packageinfo["releases"][ver]  # ????
-
+        release = packageval["releases"][ver]
+        try:
+            release = release[1]
+        except IndexError:
+            release = release[0]
+        rURL = release["url"]
         rlembed = discord.Embed(
             title=f"{package} v{ver}",
             color=0x4B8BBE,
             description=f"{package} has {len(releases)} releases"
         )
+        rlembed.add_field(name="Download", value=f"[Get the latest for {ver}]({rURL})")
+        rsize = release["size"]
+        rlembed.add_field(name="Size", value=f"{rsize / 1000}KB")
         await ctx.send(embed=rlembed)
 
     @commands.command()
