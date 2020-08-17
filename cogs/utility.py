@@ -1,9 +1,12 @@
 from discord.ext import commands
 import discord
 import typing
+import utility.funcs as f
 import platform as p
 import pkg_resources
 import aiohttp
+import classes.bot as bot
+import humanize
 import json
 
 
@@ -32,12 +35,14 @@ class Utility(commands.Cog):
             color=discord.Color.purple()
         )
         py_ver = p.python_version()
-        osembed.add_field(name="Python version", value=py_ver, inline=False)
+        osembed.add_field(name="Python version", value=py_ver)
+        osembed.add_field(name="System uptime", value=humanize.precisedelta(f.get_uptime(), minimum_unit="minutes"))
+        osembed.add_field(name="Bot uptime", value=humanize.precisedelta(bot.started_at, minimum_unit="minutes"))
         for package in packages_for_info:
             osembed.add_field(name=f"**{package}** version", value=version(package))
         os_ver = f"{p.system()} {p.release()}"
         osembed.add_field(name="OS type", value=os_ver or "Unknown")
-        osembed.add_field(name="Architecture", value=p.processor() or "Unknown")
+        osembed.add_field(name="Architecture", value=p.machine() or p.processor() or "Unknown")
         await ctx.send(embed=osembed)
 
     @osinfo.command(aliases=["pkg", "pkgs", "package"])
@@ -182,7 +187,7 @@ class Utility(commands.Cog):
         )
         rlembed.add_field(name="Download", value=f"[Get the latest for {ver}]({rURL})")
         rsize = release["size"]
-        rlembed.add_field(name="Size", value=f"{rsize / 1000}KB")
+        rlembed.add_field(name="Size", value=humanize.naturalsize(rsize))
         await ctx.send(embed=rlembed)
 
     @commands.command()

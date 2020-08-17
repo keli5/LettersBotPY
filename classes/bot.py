@@ -1,6 +1,7 @@
 import discord
 from classes.dbmodels import LBGuild
 import utility.funcs as utility
+import datetime
 from discord.ext import commands, tasks
 import re
 import random
@@ -15,6 +16,7 @@ type_examples = {
     "\"float\"": "48.92"
 }
 corpus = open("corpus.txt", "a")
+started_at = datetime.datetime.now()
 
 
 class LettersBot(commands.AutoShardedBot):  # when you going

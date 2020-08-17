@@ -14,6 +14,7 @@ Thanks to [kaylynn234](https://github.com/kaylynn234) for a lot but commit [`b30
 Thanks to [Litleck](https://github.com/Litleck) for something
 
 ## Setup?
+There's a 99% chance this doesn't work on windows<br>
 Run launcher.py to start the bot - on first run, it will create a sqlite3 file<br>
 Should work on Python 3.6+<br>
 You'll need an environment variable called BOT_TOKEN, containing the token of the discord bot you want to run this as<br>

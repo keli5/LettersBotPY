@@ -197,10 +197,18 @@ def call_cmarkov(maxlength, startword: str = None) -> str:
 
 
 def paginate_list(list_items: typing.Union[list, tuple],
-                  per_page: int, page: int = 1) -> typing.List[list]:
-    start = ((page - 1) * per_page) + 1
-    stop = page * 10
-    return list_items[start-1:stop]
+                  per_page: int = 10, page: int = 1) -> list:  # ?????
+    page = page - 1
+    start = (page * per_page)
+    stop = start + per_page
+    return list_items[start:stop]
+
+
+def get_uptime():  # lifted directly from S/O: https://stackoverflow.com/a/55109870/12082547
+    with open('/proc/uptime', 'r') as f:
+        uptime_seconds = float(f.readline().split()[0])
+
+    return uptime_seconds
 
 
 def enumerate_list(list_items: typing.Union[list, tuple], max_shown: int) -> str:

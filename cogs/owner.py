@@ -3,6 +3,7 @@ import discord
 from classes.dbmodels import LBUser, LBGuild
 from utility.funcs import reload_markov, call_markov, image_from_url, tally_users
 import os
+import humanize
 import io
 import random
 import pkg_resources
@@ -47,8 +48,8 @@ class Owner(commands.Cog):
         shm = os.path.getsize("lettersbot_data.sqlite3-shm")
         wal = os.path.getsize("lettersbot_data.sqlite3-wal")
         base = os.path.getsize("lettersbot_data.sqlite3")
-        size = (shm + wal + base) / 1000
-        await ctx.send(f"SQLite 3 database, {size} KB\nUsing tortoise-orm {tormver}")
+        size = (shm + wal + base)
+        await ctx.send(f"SQLite 3 database, {humanize.naturalsize(size)}\nUsing tortoise-orm {tormver}")
 
     @commands.command()
     @commands.is_owner()
