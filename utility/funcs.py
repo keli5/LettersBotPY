@@ -204,6 +204,13 @@ def paginate_list(list_items: typing.Union[list, tuple],
     return list_items[start:stop]
 
 
+def get_uptime():  # lifted directly from S/O: https://stackoverflow.com/a/55109870/12082547
+    with open('/proc/uptime', 'r') as f:
+        uptime_seconds = float(f.readline().split()[0])
+
+    return uptime_seconds
+
+
 def enumerate_list(list_items: typing.Union[list, tuple], max_shown: int) -> str:
     newlist = []
     string = ""
