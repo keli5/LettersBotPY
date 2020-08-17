@@ -11,12 +11,12 @@ Or, invite the bot to your own Discord: [Click here](https://cutt.ly/lettersbot)
 
 ### Thanks
 Thanks to [kaylynn234](https://github.com/kaylynn234) for a lot but commit [`b308f5d`](https://github.com/keli5/LettersBotPY/commit/b308f5d6e5cb8f60ce90a73788b06689c9610293) in particular  <br>
-Thanks to [Litleck](https://github.com/Litleck) for something
+Thanks to [Litleck](https://github.com/Litleck) for causing me to realize how painful JS is
 
 ## Setup?
 There's a 99% chance this doesn't work on windows<br>
 Run launcher.py to start the bot - on first run, it will create a sqlite3 file<br>
-Should work on Python 3.6+<br>
+Should work on Python 3.6 and up, tested on 3.7.5<br>
 You'll need an environment variable called BOT_TOKEN, containing the token of the discord bot you want to run this as<br>
 You'll also need an environment variable called LB_PREFIX to set the bot prefix. Defaults to `d::`. <br>
 Make sure that you change the classes/botowners.txt to contain user IDs of people who should be able to run owner-only commands and use Jishaku if installed
