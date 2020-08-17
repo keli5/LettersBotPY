@@ -197,10 +197,11 @@ def call_cmarkov(maxlength, startword: str = None) -> str:
 
 
 def paginate_list(list_items: typing.Union[list, tuple],
-                  per_page: int, page: int = 1) -> typing.List[list]:
-    start = ((page - 1) * per_page) + 1
-    stop = page * 10
-    return list_items[start-1:stop]
+                  per_page: int = 10, page: int = 1) -> list:  # ?????
+    page = page - 1
+    start = (page * per_page)
+    stop = start + per_page
+    return list_items[start:stop]
 
 
 def enumerate_list(list_items: typing.Union[list, tuple], max_shown: int) -> str:
