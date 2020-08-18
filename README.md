@@ -11,7 +11,8 @@ Or, invite the bot to your own Discord: [Click here](https://cutt.ly/lettersbot)
 
 ### Thanks
 Thanks to [kaylynn234](https://github.com/kaylynn234) for a lot but commit [`b308f5d`](https://github.com/keli5/LettersBotPY/commit/b308f5d6e5cb8f60ce90a73788b06689c9610293) in particular  <br>
-Thanks to [Litleck](https://github.com/Litleck) for causing me to realize how painful JS is
+Thanks to [Litleck](https://github.com/Litleck) for causing me to realize how painful JS is<br>
+And huge thanks to [everyone who works on crimsoBOT](https://github.com/crimsobot/crimsoBOT/) because the help command may, or may not, be directly lifted from them
 
 ## Setup?
 There's a 99% chance this doesn't work on windows<br>
