@@ -36,27 +36,17 @@ class Utility(commands.Cog):
         )
         py_ver = p.python_version()
         osembed.add_field(name="Python version", value=py_ver)
-        osembed.add_field(name="System uptime", value=humanize.precisedelta(f.get_uptime(), minimum_unit="minutes"))
-        osembed.add_field(name="Bot uptime", value=humanize.precisedelta(bot.started_at, minimum_unit="minutes"))
+        osembed.add_field(name="System uptime", value=humanize.precisedelta(f.get_uptime(), minimum_unit="seconds"))
+        osembed.add_field(name="Bot uptime", value=humanize.precisedelta(bot.started_at, minimum_unit="seconds",
+                          format="%0.0f"))
+
         for package in packages_for_info:
             osembed.add_field(name=f"**{package}** version", value=version(package))
         os_ver = f"{p.system()} {p.release()}"
         osembed.add_field(name="OS type", value=os_ver or "Unknown")
         osembed.add_field(name="Architecture", value=p.machine() or p.processor() or "Unknown")
         await ctx.send(embed=osembed)
-
-    @osinfo.command(aliases=["pkg", "pkgs", "package"])
-    async def packages(self, ctx):
-        pkgembed = discord.Embed(
-            title="Required packages",
-            color=discord.Color.purple()
-        )
-        with open("requirements.txt") as f:
-            packages = f.read().split(" ")[0::2][0::2]
-            for pkg in packages:
-                pkgembed.add_field(name=pkg, value=version(pkg))
-
-        await ctx.send(embed=pkgembed)
+# todo: osinfo packages needs to be fixed
 
     @commands.command(aliases=["a"])
     async def avatar(self, ctx, user: discord.User = None):
