@@ -1,4 +1,6 @@
 from classes.bot import LettersBot
+from discord.ext.commands import Paginator
+from help_command import PaginatedHelpCommand
 import os
 import json
 
@@ -11,10 +13,13 @@ except KeyError:
     botprefix = "d::"
 
 with open("classes/botowners.txt", "r") as botowners:
+    paginator = Paginator(max_size=1336)  # see help_command.py
+
     bot = LettersBot(  # create the bot
         command_prefix=botprefix,
         case_insensitive=True,
-        owner_ids=json.loads(botowners.read())
+        owner_ids=json.loads(botowners.read()),
+        help_command=PaginatedHelpCommand(paginator=paginator)  # see help_command.py
     )
 
 if not os.path.exists("lettersbot_data.sqlite3"):
