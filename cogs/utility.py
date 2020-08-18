@@ -38,7 +38,7 @@ class Utility(commands.Cog):
         osembed.add_field(name="Python version", value=py_ver)
         osembed.add_field(name="System uptime", value=humanize.precisedelta(f.get_uptime(), minimum_unit="seconds"))
         osembed.add_field(name="Bot uptime", value=humanize.precisedelta(bot.started_at, minimum_unit="seconds",
-                          format="%0.0f"))
+                          format="%0.0f", suppress=["months", "years"]))
 
         for package in packages_for_info:
             osembed.add_field(name=f"**{package}** version", value=version(package))
