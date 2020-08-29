@@ -22,7 +22,8 @@ started_at = datetime.datetime.now()
 class LettersBot(commands.AutoShardedBot):  # when you going
     """ Welcome to the rewrite of LettersBot! """
     async def on_ready(self):
-        self.allowedLearningGuilds = [554079640499519499, 671897656003395595]
+        self.allowedLearningGuilds = [554079640499519499, 671897656003395595, 726699349362343967,
+                                      699476987990769735, 672963999964594176, 505508859117305877]
         self.queues = {}
         utility.reload_markov()
         for guild in self.guilds:
