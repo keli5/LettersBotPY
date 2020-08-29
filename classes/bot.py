@@ -119,4 +119,5 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         chid = getattr(guilddb, "joinMesgChannel")
         joinmsgchannel = self.get_channel(chid) or guild.system_channel
         if (joinmsg is not None) and (joinmsgchannel is not None):
-            await joinmsgchannel.send(f"{member.mention}\n{joinmsg}")
+            jmsg = joinmsg.replace("%member%", member.mention)
+            await joinmsgchannel.send(f"{jmsg}")

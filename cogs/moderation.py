@@ -75,7 +75,7 @@ class Moderation(commands.Cog):
     @joinmsg.command(name="set")
     @commands.has_permissions(manage_guild=True)
     async def set_join_message(self, ctx, *, joinmessage: str):
-        """Set the guild's custom join message."""
+        """Set the guild's custom join message. Add %member% to mention whoever joined."""
         if len(joinmessage) > 1350:
             return await ctx.send("Guild join messages may only be a max of 1,350 characters long.")
 
