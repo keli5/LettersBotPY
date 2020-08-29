@@ -7,7 +7,7 @@ import typing
 import markovify
 from PIL import Image
 from tortoise import Tortoise
-from classes.dbmodels import LBUser, LBGuild
+from classes.dbmodels import LBUser, LBGuild, LBInv
 from classes.cmarkov import CharacterText
 markov = None
 cmarkov = None
@@ -98,6 +98,22 @@ async def db_for_guild(id: int, returns: bool = False) -> dict:
             joinMesg=None,
             disabledCommands=[],
             blacklisted=False
+        )
+
+    if returns is True:
+        return guild
+
+
+async def db_for_inv(id: int, returns: bool = False) -> dict:
+    """ Tries to get the inventory DB entry for user with id `id`, if it doesn't work,
+    generates a DB entry for it.
+    Also returns them if `returns` is true. """
+    try:
+        guild = await LBInv[id]
+    except KeyError:
+        guild = await LBInv.create(
+            id=id,
+            items={}
         )
 
     if returns is True:

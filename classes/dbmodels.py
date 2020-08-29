@@ -14,3 +14,7 @@ class LBGuild(Model):
     blacklisted = fields.BooleanField()
     joinMesg = fields.CharField(max_length=1350, null=True)
     joinMesgChannel = fields.IntField(null=True)
+
+
+class LBInv(Model):
+    items = fields.JSONField(null=True)
