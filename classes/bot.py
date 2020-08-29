@@ -22,6 +22,7 @@ started_at = datetime.datetime.now()
 class LettersBot(commands.AutoShardedBot):  # when you going
     """ Welcome to the rewrite of LettersBot! """
     async def on_ready(self):
+        self.allowedLearningGuilds = [554079640499519499, 671897656003395595]
         self.queues = {}
         utility.reload_markov()
         for guild in self.guilds:
@@ -63,7 +64,8 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         swregex = r"(^\W|d::|^```)"
         if len(message.content) > 8 and not re.match(swregex, message.content):
             if message.channel.type is not discord.ChannelType.private:
-                corpus.write(message.content.lower() + "\n")
+                if message.guild.id in self.allowedLearningGuilds:
+                    corpus.write(message.content.lower() + "\n")
 
         if (message.channel.type == discord.ChannelType.private) and owner:
             if message.author is not owner:
