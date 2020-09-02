@@ -139,4 +139,7 @@ corpus.txt
 # ignore dbs
 *.sqlite3*
 
+# ignore your config
+config.json
+
 # you don't need to worry about bot.sh it just does some prior checks

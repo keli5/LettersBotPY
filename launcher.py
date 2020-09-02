@@ -6,11 +6,18 @@ import json
 
 extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun", "voice"]
 botprefix = ""
+token = ""
 
 try:
-    botprefix = os.environ['LB_PREFIX']
-except KeyError:
-    botprefix = "d::"
+    with open("config.json") as opts:
+        opts = json.loads(opts.read())
+        botprefix = opts["prefix"] or "d::"
+        token = opts["token"]
+except Exception as e:
+    print("Something went wrong. Make sure your config.json is valid and all keys are filled in.")
+    print(e)
+    exit()
+
 
 with open("classes/botowners.txt", "r") as botowners:
     paginator = Paginator(max_size=1336)  # see help_command.py
@@ -37,4 +44,4 @@ for extension in extlist:
         exc = "{}: {}".format(type(e).__name__, e)
         print(f"Failed to load extension {extension}\nError: {exc}")
 
-bot.run(os.environ['BOT_TOKEN'])
+bot.run(token)

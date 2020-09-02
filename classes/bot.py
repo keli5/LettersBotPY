@@ -36,8 +36,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
     async def update_status(self):
         try:
             user_count = utility.call_cmarkov(25)
-        except Exception as e:
-            e = e  # there, now it's used
+        except Exception:
             user_count = "with you"
 
         await self.change_presence(activity=discord.Activity(
