@@ -90,6 +90,7 @@ class Fun(commands.Cog):
         if sides > 100:
             return await ctx.send("You cannot roll a dice with more than 100 sides.")
         roll = 0
+        mod = 0
         for i in range(amount):
             roll += random.randint(1, sides)
         if mod > 0:
