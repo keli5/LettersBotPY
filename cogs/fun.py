@@ -83,7 +83,7 @@ class Fun(commands.Cog):
         await ctx.send(f"I will {v} your {n}{end}")
 
     @commands.command(aliases=["roll"])
-    async def diceroll(self, ctx, amount: int = 1, sides: int = 6):
+    async def diceroll(self, ctx, amount: int = 1, sides: int = 6, modifier: int = 0):
         """ Roll some dice. """
         if amount > 50:
             return await ctx.send("You cannot roll more than 50 dice at a time.")
@@ -92,7 +92,13 @@ class Fun(commands.Cog):
         roll = 0
         for i in range(amount):
             roll += random.randint(1, sides)
-        await ctx.send(f"Rolled {amount}d{sides} and got {roll}.")
+        if mod > 0:
+            mod = f"+{mod}"
+        
+        if modifier == 0:
+            await ctx.send(f"Rolled {amount}d{sides} and got {roll}.")
+        else:
+            await ctx.send(f"Rolled {amount}d{sides}{modifier} and got {roll+modifier}.")
 
     @commands.command(aliases=["mkv"])
     async def markov(self, ctx, start: str = None):
