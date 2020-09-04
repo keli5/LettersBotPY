@@ -95,6 +95,10 @@ class Fun(commands.Cog):
             roll += random.randint(1, sides)
         if modifier > 0:
             mod = f"+{modifier}"
+        elif modifier < 0:
+            mod = modifier
+        else:
+            mod = ""
         
         await ctx.send(f"Rolled {amount}d{sides}{mod} and got {roll+modifier}.")
 
