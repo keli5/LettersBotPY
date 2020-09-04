@@ -99,8 +99,8 @@ class Fun(commands.Cog):
             mod = modifier
         else:
             mod = ""
-        
-        await ctx.send(f"Rolled {amount}d{sides}{mod} and got {roll+modifier} ({roll} + {(mod or "No modifier")} = {roll+modifier}".)
+        modtext = mod or "No modifier"  # FUCK
+        await ctx.send(f"Rolled {amount}d{sides}{mod} and got {roll+modifier} ({roll} + {modtext} = {roll+modifier}".)
 
     @commands.command(aliases=["mkv"])
     async def markov(self, ctx, start: str = None):
