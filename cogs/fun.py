@@ -90,16 +90,13 @@ class Fun(commands.Cog):
         if sides > 100:
             return await ctx.send("You cannot roll a dice with more than 100 sides.")
         roll = 0
-        mod = 0
+        mod = ""
         for i in range(amount):
             roll += random.randint(1, sides)
         if mod > 0:
             mod = f"+{mod}"
         
-        if modifier == 0:
-            await ctx.send(f"Rolled {amount}d{sides} and got {roll}.")
-        else:
-            await ctx.send(f"Rolled {amount}d{sides}{mod} and got {roll+modifier}.")
+        await ctx.send(f"Rolled {amount}d{sides}{mod} and got {roll+modifier}.")
 
     @commands.command(aliases=["mkv"])
     async def markov(self, ctx, start: str = None):
