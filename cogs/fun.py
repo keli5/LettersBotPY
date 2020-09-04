@@ -82,25 +82,25 @@ class Fun(commands.Cog):
         end = random.choice(["!", "."])
         await ctx.send(f"I will {v} your {n}{end}")
 
-    @commands.command(aliases=["roll"])
-    async def diceroll(self, ctx, amount: int = 1, sides: int = 6, modifier: int = 0):
-        """ Roll some dice. """
-        if amount > 50:
-            return await ctx.send("You cannot roll more than 50 dice at a time.")
-        if sides > 100:
-            return await ctx.send("You cannot roll a dice with more than 100 sides.")
-        roll = 0
-        mod = ""
-        for i in range(amount):
-            roll += random.randint(1, sides)
-        if modifier > 0:
-            mod = f"+{modifier}"
-        elif modifier < 0:
-            mod = modifier
-        else:
-            mod = ""
-        modtext = mod or "No modifier"  # FUCK
-        await ctx.send(f"Rolled {amount}d{sides}{mod} and got {roll+modifier} ({roll} + {modtext} = {roll+modifier}".)
+    #@commands.command(aliases=["roll"])
+    #async def diceroll(self, ctx, amount: int = 1, sides: int = 6, modifier: int = 0):
+    #    """ Roll some dice. """
+    #    if amount > 50:
+    #        return await ctx.send("You cannot roll more than 50 dice at a time.")
+    #    if sides > 100:
+    #        return await ctx.send("You cannot roll a dice with more than 100 sides.")
+    #    roll = 0
+    #    mod = ""
+    #    for i in range(amount):
+    #        roll += random.randint(1, sides)
+    #    if modifier > 0:
+    #        mod = f"+{modifier}"
+    #    elif modifier < 0:
+    #        mod = modifier
+    #    else:
+    #        mod = ""
+    #    modtext = mod or "No modifier"  # FUCK
+    #    await ctx.send(f"Rolled {amount}d{sides}{mod} and got {roll+modifier} ({roll} + {modtext} = {roll+modifier}".)
 
     @commands.command(aliases=["mkv"])
     async def markov(self, ctx, start: str = None):
