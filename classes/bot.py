@@ -70,8 +70,12 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if (message.channel.type == discord.ChannelType.private) and owner:
             if message.author is not owner:
                 await owner.send(f"`DM from {message.author} ({message.author.id}):`\n{message.content}")
-        if (self.user in message.mentions) or (random.random() < 0.01):
-            await message.channel.send(utility.call_markov(900))
+
+        if (self.user in message.mentions) or (random.random() < 0.008):
+            if random.choice([True, False]):
+                await message.channel.send(utility.call_markov(900))
+            else:
+                await message.channel.send(utility.call_cmarkov(900))
 
         await self.process_commands(message)
 
