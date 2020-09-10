@@ -4,6 +4,7 @@ import utility.funcs as utility
 import datetime
 from discord.ext import commands, tasks
 import re
+import json
 import random
 typedescs = {
     "\"int\"": "number without a decimal point",
@@ -22,8 +23,8 @@ started_at = datetime.datetime.now()
 class LettersBot(commands.AutoShardedBot):  # when you going
     """ Welcome to the rewrite of LettersBot! """
     async def on_ready(self):
-        self.allowedLearningGuilds = [554079640499519499, 671897656003395595, 726699349362343967,
-                                      699476987990769735, 672963999964594176, 505508859117305877]
+        config = json.loads(open("config.json").read())
+        self.allowedLearningGuilds = config["markovGuilds"]
         self.queues = {}
         utility.reload_markov()
         for guild in self.guilds:
