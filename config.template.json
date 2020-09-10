@@ -1,4 +1,5 @@
 {
-    "token": "",
-    "prefix": ""
+    "token": "This is your bot token",
+    "prefix": "This is your bot prefix",
+    "markovGuilds": ["This is an array of guild IDs as integers that the bot can get markov data from"]
 }
