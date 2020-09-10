@@ -9,3 +9,4 @@ discord.py ~= 1.4.0
  youtube-dl ~= 2020.5.8 
  gtts ~= 2.1.1
  git+https://github.com/Rapptz/discord-ext-menus
+ humanize ~= 2.6.0
