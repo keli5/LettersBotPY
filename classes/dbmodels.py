@@ -5,6 +5,7 @@ from tortoise import fields
 class LBUser(Model):
     balance = fields.FloatField()
     canUseBot = fields.BooleanField()
+    inventory = fields.JSONField()
 
 
 class LBGuild(Model):
