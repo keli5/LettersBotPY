@@ -131,6 +131,7 @@ dmypy.json
 
 # uuuuh
 .vscode/
+.theia/
 bot.sh
 corpus.txt
 .directory
