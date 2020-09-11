@@ -29,9 +29,10 @@ with open("classes/botowners.txt", "r") as botowners:
         help_command=PaginatedHelpCommand(paginator=paginator)  # see help_command.py
     )
 
-if not os.path.exists("lettersbot_data.sqlite3"):
-    print('Running initdb.py')
-    exec(open("utility/initdb.py").read())
+# if not os.path.exists("lettersbot_data.sqlite3"):
+# fuck
+print('Running initdb.py')
+exec(open("utility/initdb.py").read())
 
 for extension in extlist:
     prefix = "cogs."

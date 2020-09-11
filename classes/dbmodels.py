@@ -14,3 +14,12 @@ class LBGuild(Model):
     blacklisted = fields.BooleanField()
     joinMesg = fields.CharField(max_length=1350, null=True)
     joinMesgChannel = fields.IntField(null=True)
+
+
+class LBTubeGame(Model):
+    channelName = fields.CharField(max_length=24)
+    subscribers = fields.IntField()
+    videoCount = fields.IntField()
+    videos = fields.JSONField()
+    lifetimeEarned = fields.IntField()
+    lifetimeViews = fields.IntField()

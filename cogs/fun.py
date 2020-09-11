@@ -1,6 +1,6 @@
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-from classes.dbmodels import LBUser
+from classes.dbmodels import LBUser, LBTubeGame
 from gtts import gTTS
 import asyncio
 import utility.funcs as f
@@ -113,6 +113,56 @@ class Fun(commands.Cog):
         """ Generate a Markov chain. """
         start = start or None
         await ctx.send(f.call_markov(1600, start))
+
+    # -------------------------------------- LBTUBE SHIT
+
+    @commands.group(aliases=["lbt"], invoke_without_command=True)
+    async def lbtube(self, ctx):
+        """ Now you can live out your dreams of becoming a youtuber, but not really! """
+        await ctx.send("This command only exists for grouping - check `lbt stats`.")
+
+    @lbtube.command(name="begin", aliases=["start"])
+    async def lbtube_start(self, ctx, channel_name: str):
+        """ Start your LBTube journey. Choose your name wisely, you can't change it. """
+        channel = None
+        try:
+            channel = await LBTubeGame[ctx.author.id]
+        except Exception:
+            ...  # whatever, this only happens if no games exist.
+
+        if channel:
+            await ctx.send("You already have a channel - do `lbt stats` to check up on it.")
+        else:
+            await LBTubeGame.create(
+                id=ctx.author.id,
+                channelName=channel_name,
+                subscribers=0,
+                videoCount=0,
+                videos=[],
+                lifetimeEarned=0,
+                lifetimeViews=0
+            )
+            await ctx.send(f"Welcome to LBTube, {channel_name}! Check `help lbtube` to see what you can do.")
+
+    @lbtube.command(name="stats")
+    async def lbtube_stats(self, ctx, user: discord.User = None):
+        if user is None:
+            user = ctx.author
+        channel = None
+        try:
+            channel = await LBTubeGame[user.id]
+        except Exception:
+            return await ctx.send("You have no LBT game. Do `help lbt start` to see how to begin a game.")
+
+        statsembed = discord.Embed(
+            color=0x2b30c4,
+            title=channel.channelName + " stats"
+        )
+
+        statsembed.add_field(name="Channel run by", value=user.name)
+        statsembed.add_field(name="Subscribers", value=channel.subscribers)
+
+    # -------------------------------------- GOD WILL NEVER FORGIVE ME
 
     @commands.command(aliases=["cmkv"])
     async def cmarkov(self, ctx):
