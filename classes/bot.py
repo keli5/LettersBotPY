@@ -6,16 +6,6 @@ from discord.ext import commands, tasks
 import re
 import json
 import random
-typedescs = {
-    "\"int\"": "number without a decimal point",
-    "\"str\"": "string of text",
-    "\"float\"": "number, optionally with up to 2 decimal places"
-}
-type_examples = {
-    "\"int\"": "11",
-    "\"str\"": "Hello, World!",
-    "\"float\"": "48.92"
-}
 corpus = open("corpus.txt", "a")
 started_at = datetime.datetime.now()
 
@@ -91,28 +81,6 @@ class LettersBot(commands.AutoShardedBot):  # when you going
 
         if isinstance(exception, commands.CommandNotFound):
             return
-
-        if isinstance(exception, commands.BadArgument):
-            string = str(exception).split(" ")
-            if len(string) == 7:
-                delay = 20
-                type_to_be = string[2]
-                argument = string[6]
-                argument = argument[0:len(argument)-1]
-                try:
-                    errembed.add_field(
-                        name="How to fix it?",
-                        value=f"Argument {argument} failed to convert; it needs to be a {typedescs[type_to_be]}."
-                    )
-                except KeyError:
-                    pass
-                try:
-                    errembed.add_field(
-                        name=f"Example of {type_to_be}",
-                        value=type_examples[type_to_be]
-                    )
-                except KeyError:
-                    pass
 
         if excname != "CommandOnCooldown":  # dont need cooldowns logged
             print(f"{excname}: {exception}")
