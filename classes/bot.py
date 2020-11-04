@@ -5,6 +5,7 @@ import datetime
 from discord.ext import commands, tasks
 import re
 import json
+import difflib
 import random
 corpus = open("corpus.txt", "a")
 started_at = datetime.datetime.now()
@@ -80,6 +81,30 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         )
 
         if isinstance(exception, commands.CommandNotFound):
+            commandnames = []
+            failed = str(exception).split(" ")
+            failed = failed[1]
+            parsedfailed = failed.replace("\"", "")
+            
+            for command in ctx.bot.commands:
+                commandnames.append(command.name)
+                for alias in command.aliases:
+                    if alias == "":
+                        return
+                    commandnames.append(alias)
+            
+            matches = difflib.get_close_matches(parsedfailed, commandnames, 6, 0.5)
+            if len(matches) == 0:
+                return
+            dymembed = discord.Embed(
+                title=f"Couldn't find command {failed}",
+                color=0xff0000,
+                description="Did you mean..."
+            )
+            for match in matches:
+                dymembed.add_field(name=f"{ctx.bot.command_prefix}{match}?", value="\u202d")
+
+            await ctx.send(embed=dymembed)
             return
 
         if excname != "CommandOnCooldown":  # dont need cooldowns logged
