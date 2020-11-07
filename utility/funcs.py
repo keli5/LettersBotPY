@@ -219,3 +219,15 @@ def enumerate_list(list_items: typing.Union[list, tuple], max_shown: int) -> str
     else:
         string = ", ".join(newlist[0:max_shown])
     return string
+
+
+def command_from_name(name: str, ctx):  # I hate this with every fiber
+    command = None                      # of my being
+    for cmd in ctx.bot.commands:
+        if cmd.name == name:
+            command = cmd
+            break
+        if name in cmd.aliases:
+            command = cmd
+            break
+    return command
