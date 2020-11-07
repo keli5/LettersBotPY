@@ -1,6 +1,6 @@
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-from classes.dbmodels import LBUser, LBTubeGame
+from classes.dbmodels import LBUser
 from gtts import gTTS
 import asyncio
 import utility.funcs as f
@@ -114,81 +114,6 @@ class Fun(commands.Cog):
         """ Generate a Markov chain. """
         start = start or None
         await ctx.send(f.call_markov(1600, start))
-
-    # -------------------------------------- LBTUBE SHIT
-
-    @commands.group(aliases=["lbt"], invoke_without_command=True)
-    async def lbtube(self, ctx):
-        """ Now you can live out your dreams of becoming a youtuber, but not really! """
-        ...
-
-    @lbtube.command(name="reset", aliases=["delete"])
-    async def lbtube_reset(self, ctx, confirm: bool = False):
-        """ Reset all your LBTube data. This cannot be undone. """
-        if not confirm:
-            await ctx.send("This will delete ALL YOUR LBTUBE DATA! THIS CANNOT BE UNDONE! Type " +
-                           f"`{self.prefix}lbtube reset yes` if you are aware that this is permanent " +
-                           "and are okay with that!")
-        else:
-            await ctx.send(f"Deleting data for {ctx.author}\'s channel...")
-            try:
-                channel = await LBTubeGame[ctx.author.id]
-            except KeyError:
-                return await ctx.send("You have no channel.")
-            await channel.delete()
-            await ctx.send("Done.")
-
-    @lbtube.command(name="begin", aliases=["start"])
-    async def lbtube_start(self, ctx, channel_name: str):
-        """ Start your LBTube journey. Choose your name wisely, you can't change it. """
-        channel = None
-        try:
-            channel = await LBTubeGame[ctx.author.id]
-        except Exception:
-            ...  # whatever, this only happens if no games exist.
-
-        # existingChannel = await LBTubeGame.filter(channelName__iequals=channel_name)
-        # if existingChannel[0]:
-        #     await ctx.send("A channel already exists with this name.")
-
-        if channel:
-            await ctx.send(f"You already have a channel - do `{ctx.bot.command_prefix}lbt stats` to check up on it.")
-        else:
-            await LBTubeGame.create(
-                id=ctx.author.id,
-                channelName=channel_name,
-                subscribers=0,
-                videoCount=0,
-                videos=[],
-                lifetimeEarned=0,
-                lifetimeViews=0
-            )
-            await ctx.send(f"Welcome, {channel_name}! Check `{self.prefix}help lbtube` to see what you can do.")
-
-    @lbtube.command(name="stats")
-    async def lbtube_stats(self, ctx, user: discord.User = None):
-        if user is None:
-            user = ctx.author
-        channel = None
-        try:
-            channel = await LBTubeGame[user.id]
-        except Exception:
-            return await ctx.send(f"You have no LBT game. Do `{self.prefix}help lbt start` to see how to begin a game.")
-
-        statsembed = discord.Embed(
-            color=0x2b30c4,
-            title=channel.channelName + " stats"
-        )
-
-        statsembed.add_field(name="Channel run by", value=user)
-        statsembed.add_field(name="Subscribers", value=channel.subscribers)
-        statsembed.add_field(name="Videos", value=channel.videoCount)
-        statsembed.add_field(name="Lifetime earnings", value=f"{self.cur}{channel.lifetimeEarned}")
-        statsembed.add_field(name="Lifetime views", value=channel.lifetimeViews)
-
-        await ctx.send(embed=statsembed)
-
-    # -------------------------------------- GOD WILL NEVER FORGIVE ME
 
     @commands.command(aliases=["cmkv"])
     async def cmarkov(self, ctx):
