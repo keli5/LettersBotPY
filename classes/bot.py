@@ -85,14 +85,14 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             failed = str(exception).split(" ")
             failed = failed[1]
             parsedfailed = failed.replace("\"", "")
-            
+
             for command in ctx.bot.commands:
                 commandnames.append(command.name)
                 for alias in command.aliases:
                     if alias == "":
                         return
                     commandnames.append(alias)
-            
+
             matches = difflib.get_close_matches(parsedfailed, commandnames, 6, 0.5)
             if len(matches) == 0:
                 return
@@ -101,13 +101,17 @@ class LettersBot(commands.AutoShardedBot):  # when you going
                 color=0xff0000,
                 description="Did you mean..."
             )
+
             for match in matches:
                 dymembed.add_field(name=f"{ctx.bot.command_prefix}{match}?", value="\u202d")
 
             await ctx.send(embed=dymembed)
             return
 
-        if excname != "CommandOnCooldown":  # dont need cooldowns logged
+        if isinstance(exception, commands.MissingRequiredArgument):
+            ctx.command.reset_cooldown(ctx)
+
+        else:  # dont need cooldowns logged
             print(f"{excname}: {exception}")
         errmsg = await ctx.send(embed=errembed)
         await errmsg.delete(delay=delay)
