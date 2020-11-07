@@ -9,6 +9,8 @@ import difflib
 import random
 corpus = open("corpus.txt", "a")
 started_at = datetime.datetime.now()
+cooldown_texts = ["Hey there.", "Hold on a second!", "pls wait...", "Cooldown..", "Hey, chill.",
+                  "Just a minute...", "Give it a second.", "Whoop", "..."]
 
 
 class LettersBot(commands.AutoShardedBot):  # when you going
@@ -111,8 +113,11 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if isinstance(exception, commands.MissingRequiredArgument):
             ctx.command.reset_cooldown(ctx)
 
-        if isinstance(exception, commands.CommandOnCooldown):  # dont need cooldowns logged
+        if isinstance(exception, commands.CommandOnCooldown):
+            errembed.title = random.choice(cooldown_texts)
+        else:
             print(f"{excname}: {exception}")
+
         errmsg = await ctx.send(embed=errembed)
         await errmsg.delete(delay=delay)
 
