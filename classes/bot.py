@@ -111,7 +111,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if isinstance(exception, commands.MissingRequiredArgument):
             ctx.command.reset_cooldown(ctx)
 
-        else:  # dont need cooldowns logged
+        if isinstance(exception, commands.CommandOnCooldown):  # dont need cooldowns logged
             print(f"{excname}: {exception}")
         errmsg = await ctx.send(embed=errembed)
         await errmsg.delete(delay=delay)
