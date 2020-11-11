@@ -35,7 +35,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
 
         await self.change_presence(activity=discord.Activity(
             type=discord.ActivityType.playing,
-            name=f"{user_count} | {self.command_prefix}info"
+            name=f"{user_count} | {self.command_prefix}help"
             )
         )
 
