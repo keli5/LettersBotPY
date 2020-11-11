@@ -7,7 +7,7 @@ import re
 import json
 import difflib
 import random
-corpus = open("corpus.txt", "a")
+corpus = open("corpus.txt", "at")
 started_at = datetime.datetime.now()
 cooldown_texts = ["Hey there.", "Hold on a second!", "pls wait...", "Cooldown..", "Hey, chill.",
                   "Just a minute...", "Give it a second.", "Whoop", "..."]
@@ -56,10 +56,12 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if not user.canUseBot:
             return
         swregex = r"(^\W|d::|^```)"
-        if len(message.content) > 8 and not re.match(swregex, message.content):
-            if message.channel.type is not discord.ChannelType.private:
-                if message.guild.id in self.allowedLearningGuilds:
-                    corpus.write(message.content.lower() + "\n")
+        pingregex = r"^<@"
+        if len(message.content) > 8:
+            if re.match(pingregex, message.content) or not re.match(swregex, message.content):
+                if message.channel.type is not discord.ChannelType.private:
+                    if message.guild.id in self.allowedLearningGuilds:
+                        corpus.write(message.content.lower() + "\n")
 
         if (message.channel.type == discord.ChannelType.private) and owner:
             if message.author is not owner:
