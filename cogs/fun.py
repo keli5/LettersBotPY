@@ -3,6 +3,8 @@ from discord.ext.commands.cooldowns import BucketType
 from classes.dbmodels import LBUser
 from gtts import gTTS
 import asyncio
+import humanize
+import datetime as dt
 import utility.funcs as f
 import random
 import html
@@ -238,6 +240,31 @@ class Fun(commands.Cog):
         s = list(string)
         random.shuffle(s)
         await ctx.send("".join(s))
+
+    @commands.command()
+    async def xkcd(self, ctx, num: int = 0):
+        cembed = discord.Embed()
+        comic = num
+        if num == 0:
+            comic = ""
+        response = requests.get(f"https://xkcd.com/{comic}/info.0.json")
+        if response.status_code == 404:
+            cembed.title = f"Couldn't find comic #{num}"
+            cembed.color = 0xFF0000
+            cembed.set_footer(text="Check the number, or provide none for the latest comic.")
+            return await ctx.send(embed=cembed)
+        res_json = json.loads(response.content)
+
+        year = int(res_json["year"])
+        month = int(res_json["month"])
+        day = int(res_json["day"])
+
+        cdate = humanize.naturaldate(dt.date(year, month, day))
+        cembed.set_image(url=res_json["img"])  # I hate the below line, but better than f-strings for this use
+        cembed.title = "{} (#{})".format(res_json["safe_title"], res_json["num"])
+        cembed.description = res_json["alt"]
+        cembed.set_footer(text=cdate.capitalize())
+        await ctx.send(embed=cembed)
 
     @commands.command(name="8ball")
     async def magic8ball(self, ctx, *, question):
