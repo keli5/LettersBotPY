@@ -17,4 +17,4 @@ class LBGuild(Model):
 
 
 class GuildMarkovSettings(Model):
-    enabled = fields.BooleanField(default=True)
+    enabled = fields.BooleanField()
