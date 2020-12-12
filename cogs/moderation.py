@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord
-from classes.dbmodels import LBGuild
+from classes.dbmodels import LBGuild, GuildMarkovSettings
 alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
 
@@ -63,6 +63,15 @@ class Moderation(commands.Cog):
         unbanembed.add_field(name="Reason", value=reason)
         unbanembed.add_field(name="ID", value=userid.id)
         await ctx.send(embed=unbanembed)
+
+    @commands.command(aliases=["togglespeak", "togglemkv"])
+    @commands.has_permissions(manage_guild=True)
+    async def togglerandommkv(self, ctx):
+        """ Allow or disallow the bot from randomly speaking. """
+        markov = await GuildMarkovSettings[ctx.guild.id]
+        can = getattr(markov, "enabled")
+        await GuildMarkovSettings.filter(id=ctx.guild.id).update(enabled=(not can))
+        await ctx.send(f"Toggled random markov messages. This bot **{'can' if not can else 'can not'}** randomly speak in this server.")
 
     @commands.group(aliases=["joinmessage"], invoke_without_command=True)
     @commands.has_permissions(manage_guild=True)
