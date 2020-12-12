@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord
-from classes.dbmodels import LBUser, LBGuild
+from classes.dbmodels import LBUser, LBGuild, GuildMarkovSettings
 from utility.funcs import reload_markov, call_markov, image_from_url, tally_users
 import os
 import humanize
@@ -11,11 +11,12 @@ import typing
 
 modeltypes = {
     "users": LBUser,
-    "guilds": LBGuild
+    "guilds": LBGuild,
+    "markov": GuildMarkovSettings
 }
 valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole",
                 "warnings", "banUntil", "joinMesg", "joinMesgChannel",
-                "blacklisted", "disabledCommands", "items"]
+                "blacklisted", "disabledCommands", "items", "enabled"]
 
 
 class Owner(commands.Cog):

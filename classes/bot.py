@@ -1,5 +1,5 @@
 import discord
-from classes.dbmodels import LBGuild
+from classes.dbmodels import LBGuild, GuildMarkovSettings
 import utility.funcs as utility
 import datetime
 from discord.ext import commands, tasks
@@ -45,16 +45,17 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         guild = None
         if message.channel.type is not discord.ChannelType.private:
             guild = await utility.db_for_guild(message.guild.id, True)
+            mkv = await utility.db_for_mkv(message.guild.id, True)
 
         if guild:
             if guild.blacklisted:
                 return
         user = None
         user = await utility.db_for_user(message.author.id, True)
-        if message.author.bot:
+        
+        if message.author.bot or not user.canUseBot:
             return
-        if not user.canUseBot:
-            return
+
         swregex = r"(^\W|d::|^```)"
         pingregex = r"^<@"
         if len(message.content) > 8:
@@ -67,7 +68,9 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             if message.author is not owner:
                 await owner.send(f"`DM from {message.author} ({message.author.id}):`\n{message.content}")
 
-        if (self.user in message.mentions) or (random.random() < 0.008):
+        canmkv = mkv and mkv.enabled
+         
+        if (self.user in message.mentions) or (random.random() < 0.008 and canmkv):
             if random.choice([True, False]):
                 await message.channel.send(utility.call_markov(900))
             else:

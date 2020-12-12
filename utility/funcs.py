@@ -7,7 +7,7 @@ import typing
 import markovify
 from PIL import Image
 from tortoise import Tortoise
-from classes.dbmodels import LBUser, LBGuild
+from classes.dbmodels import GuildMarkovSettings, LBUser, LBGuild
 from classes.cmarkov import CharacterText
 markov = None
 cmarkov = None
@@ -103,6 +103,18 @@ async def db_for_guild(id: int, returns: bool = False) -> dict:
     if returns is True:
         return guild
 
+async def db_for_mkv(id: int, returns: bool = False) -> dict:
+    """ Same as db_for_user/guild, with markov settings. """
+    try:
+        mkv = await GuildMarkovSettings[id]
+    except KeyError:
+        mkv = await GuildMarkovSettings.create(
+            id=id,
+            enabled=True
+        )
+
+    if returns is True:
+        return mkv
 
 async def image_from_url(source) -> Image:
     """ Takes a url of an image as `source`. Returns a Pillow image. """
