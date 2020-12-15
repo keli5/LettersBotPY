@@ -1,5 +1,7 @@
 from classes.bot import LettersBot
 from discord.ext.commands import Paginator
+import utility.initdb as i
+from tortoise import run_async
 from help_command import PaginatedHelpCommand
 import os
 import json
@@ -32,7 +34,7 @@ with open("classes/botowners.txt", "r") as botowners:
 # if not os.path.exists("lettersbot_data.sqlite3"):
 # fuck
 print('Running initdb.py')
-exec(open("utility/initdb.py").read())
+run_async(i.init())
 
 for extension in extlist:
     prefix = "cogs."

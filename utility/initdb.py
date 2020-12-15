@@ -7,7 +7,7 @@ async def init():
         modules={'models': ["classes.dbmodels"]}
     )
     # Generate the schema
-    await Tortoise.generate_schemas()
+    await Tortoise.generate_schemas(safe=True)
 
 
 run_async(init())
