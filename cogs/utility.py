@@ -191,7 +191,7 @@ class Utility(commands.Cog):
             color=discord.Color.gold()
         )
         iembed.set_thumbnail(url=ctx.bot.user.avatar_url)
-        iembed.add_field(name="Home/support server", value="https://discord.gg/AEZFFfA")
+        iembed.add_field(name="Home/support server", value="https://discord.gg/Dnhj9GG2Et")
         iembed.add_field(
             name="Invite the bot",
             value="https://cutt.ly/lettersbot2",
