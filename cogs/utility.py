@@ -197,7 +197,6 @@ class Utility(commands.Cog):
             value="https://cutt.ly/lettersbot2",
             inline=False
         )
-        iembed.add_field(name="Patreon", value='https://patreon.com/lettersbot', inline=False)
         iembed.add_field(name="GitHub", value="https://github.com/keli5/LettersBotPY")
         letters = ctx.bot.get_user(556614860931072012)
         iembed.set_footer(
