@@ -71,7 +71,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         canmkv = mkv and mkv.enabled
          
         if (self.user in message.mentions) or (random.random() < 0.008 and canmkv):
-            if random.choice([True, False]):
+            if random.choice([True, True, True, True, True, False]):
                 await message.channel.send(utility.call_markov(900))
             else:
                 await message.channel.send(utility.call_cmarkov(900))
