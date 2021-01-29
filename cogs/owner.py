@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 from classes.dbmodels import LBUser, LBGuild, GuildMarkovSettings
-from utility.funcs import reload_markov, call_markov, image_from_url, tally_users
+from utility.funcs import reload_markov, call_markov, image_from_url, tally_users, paginate_list
 import os
 import humanize
 import io
@@ -121,19 +121,25 @@ class Owner(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def guilds(self, ctx, safe: bool = True):
-        guildstring = ""
-        for guild in ctx.bot.guilds:
+    async def guilds(self, ctx, page: int = 1, safe: bool = True):
+        # guild.name, guild.id, guild.members, ctx.bot.guilds is amount of guilds, tally_users(ctx.bot)
+        gembed = discord.Embed(
+            title="Guilds",
+            color=discord.Color.blurple()
+        )
+        guilds = paginate_list(ctx.bot.guilds, 10, page)
+        if len(guilds) == 0:
+            return await ctx.send("That page doesn't exist!")
+        for guild in guilds:
             if safe:
-                guildstring += f"{guild.name}\n"
+                gembed.add_field(name=guild.name, value=f"{guild.member_count} members")  # ??
             else:
-                guildstring += f"{guild.name}, owned by {guild.owner}\n"
-                guildstring += f"ID {guild.id}\n"
-            guildstring += f"{len(guild.members)} members\n"
-            guildstring += "\n"  # padding
-        guildstring += f"Adds up to {tally_users(ctx.bot)} unique users "
-        guildstring += f"and {len(ctx.bot.guilds)} guilds"
-        await ctx.send(guildstring)
+                gembed.add_field(name=f"{guild.name} ({guild.id})",
+                                 value=f"{guild.member_count} members, owned by {guild.owner}")
+
+        gembed.set_footer(text=f"{len(ctx.bot.guilds)} guilds, {tally_users(ctx.bot)} unique users")
+
+        await ctx.send(embed=gembed)
 
 
 def setup(bot):

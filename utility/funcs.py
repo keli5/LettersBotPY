@@ -103,6 +103,7 @@ async def db_for_guild(id: int, returns: bool = False) -> dict:
     if returns is True:
         return guild
 
+
 async def db_for_mkv(id: int, returns: bool = False) -> dict:
     """ Same as db_for_user/guild, with markov settings. """
     try:
@@ -115,6 +116,7 @@ async def db_for_mkv(id: int, returns: bool = False) -> dict:
 
     if returns is True:
         return mkv
+
 
 async def image_from_url(source) -> Image:
     """ Takes a url of an image as `source`. Returns a Pillow image. """

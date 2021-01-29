@@ -1,5 +1,5 @@
 import discord
-from classes.dbmodels import LBGuild, GuildMarkovSettings
+from classes.dbmodels import LBGuild
 import utility.funcs as utility
 import datetime
 from discord.ext import commands, tasks
@@ -52,7 +52,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
                 return
         user = None
         user = await utility.db_for_user(message.author.id, True)
-        
+
         if message.author.bot or not user.canUseBot:
             return
 
@@ -69,7 +69,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
                 await owner.send(f"`DM from {message.author} ({message.author.id}):`\n{message.content}")
 
         canmkv = mkv and mkv.enabled
-         
+
         if (self.user in message.mentions) or (random.random() < 0.008 and canmkv):
             if random.choice([True, True, True, True, True, False]):
                 await message.channel.send(utility.call_markov(900))
