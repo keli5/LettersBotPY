@@ -31,7 +31,7 @@ class Fun(commands.Cog):
         """ Play the wheel. Lose it all, or double it? What'll you get? """
         userdb = await f.db_for_user(ctx.author.id, True)
         if userdb.balance <= 0 or userdb.balance <= wager:
-            await ctx.send("You can't afford that!")
+            raise Exception("You can't afford that wager.")
             return
         LBUser.filter(id=ctx.author.id).update(balance=userdb.balance - wager)
         wheelembed = discord.Embed(

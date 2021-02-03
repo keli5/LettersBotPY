@@ -124,7 +124,7 @@ class Owner(commands.Cog):
     async def guilds(self, ctx, page: int = 1, safe: bool = True):
         # guild.name, guild.id, guild.members, ctx.bot.guilds is amount of guilds, tally_users(ctx.bot)
         gembed = discord.Embed(
-            title="Guilds",
+            title=f"Guilds (page {page}) ",
             color=discord.Color.blurple()
         )
         guilds = paginate_list(ctx.bot.guilds, 10, page)
