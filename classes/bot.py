@@ -118,6 +118,9 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if isinstance(exception, commands.MissingRequiredArgument):
             ctx.command.reset_cooldown(ctx)
 
+        if isinstance(exception, Exception):  # we will be throwing generic exceptions in commands, fuck you
+            ctx.command.reset_cooldown(ctx)
+
         if isinstance(exception, commands.CommandOnCooldown):
             errembed.title = random.choice(cooldown_texts)
         else:
