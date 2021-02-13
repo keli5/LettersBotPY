@@ -1,6 +1,7 @@
 from classes.bot import LettersBot
 from discord.ext.commands import Paginator
 import utility.initdb as i
+import discord
 from tortoise import run_async
 from help_command import PaginatedHelpCommand
 import os
@@ -9,6 +10,7 @@ import json
 extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun", "voice"]
 botprefix = ""
 token = ""
+intents = discord.Intents(messages=True, guilds=True, members=True, presences=True)
 
 try:
     with open("config.json") as opts:
@@ -28,7 +30,8 @@ with open("classes/botowners.txt", "r") as botowners:
         command_prefix=botprefix,
         case_insensitive=True,
         owner_ids=json.loads(botowners.read()),
-        help_command=PaginatedHelpCommand(paginator=paginator)  # see help_command.py
+        help_command=PaginatedHelpCommand(paginator=paginator),  # see help_command.py
+        intents=intents
     )
 
 # if not os.path.exists("lettersbot_data.sqlite3"):
