@@ -162,7 +162,7 @@ def tally_users(bot) -> int:
 
 
 def reload_markov():
-    with open("corpus.txt") as f:
+    with open("corpus.txt", encoding="utf-8") as f:
         corpus = f.read()
     try:
         global markov
@@ -170,7 +170,7 @@ def reload_markov():
         markov = markovify.NewlineText(corpus)
         cmarkov = CharacterText(corpus, state_size=3)
     except Exception as e:
-        print("Markov is disabled - an error occurred:")
+        print("Markov will not work - an error occurred:")
         print(e)
 
 
