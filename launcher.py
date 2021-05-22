@@ -30,7 +30,7 @@ with open("classes/botowners.txt", "r") as botowners:
         command_prefix=botprefix,
         case_insensitive=True,
         owner_ids=json.loads(botowners.read()),
-        help_command=PaginatedHelpCommand(paginator=paginator),  # see help_command.py
+        # help_command=PaginatedHelpCommand(paginator=paginator),  # see help_command.py
         intents=intents
     )
 

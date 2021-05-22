@@ -45,6 +45,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if message.channel.type is not discord.ChannelType.private:
             guild = await utility.db_for_guild(message.guild.id, True)
             mkv = await utility.db_for_mkv(message.guild.id, True)
+            chatchannel = await utility.db_for_mkv_channel(message.channel.id, True)
 
         if guild:
             if guild.blacklisted:
@@ -68,8 +69,9 @@ class LettersBot(commands.AutoShardedBot):  # when you going
                 await owner.send(f"`DM from {message.author} ({message.author.id}):`\n{message.content}")
 
         canmkv = mkv and mkv.enabled
+        is_chat_channel = chatchannel and chatchannel.enabled
 
-        if (self.user in message.mentions) or (random.random() < 0.008 and canmkv):
+        if (self.user in message.mentions) or (random.random() < 0.008 and canmkv) or is_chat_channel:
             if random.choice([True, True, True, True, True, False]):
                 await message.channel.send(utility.call_markov(900))
             else:

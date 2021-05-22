@@ -7,7 +7,7 @@ import typing
 import markovify
 from PIL import Image
 from tortoise import Tortoise
-from classes.dbmodels import GuildMarkovSettings, LBUser, LBGuild
+from classes.dbmodels import GuildMarkovSettings, LBUser, LBGuild, GuildChatChannel
 from classes.cmarkov import CharacterText
 markov = None
 cmarkov = None
@@ -112,6 +112,20 @@ async def db_for_mkv(id: int, returns: bool = False) -> dict:
         mkv = await GuildMarkovSettings.create(
             id=id,
             enabled=True
+        )
+
+    if returns is True:
+        return mkv
+
+
+async def db_for_mkv_channel(id: int, returns: bool = False) -> dict:
+    """ Same as the other shit but mkv channels """
+    try:
+        mkv = await GuildChatChannel[id]
+    except KeyError:
+        mkv = await GuildChatChannel.create(
+            id=id,
+            enabled=False
         )
 
     if returns is True:

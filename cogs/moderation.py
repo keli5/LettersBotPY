@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord
-from classes.dbmodels import LBGuild, GuildMarkovSettings
+from classes.dbmodels import LBGuild, GuildMarkovSettings, GuildChatChannel
 alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
 
@@ -72,6 +72,17 @@ class Moderation(commands.Cog):
         can = getattr(markov, "enabled")
         await GuildMarkovSettings.filter(id=ctx.guild.id).update(enabled=(not can))
         await ctx.send(f"Toggled random markov messages. This bot **{'can' if not can else 'can not'}** randomly speak in this server.")
+
+
+    @commands.command(aliases=["chatchannel"])
+    @commands.has_permissions(manage_guild=True)
+    async def togglechatchannel(self, ctx):
+        """ Allow or disallow the bot from responding to every message in this channel. """
+        markov = await GuildChatChannel[ctx.channel.id]
+        can = getattr(markov, "enabled")
+        await GuildChatChannel.filter(id=ctx.channel.id).update(enabled=(not can))
+        await ctx.send(f"Toggled chat channel. This bot **{'can' if not can else 'can not'}** respond to each message in this channel.")
+
 
     @commands.group(aliases=["joinmessage"], invoke_without_command=True)
     @commands.has_permissions(manage_guild=True)

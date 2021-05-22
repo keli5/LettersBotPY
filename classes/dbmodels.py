@@ -18,3 +18,6 @@ class LBGuild(Model):
 
 class GuildMarkovSettings(Model):
     enabled = fields.BooleanField()
+
+class GuildChatChannel(Model):  # ugh
+    enabled = fields.BooleanField()
