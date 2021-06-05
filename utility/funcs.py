@@ -202,6 +202,8 @@ def call_markov(maxlength, startword: str = None) -> str:
     except KeyError:
         sentence = f"`{startword}` does not appear enough in the corpus."
     sentence = sentence or "Failed to generate a sentence."
+    sentence = sentence.replace("@everyone", "everyone")
+    sentence = sentence.replace("@here", "here")
     return sentence
 
 
@@ -219,6 +221,8 @@ def call_cmarkov(maxlength, startword: str = None) -> str:
     except KeyError:
         sentence = f"`{startword}` does not appear enough in the corpus."
     sentence = sentence or "Failed to generate a sentence."
+    sentence = sentence.replace("@everyone", "everyone")
+    sentence = sentence.replace("@here", "here")
     return sentence
 
 
