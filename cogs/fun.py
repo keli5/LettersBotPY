@@ -112,10 +112,9 @@ class Fun(commands.Cog):
         await ctx.send(f"Rolled `{amount}d{sides}{mod}`.\n{rolls} with {modtext} = {roll+modifier}.")
 
     @commands.command(aliases=["mkv"])
-    async def markov(self, ctx, start: str = None, start2: str = None):
+    async def markov(self, ctx, start: str = None):
         """ Generate a Markov chain. """
-        start = start or None
-        await ctx.send(f.call_markov(1600, start + start2 or ""))
+        await ctx.send(f.call_markov(1600, start))
 
     @commands.command(aliases=["cmkv"])
     async def cmarkov(self, ctx):
