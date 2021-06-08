@@ -106,7 +106,8 @@ class Owner(commands.Cog):
     @commands.command(aliases=["reloadmkv"])
     @commands.is_owner()
     async def reloadmarkov(self, ctx):
-        reload_markov()
+        async with ctx.typing():
+            reload_markov()
         await ctx.send('Done')
 
     @commands.command(aliases=["editpfp"])

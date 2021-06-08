@@ -181,11 +181,14 @@ def reload_markov():
     try:
         global markov
         global cmarkov
-        markov = markovify.NewlineText(corpus)
-        cmarkov = CharacterText(corpus, state_size=3)
+        newmarkov = markovify.NewlineText(corpus)
+        newcmarkov = CharacterText(corpus, state_size=3)
     except Exception as e:
         print("Markov will not work - an error occurred:")
         print(e)
+
+    markov = newmarkov
+    cmarkov = newcmarkov
 
 
 def call_markov(maxlength, startword: str = None) -> str:
