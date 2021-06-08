@@ -115,7 +115,7 @@ class Fun(commands.Cog):
     async def markov(self, ctx, start: str = None, start2: str = None):
         """ Generate a Markov chain. """
         start = start or None
-        await ctx.send(f.call_markov(1600, start + start2))
+        await ctx.send(f.call_markov(1600, start + start2 or ""))
 
     @commands.command(aliases=["cmkv"])
     async def cmarkov(self, ctx):
