@@ -180,14 +180,24 @@ def reload_markov():
         corpus = f.read()
     try:
         global markov
-        global cmarkov
         newmarkov = markovify.NewlineText(corpus)
-        newcmarkov = CharacterText(corpus, state_size=3)
     except Exception as e:
         print("Markov will not work - an error occurred:")
         print(e)
 
     markov = newmarkov
+
+
+def reload_cmarkov():
+    with open("corpus.txt", encoding="utf-8") as f:
+        corpus = f.read()
+    try:
+        global cmarkov
+        newcmarkov = CharacterText(corpus, state_size=3)
+    except Exception as e:
+        print("CMarkov will not work - an error occurred:")
+        print(e)
+
     cmarkov = newcmarkov
 
 
