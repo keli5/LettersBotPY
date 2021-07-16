@@ -28,7 +28,7 @@ class Fun(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 45, BucketType.user)
     async def wheel(self, ctx, wager: float):
-        """ Play the wheel. Lose it all, or double it? What'll you get? """
+        """ Spin the wheel. You can lose your bet, or double it completely. """
         userdb = await f.db_for_user(ctx.author.id, True)
         if userdb.balance <= 0 or userdb.balance < wager:
             raise Exception("You can't afford that wager.")
