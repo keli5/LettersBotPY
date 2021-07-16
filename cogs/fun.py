@@ -30,9 +30,13 @@ class Fun(commands.Cog):
     async def wheel(self, ctx, wager: float):
         """ Play the wheel. Lose it all, or double it? What'll you get? """
         userdb = await f.db_for_user(ctx.author.id, True)
-        if userdb.balance <= 0 or userdb.balance <= wager:
+        if userdb.balance <= 0 or userdb.balance < wager:
             raise Exception("You can't afford that wager.")
             return
+        if wager > 50000:
+            raise Exception("Maximum wager is 50,000.")
+            return
+
         LBUser.filter(id=ctx.author.id).update(balance=userdb.balance - wager)
         wheelembed = discord.Embed(
             title="Spin the Wheel!",
@@ -188,6 +192,7 @@ class Fun(commands.Cog):
             winnerembed.description += f"\nYou all earned {self.cur}{earn}!"
             winnerembed.description += f"\nCheck your balance with {self.bot.command_prefix}bal."
         await ctx.send(embed=winnerembed)
+
 
     @commands.command()
     async def spotify(self, ctx, user: discord.Member = None):
