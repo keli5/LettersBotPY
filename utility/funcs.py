@@ -9,6 +9,7 @@ from PIL import Image
 from tortoise import Tortoise
 from classes.dbmodels import GuildMarkovSettings, LBUser, LBGuild, GuildChatChannel
 from classes.cmarkov import CharacterText
+import ctypes
 markov = None
 cmarkov = None
 
@@ -248,8 +249,12 @@ def paginate_list(list_items: typing.Union[list, tuple],
 
 
 def get_uptime():  # lifted directly from S/O: https://stackoverflow.com/a/55109870/12082547
-    with open('/proc/uptime', 'r') as f:
-        uptime_seconds = float(f.readline().split()[0])
+    uptime_seconds = None
+    try:
+        with open('/proc/uptime', 'r') as f:
+            uptime_seconds = float(f.readline().split()[0])
+    except FileNotFoundError:  # FUCK
+        uptime_seconds = ctypes.windll.kernel32.GetTickCount64() / 1000.0
 
     return uptime_seconds
 
