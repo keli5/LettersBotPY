@@ -56,7 +56,7 @@ class Utility(commands.Cog):
             title=f"Avatar of {str(victim)}",
             color=victim.color
         )
-        avatarembed.set_image(url=victim.avatar_url)
+        avatarembed.set_image(url=victim.avatar.url)
         await ctx.send(embed=avatarembed)
 
     @commands.command()
@@ -72,7 +72,7 @@ class Utility(commands.Cog):
             name="Joined guild at",
             value=user.joined_at.strftime("%m/%d/%Y %H:%M") + " UTC"
         )
-        uiembed.set_thumbnail(url=str(user.avatar_url))
+        uiembed.set_thumbnail(url=str(user.avatar.url))
         uiembed.add_field(name="Nickname", value=user.nick or "No nickname")
         rolestring = ""
         nroles = []
@@ -190,7 +190,7 @@ class Utility(commands.Cog):
                         "and tell me about bugs on the GitHub repo!",
             color=discord.Color.gold()
         )
-        iembed.set_thumbnail(url=ctx.bot.user.avatar_url)
+        iembed.set_thumbnail(url=ctx.bot.user.avatar.url)
         iembed.add_field(name="Home/support server", value="https://discord.gg/Dnhj9GG2Et")
         iembed.add_field(
             name="Invite the bot",
@@ -201,7 +201,7 @@ class Utility(commands.Cog):
         letters = ctx.bot.get_user(556614860931072012)
         iembed.set_footer(
             text=f"Made by Letters ({letters})",
-            icon_url=letters.avatar_url
+            icon_url=letters.avatar.url
         )
         await ctx.send(embed=iembed)
 
