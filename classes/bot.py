@@ -12,6 +12,7 @@ started_at = datetime.datetime.now()
 cooldown_texts = ["Hey there.", "Hold on a second!", "pls wait...", "Cooldown..", "Hey, chill.",
                   "Just a minute...", "Give it a second.", "Whoop", "..."]
 
+
 class LettersBot(commands.AutoShardedBot):  # when you going
     """ Welcome to the rewrite of LettersBot! """
     async def on_ready(self):
@@ -29,7 +30,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
     @tasks.loop(minutes=5.0)
     async def update_status(self):
         try:
-            user_count = utility.call_cmarkov(25)
+            user_count = utility.call_cmarkov()  # stop failing dipshit
         except Exception:
             user_count = "with you"
 

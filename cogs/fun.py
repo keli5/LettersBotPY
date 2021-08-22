@@ -193,7 +193,6 @@ class Fun(commands.Cog):
             winnerembed.description += f"\nCheck your balance with {self.bot.command_prefix}bal."
         await ctx.send(embed=winnerembed)
 
-
     @commands.command()
     async def spotify(self, ctx, user: discord.Member = None):
         """ See a user's Spotify information. Uses presences, so offline users / non-connected Spotify won't work. It's real fucky, especially on mobile.  """
