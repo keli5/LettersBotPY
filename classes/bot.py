@@ -31,6 +31,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
     async def update_status(self):
         try:
             user_count = utility.call_cmarkov()  # stop failing dipshit
+            user_count = user_count[:20]
         except Exception:
             user_count = "with you"
 
