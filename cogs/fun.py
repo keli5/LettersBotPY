@@ -195,7 +195,8 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def spotify(self, ctx, user: discord.Member = None):
-        """ See a user's Spotify information. Uses presences, so offline users / non-connected Spotify won't work. It's real fucky, especially on mobile.  """
+        """ See a user's Spotify information. Uses presences, so offline users / non-connected Spotify won't work.
+        It's real fucky, especially on mobile.  """
         user = user or ctx.author
         sembed = discord.Embed(
             title=f"Spotify for {user}"
