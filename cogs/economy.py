@@ -47,7 +47,7 @@ class Economy(commands.Cog):
         await ctx.send(embed=lbembed)
 
     @commands.command()
-    @commands.cooldown(1, 30, BucketType.user)
+    @commands.cooldown(1, 400, BucketType.user)
     async def guess(self, ctx, guess: int):
         """ Play a guessing game for a chance to earn some money. 30 sec cooldown. """
         if guess > 100 or guess < 0:
