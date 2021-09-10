@@ -15,6 +15,7 @@ modeltypes = {
     "guilds": LBGuild,
     "markov": GuildMarkovSettings
 }
+
 valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole",
                 "warnings", "banUntil", "joinMesg", "joinMesgChannel",
                 "blacklisted", "disabledCommands", "items", "enabled"]
@@ -83,6 +84,17 @@ class Owner(commands.Cog):
     async def echo(self, ctx, *, content):
         await ctx.message.delete()
         await ctx.send(content)
+
+    @commands.command(aliases=["cc"])
+    @commands.is_owner()
+    async def corpuscontains(self, ctx, substring):
+        count = 0
+        with open("corpus.txt", 'r', encoding="utf-8") as corpus:
+            text = corpus.read()
+            count = text.count(substring)
+            corpus.close()
+        await ctx.send(f"Found {count} instances of `{substring}`")
+
 
     @db.command(name="get")
     @commands.is_owner()
