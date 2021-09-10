@@ -85,17 +85,6 @@ class Owner(commands.Cog):
         await ctx.message.delete()
         await ctx.send(content)
 
-    @commands.command(aliases=["cc"])
-    @commands.is_owner()
-    async def corpuscontains(self, ctx, substring):
-        count = 0
-        with open("corpus.txt", 'r', encoding="utf-8") as corpus:
-            text = corpus.read()
-            count = text.count(substring)
-            corpus.close()
-        await ctx.send(f"Found {count} instances of `{substring}`")
-
-
     @db.command(name="get")
     @commands.is_owner()
     async def get_db_item(self, ctx, model, id):
@@ -130,12 +119,10 @@ class Owner(commands.Cog):
         timed = round(end - start, 2)
         await ctx.send(f"Reloaded markov and cmarkov in {timed} seconds.")
 
-
     @commands.command()
     @commands.is_owner()
     async def stop(self, ctx):
         exit(0)
-
 
     @commands.command(aliases=["editpfp"])
     @commands.is_owner()

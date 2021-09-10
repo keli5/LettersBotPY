@@ -1,4 +1,5 @@
 from discord.ext import commands
+from discord.ext.commands.cooldowns import BucketType
 import discord
 import typing
 import utility.funcs as f
@@ -47,6 +48,17 @@ class Utility(commands.Cog):
         osembed.add_field(name="Architecture", value=p.machine() or p.processor() or "Unknown")
         await ctx.send(embed=osembed)
 # todo: osinfo packages needs to be fixed
+# lol
+
+    @commands.command(aliases=["cc"])
+    @commands.cooldown(1, 3, BucketType.user)
+    async def corpuscontains(self, ctx, substring):
+        count = 0
+        with open("corpus.txt", 'r', encoding="utf-8") as corpus:
+            text = corpus.read()
+            count = text.count(substring)
+            corpus.close()
+        await ctx.send(f"Found {count} instances of `{substring}`")
 
     @commands.command(aliases=["a"])
     async def avatar(self, ctx, user: discord.User = None):
