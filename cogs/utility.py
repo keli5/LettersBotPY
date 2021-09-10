@@ -52,7 +52,7 @@ class Utility(commands.Cog):
 
     @commands.command(aliases=["cc"])
     @commands.cooldown(1, 3, BucketType.user)
-    async def corpuscontains(self, ctx, substring):
+    async def corpuscontains(self, ctx, *, substring):
         count = 0
         with open("corpus.txt", 'r', encoding="utf-8") as corpus:
             text = corpus.read()
