@@ -182,6 +182,7 @@ def reload_markov():
     try:
         global markov
         newmarkov = markovify.NewlineText(corpus)
+        # newmarkov = newmarkov.compile()
     except Exception as e:
         print("Markov will not work - an error occurred:")
         print(e)
@@ -195,6 +196,7 @@ def reload_cmarkov():
     try:
         global cmarkov
         newcmarkov = CharacterText(corpus, state_size=3)
+        # newcmarkov = newcmarkov.compile()
     except Exception as e:
         print("CMarkov will not work - an error occurred:")
         print(e)

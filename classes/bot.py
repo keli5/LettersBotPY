@@ -65,6 +65,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             if re.match(pingregex, message.content) or not re.match(swregex, message.content):
                 if message.channel.type is not discord.ChannelType.private:
                     if message.guild.id in self.allowedLearningGuilds:
+                        pass
                         # corpus.write(message.content.lower() + "\n")
 
         if (message.channel.type == discord.ChannelType.private) and owner:
