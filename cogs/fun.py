@@ -81,14 +81,6 @@ class Fun(commands.Cog):
             coinembed.description = "...the coin landed on its side?"
         await ctx.send(embed=coinembed)
 
-    @commands.command()
-    async def insult(self, ctx):
-        """ Generate an... interesting insult. """
-        v = random.choice(verb)
-        n = random.choice(noun)
-        end = random.choice(["!", "."])
-        await ctx.send(f"I will {v} your {n}{end}")
-
     @commands.command(aliases=["roll"])
     async def diceroll(self, ctx, amount: int = 1, sides: int = 6, modifier: int = 0):
         """ Roll some dice. """
