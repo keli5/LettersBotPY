@@ -12,6 +12,10 @@ started_at = datetime.datetime.now()
 cooldown_texts = ["Hey there.", "Hold on a second!", "pls wait...", "Cooldown..", "Hey, chill.",
                   "Just a minute...", "Give it a second.", "Whoop", "..."]
 
+status_texts = ["with pip", "with python", "with you", "with bot.py", "with git", "mind games", "ooer game",
+                "minecraft", "with bash", "with linux", "games", "with discord", "with discord.py",
+                "with frogs", "with cats", "with dogs", "you", "vs code", "around"]
+
 
 class LettersBot(commands.AutoShardedBot):  # when you going
     """ Welcome to the rewrite of LettersBot! """
