@@ -115,7 +115,7 @@ class Owner(commands.Cog):
         end = time.time()
         await loadingmsg.delete()
         timed = round(end - start, 2)
-        await ctx.send(f"Reloaded markov and cmarkov in {timed} seconds.")
+        await ctx.send(f"Reloaded markov in {timed} seconds.")
 
     @commands.command()
     @commands.is_owner()

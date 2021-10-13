@@ -24,7 +24,6 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         self.allowedLearningGuilds = config["markovGuilds"]
         self.queues = {}
         utility.reload_markov()
-        utility.reload_cmarkov()
         for guild in self.guilds:
             self.queues[guild.id] = []
         await utility.setup()

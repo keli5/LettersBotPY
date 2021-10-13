@@ -10,7 +10,6 @@ from tortoise import Tortoise
 from classes.dbmodels import GuildMarkovSettings, LBUser, LBGuild, GuildChatChannel
 import ctypes
 markov = None
-cmarkov = None
 
 
 eightball = [
@@ -181,7 +180,6 @@ def reload_markov():
     try:
         global markov
         newmarkov = markovify.NewlineText(corpus)
-        # newmarkov = newmarkov.compile()
     except Exception as e:
         print("Markov will not work - an error occurred:")
         print(e)
@@ -200,25 +198,6 @@ def call_markov(maxlength, startword: str = None) -> str:
                 )
         else:
             sentence = markov.make_short_sentence(maxlength)
-    except KeyError:
-        sentence = f"`{startword}` does not appear enough in the corpus."
-    sentence = sentence or "Failed to generate a sentence."
-    sentence = sentence.replace("@everyone", "everyone")
-    sentence = sentence.replace("@here", "here")
-    return sentence
-
-
-def call_cmarkov(maxlength, startword: str = None) -> str:
-    try:
-        if startword:
-            sentence = cmarkov.make_sentence_with_start(
-                startword,
-                max_chars=maxlength,
-                strict=True,
-                tries=200
-                )
-        else:
-            sentence = cmarkov.make_short_sentence(maxlength)
     except KeyError:
         sentence = f"`{startword}` does not appear enough in the corpus."
     sentence = sentence or "Failed to generate a sentence."
