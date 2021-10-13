@@ -112,11 +112,6 @@ class Fun(commands.Cog):
         """ Generate a Markov chain. """
         await ctx.send(f.call_markov(1600, start))
 
-    @commands.command(aliases=["cmkv"])
-    async def cmarkov(self, ctx):
-        """ Generates a chunk-based Markov chain. Can have interesting results. """
-        await ctx.send(f.call_cmarkov(1600))
-
     @commands.command()
     async def trivia(self, ctx):
         """ Trivia question. Occasionally worth some money. """

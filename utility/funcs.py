@@ -8,7 +8,6 @@ import markovify
 from PIL import Image
 from tortoise import Tortoise
 from classes.dbmodels import GuildMarkovSettings, LBUser, LBGuild, GuildChatChannel
-from classes.cmarkov import CharacterText
 import ctypes
 markov = None
 cmarkov = None
@@ -188,20 +187,6 @@ def reload_markov():
         print(e)
 
     markov = newmarkov
-
-
-def reload_cmarkov():
-    with open("corpus.txt", encoding="utf-8") as f:
-        corpus = f.read()
-    try:
-        global cmarkov
-        newcmarkov = CharacterText(corpus, state_size=3)
-        # newcmarkov = newcmarkov.compile()
-    except Exception as e:
-        print("CMarkov will not work - an error occurred:")
-        print(e)
-
-    cmarkov = newcmarkov
 
 
 def call_markov(maxlength, startword: str = None) -> str:

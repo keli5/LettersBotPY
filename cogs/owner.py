@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 from classes.dbmodels import LBUser, LBGuild, GuildMarkovSettings
-from utility.funcs import reload_cmarkov, reload_markov, call_markov, image_from_url, tally_users, paginate_list
+from utility.funcs import reload_markov, call_markov, image_from_url, tally_users, paginate_list
 import os
 import humanize
 import io
@@ -112,8 +112,6 @@ class Owner(commands.Cog):
         start = time.time()
         async with ctx.typing():
             reload_markov()
-            await loadingmsg.edit(content="Done! Reloading cmarkov... `this may take a minute`")
-            reload_cmarkov()
         end = time.time()
         await loadingmsg.delete()
         timed = round(end - start, 2)

@@ -79,10 +79,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         is_chat_channel = chatchannel and chatchannel.enabled
 
         if (self.user in message.mentions) or (random.random() < 0.008 and canmkv) or is_chat_channel:
-            if random.choice([True, True, True, True, True, False]):
-                await message.channel.send(utility.call_markov(900))
-            else:
-                await message.channel.send(utility.call_cmarkov(900))
+            await message.channel.send(utility.call_markov(900))
 
         await self.process_commands(message)
 
