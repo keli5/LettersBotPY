@@ -136,12 +136,12 @@ class Utility(commands.Cog):
         gpiembed = discord.Embed(
             title=package,
             color=0x4B8BBE,
-            description=packageinfo["summary"],
+            description=packageinfo["summary"] or "No description provided.",
             url=packageinfo["package_url"]
         )
-        gpiembed.add_field(name="Author", value=packageinfo["author"])
+        gpiembed.add_field(name="Author", value=packageinfo["author"] or "Unknown author")
         gpiembed.add_field(name="Python version", value=packageinfo["requires_python"] or "Unknown")
-        gpiembed.add_field(name="Package version", value=packageinfo["version"])
+        gpiembed.add_field(name="Package version", value=packageinfo["version"] or "Unversioned")
         if packageinfo["docs_url"]:
             gpiembed.add_field(name="Docs", value=packageinfo["docs_url"], inline=False)
 
