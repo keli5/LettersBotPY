@@ -43,7 +43,7 @@ class Economy(commands.Cog):
             name = await ctx.bot.fetch_user(user.id)
             name = name or user.id
             bal = user.balance
-            lbembed.add_field(name=name, value=self.cur + f"{round(bal, 2):,}", inline=False)
+            lbembed.add_field(name=name, value=self.cur + f"{round(bal, 2):,}", inline=True)
         await ctx.send(embed=lbembed)
 
     @commands.command()
