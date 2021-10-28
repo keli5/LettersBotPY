@@ -36,6 +36,8 @@ class Fun(commands.Cog):
         if wager > 50000:
             raise Exception("Maximum wager is 50,000.")
             return
+        if wager < 5:
+            raise Exception("Can't bet less than 5")
 
         LBUser.filter(id=ctx.author.id).update(balance=userdb.balance - wager)
         wheelembed = discord.Embed(
