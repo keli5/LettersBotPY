@@ -32,10 +32,8 @@ class Fun(commands.Cog):
         userdb = await f.db_for_user(ctx.author.id, True)
         if userdb.balance <= 0 or userdb.balance < wager:
             raise Exception("You can't afford that wager.")
-            return
         if wager > 50000:
             raise Exception("Maximum wager is 50,000.")
-            return
         if wager < 5:
             raise Exception("Can't bet less than 5")
 
