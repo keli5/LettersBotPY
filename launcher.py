@@ -3,11 +3,11 @@ from discord.ext.commands import Paginator
 import utility.initdb as i
 import discord
 from tortoise import run_async
-from help_command import PaginatedHelpCommand
-import os
+# from help_command import PaginatedHelpCommand
+# import os
 import json
 
-extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun", "voice"]
+extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun", "voice", "shop"]
 botprefix = ""
 token = ""
 intents = discord.Intents(messages=True, guilds=True, members=True, presences=True)

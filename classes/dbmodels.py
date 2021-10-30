@@ -18,7 +18,7 @@ class LBGuild(Model):
 
 class GuildShop(Model):
     id = fields.IntField(pk=True)
-    items = fields.JSONField(null=False)
+    items = fields.JSONField(null=True)
 
 
 class GuildMarkovSettings(Model):
