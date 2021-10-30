@@ -41,21 +41,22 @@ class Shop(commands.Cog):
         items = paginate_list(items, 10, page)  # uh, this is a bit of a hack.
 
         for item, price in zip(items, prices):
-            shopembed.add_field(name=item, value=price)
+            shopembed.add_field(name=item, value=price + self.cur)
 
         await ctx.send(embed=shopembed)
 
     @shop.command()
     async def buy(self, ctx, item: str):
         """ Buy an item from the shop. """
-        items = await get_shop(ctx.guild.id).items
+        shop = await get_shop(ctx.guild.id)
+        items = shop.items
         try:
-            obj = items[item]
+            price = items[item]
         except KeyError:
             await ctx.send("That item is not in the shop.")
             return
-
-
+        
+        
 
 
 def setup(bot):
