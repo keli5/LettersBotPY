@@ -1,6 +1,6 @@
 from discord.ext import commands
 import discord
-from classes.dbmodels import LBUser, LBGuild, GuildMarkovSettings
+from classes.dbmodels import LBUser, LBGuild, GuildMarkovSettings, GuildShop
 from utility.funcs import reload_markov, call_markov, image_from_url, tally_users, paginate_list
 import os
 import humanize
@@ -13,7 +13,8 @@ import typing
 modeltypes = {
     "users": LBUser,
     "guilds": LBGuild,
-    "markov": GuildMarkovSettings
+    "markov": GuildMarkovSettings,
+    "shop": GuildShop
 }
 
 valid_fields = ["id", "inventory", "canUseBot", "balance", "muteRole",
