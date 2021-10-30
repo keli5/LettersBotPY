@@ -16,8 +16,14 @@ class LBGuild(Model):
     joinMesgChannel = fields.IntField(null=True)
 
 
+class GuildShop(Model):
+    id = fields.IntField(pk=True)
+    items = fields.JSONField(null=False)
+
+
 class GuildMarkovSettings(Model):
     enabled = fields.BooleanField()
+
 
 class GuildChatChannel(Model):  # ugh
     enabled = fields.BooleanField()
