@@ -78,7 +78,6 @@ class Shop(commands.Cog):
         shop = await get_shop(ctx.guild.id)
         user = await db_for_user(ctx.author.id, True)
         user_inv = user.inventory
-        await ctx.send(user_inv)
 
         items = shop.items
         try:
@@ -102,6 +101,91 @@ class Shop(commands.Cog):
         )
         buyembed.add_field(name="Balance remaining", value=self.cur + str(user.balance - (price * amount)))
         await ctx.send(embed=buyembed)
+
+    @shop.command()
+    async def sell(self, ctx, item: str, amount: int = 1):
+        """ Sell an item to the shop. """
+        if amount < 1:
+            return await ctx.send("You can't sell less than 1 item.")
+        shop = await get_shop(ctx.guild.id)
+        user = await db_for_user(ctx.author.id, True)
+        user_inv = user.inventory
+
+        items = shop.items
+        try:
+            price = items[item]
+        except KeyError:
+            return await ctx.send(f"{item if len(item) <= 55 else 'That item'} is not in the shop.")
+        if amount > user_inv[item]:
+            return await ctx.send(f"You do not have enough {item} to sell.")
+
+        try:
+            user_inv[item] -= amount
+        except KeyError:
+            return await ctx.send(f"You do not have any {item} to sell.")
+
+        await LBUser.filter(id=ctx.author.id).update(balance=user.balance + (price * amount),
+                                                     inventory=user_inv)
+        buyembed = discord.Embed(
+            title="Transaction successful!",
+            description=f"You have sold {amount} {item} for {self.cur}{price * amount}.",
+            color=discord.Color.green()
+        )
+        buyembed.add_field(name="Balance remaining", value=self.cur + str(user.balance + (price * amount)))
+        await ctx.send(embed=buyembed)
+
+    @commands.command()
+    async def give(self, ctx, user: discord.User, item: str, amount: int = 1):
+        """Give an item to another user."""
+        if amount < 1:
+            return await ctx.send("You can't give less than 1 item.")
+        sender = await db_for_user(ctx.author.id, True)
+        receiver = await db_for_user(user.id, True)
+        sender_inv = sender.inventory
+        reciever_inv = receiver.inventory
+
+        try:
+            reciever_inv[item] += amount
+        except KeyError:
+            reciever_inv[item] = amount
+
+        try:
+            sender_inv[item] -= amount
+        except KeyError:
+            return await ctx.send(f"You do not have any {item} to give.")
+
+        await LBUser.filter(id=ctx.author.id).update(inventory=sender_inv)
+        await LBUser.filter(id=user.id).update(inventory=reciever_inv)
+        giveembed = discord.Embed(
+            title="Transaction successful!",
+            description=f"You have given {amount} {item} to {user.name}.",
+            color=discord.Color.green()
+        )
+        await ctx.send(embed=giveembed)
+
+    @commands.has_guild_permissions(manage_channels=True)
+    @shop.command()
+    async def additem(self, ctx, item: str, price: int):
+        """ Add an item to the shop. """
+        if (price < 0.05):
+            return await ctx.send("Item must cost at least 0.05")
+        shop = await get_shop(ctx.guild.id)
+        shop.items[item] = price
+        await GuildShop.filter(id=ctx.guild.id).update(items=shop.items)
+        await ctx.send(f"{item} has been added to the shop, costs {self.cur}{price}")
+
+    @commands.has_guild_permissions(manage_channels=True)
+    @shop.command()
+    async def removeitem(self, ctx, item: str):
+        """ Remove an item from the shop. """
+        shop = await get_shop(ctx.guild.id)
+
+        try:
+            del shop.items[item]
+        except KeyError:
+            return await ctx.send(f"{item} is not in the shop.")
+        await GuildShop.filter(id=ctx.guild.id).update(items=shop.items)
+        await ctx.send(f"{item} has been removed from the shop.")
 
 
 def setup(bot):
