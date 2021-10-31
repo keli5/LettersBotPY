@@ -99,7 +99,7 @@ class Shop(commands.Cog):
             description=f"You have bought {amount} {item} for {self.cur}{price * amount}.",
             color=discord.Color.green()
         )
-        buyembed.add_field(name="Balance remaining", value=self.cur + str(user.balance - (price * amount)))
+        buyembed.add_field(name="Balance remaining", value=self.cur + str(round(user.balance - (price * amount), 2)))
         await ctx.send(embed=buyembed)
 
     @shop.command()
@@ -131,7 +131,7 @@ class Shop(commands.Cog):
             description=f"You have sold {amount} {item} for {self.cur}{price * amount}.",
             color=discord.Color.green()
         )
-        buyembed.add_field(name="Balance remaining", value=self.cur + str(user.balance + (price * amount)))
+        buyembed.add_field(name="Balance", value=self.cur + str(round(user.balance + (price * amount), 2)))
         await ctx.send(embed=buyembed)
 
     @commands.command()
