@@ -191,4 +191,5 @@ class Shop(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Shop(bot))
+    ...
+    # bot.add_cog(Shop(bot))

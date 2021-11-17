@@ -43,7 +43,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             )
         )
 
-    async def on_message(self, message):
+    async def on_message(self, message: discord.Message):
         owner = self.owner_ids[0] or self.owner_id or None
         owner = self.get_user(owner)
         guild = None
@@ -68,7 +68,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
                 if message.channel.type is not discord.ChannelType.private:
                     if message.guild.id in self.allowedLearningGuilds:
                         pass
-                        # corpus.write(message.content.lower() + "\n")
+                        corpus.write(message.content.lower() + "\n")
 
         if (message.channel.type == discord.ChannelType.private) and owner:
             if message.author is not owner:
@@ -78,7 +78,14 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         is_chat_channel = chatchannel and chatchannel.enabled
 
         if (self.user in message.mentions) or (random.random() < 0.008 and canmkv) or is_chat_channel:
-            await message.channel.send(utility.call_markov(900))
+            firstmsg = utility.call_markov(900)
+
+            if random.randint(0, 20) == 10:
+                msg = utility.call_markov(900, message.author.mention)
+            if "appear enough in the corpus" in msg:  # I am a victim of my own bad code
+                msg = firstmsg
+
+            await message.channel.send(msg)
 
         await self.process_commands(message)
 
