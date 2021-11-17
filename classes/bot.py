@@ -78,7 +78,8 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         is_chat_channel = chatchannel and chatchannel.enabled
 
         if (self.user in message.mentions) or (random.random() < 0.008 and canmkv) or is_chat_channel:
-            firstmsg = utility.call_markov(900)
+            msg = utility.call_markov(900)
+            firstmsg = msg
 
             if random.randint(0, 20) == 10:
                 msg = utility.call_markov(900, message.author.mention)
