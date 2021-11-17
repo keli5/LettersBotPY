@@ -167,6 +167,8 @@ class Shop(commands.Cog):
     @shop.command()
     async def additem(self, ctx, item: str, price: int):
         """ Add an item to the shop. """
+        if (len(item) > 55):
+            return await ctx.send("Item name too long.")
         if (price < 0.05):
             return await ctx.send("Item must cost at least 0.05")
         shop = await get_shop(ctx.guild.id)
