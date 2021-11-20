@@ -114,9 +114,9 @@ class Fun(commands.Cog):
             await ctx.send(f.call_markov(1600, start))
         except Exception as e:
             if "can't find sentence" in str(e):
-                return await ctx.send("`start` does not appear enough in the corpus.")
+                return await ctx.send(f"`{start}` does not appear enough in the corpus.")
             if "requires a string containing" in str(e):
-                return await ctx.send("`start` has too many words. (max 2)")
+                return await ctx.send(f"`{start}` has too many words. (max 2)")
 
     @commands.command()
     async def trivia(self, ctx):
