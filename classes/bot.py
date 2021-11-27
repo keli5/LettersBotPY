@@ -15,7 +15,7 @@ cooldown_texts = ["Hey there.", "Hold on a second!", "pls wait...", "Cooldown.."
 status_texts = ["with pip", "with python", "with you", "with bot.py", "with git", "mind games", "ooer game",
                 "minecraft", "with bash", "with linux", "games", "with discord", "with discord.py",
                 "with frogs", "with cats", "with dogs", "you", "vs code", "around", "with knives", "with destruction",
-                "with bombs", "with myself", "with your mom", "with your dad", "."]
+                "with bombs", "with myself", "with your mom", "with your dad", "with crewmates", "."]
 
 
 class LettersBot(commands.AutoShardedBot):  # when you going
