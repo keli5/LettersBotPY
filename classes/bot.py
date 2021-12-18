@@ -7,7 +7,7 @@ import re
 import json
 import difflib
 import random
-corpus = open("corpus.txt", "at")
+corpus = open("corpus.txt", "at", encoding="utf-8")
 started_at = datetime.datetime.now()
 cooldown_texts = ["Hey there.", "Hold on a second!", "pls wait...", "Cooldown..", "Hey, chill.",
                   "Just a minute...", "Give it a second.", "Whoop", "..."]
@@ -145,8 +145,8 @@ class LettersBot(commands.AutoShardedBot):  # when you going
     async def on_member_join(self, member):
         guild = member.guild
         guilddb = await LBGuild.filter(id=guild.id).first()
-        joinmsg = getattr(guilddb, "joinMesg")
-        chid = getattr(guilddb, "joinMesgChannel")
+        joinmsg = getattr(guilddb, "joinMesg") or None
+        chid = getattr(guilddb, "joinMesgChannel") or None
         joinmsgchannel = self.get_channel(chid) or guild.system_channel
         if (joinmsg is not None) and (joinmsgchannel is not None):
             jmsg = joinmsg.replace("%member%", member.mention)
