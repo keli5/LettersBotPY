@@ -1,5 +1,5 @@
-from discord.ext import commands
-import discord
+from diskord.ext import commands
+import diskord
 from classes.dbmodels import LBUser, LBGuild, GuildMarkovSettings, GuildShop
 from utility.funcs import reload_markov, call_markov, image_from_url, tally_users, paginate_list
 import os
@@ -34,13 +34,13 @@ class Owner(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def botban(self, ctx, victim: discord.User):
+    async def botban(self, ctx, victim: diskord.User):
         await LBUser.filter(id=victim.id).update(canUseBot=False)
         await ctx.send(f"Disallowed {victim} from using LettersBot.")
 
     @commands.command()
     @commands.is_owner()
-    async def botunban(self, ctx, victim: discord.User):
+    async def botunban(self, ctx, victim: diskord.User):
         await LBUser.filter(id=victim.id).update(canUseBot=True)
         await ctx.send(f"Allowed {victim} to use LettersBot.")
 
@@ -57,13 +57,13 @@ class Owner(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def dm(self, ctx, channel: typing.Union[discord.User, discord.TextChannel], markov: bool, *,
+    async def dm(self, ctx, channel: typing.Union[diskord.User, diskord.TextChannel], markov: bool, *,
                  content: str = None):
 
         if markov:
             content = call_markov(900)
         await channel.send(content)
-        if isinstance(channel, discord.User):
+        if isinstance(channel, diskord.User):
             await ctx.send(f"`Sent DM to {channel}`:\n{content}")
         else:
             await ctx.send(f"`Sent message in {channel.guild}/#{channel.name}`:\n{content}")
@@ -94,7 +94,7 @@ class Owner(commands.Cog):
         model = modeltypes[model] or LBUser
         id = id or ctx.author.id
         result = await model[id]
-        getembed = discord.Embed(
+        getembed = diskord.Embed(
             title=f"{modelnm}.{id}"
         )
         for field in valid_fields:
@@ -137,9 +137,9 @@ class Owner(commands.Cog):
     @commands.is_owner()
     async def guilds(self, ctx, page: int = 1, safe: bool = True):
         # guild.name, guild.id, guild.members, ctx.bot.guilds is amount of guilds, tally_users(ctx.bot)
-        gembed = discord.Embed(
+        gembed = diskord.Embed(
             title=f"Guilds (page {page}) ",
-            color=discord.Color.blurple()
+            color=diskord.Color.blurple()
         )
         guilds = paginate_list(ctx.bot.guilds, 10, page)
         if len(guilds) == 0:

@@ -1,6 +1,6 @@
-from discord.ext import commands
-from discord.ext.commands.cooldowns import BucketType
-import discord
+from diskord.ext import commands
+from diskord.ext.commands.cooldowns import BucketType
+import diskord
 import typing
 import utility.funcs as f
 import platform as p
@@ -30,10 +30,10 @@ class Utility(commands.Cog):
     @commands.group(invoke_without_command=True, aliases=["os"])
     async def osinfo(self, ctx):
         """ Show some info about what the bot's running on, package versions, and more. """
-        packages_for_info = ["discord.py", "tortoise-orm", "markovify", "pillow"]
-        osembed = discord.Embed(
+        packages_for_info = ["diskord", "tortoise-orm", "markovify", "pillow"]
+        osembed = diskord.Embed(
             title=ctx.bot.user.name,
-            color=discord.Color.purple()
+            color=diskord.Color.purple()
         )
         py_ver = p.python_version()
         osembed.add_field(name="Python version", value=py_ver)
@@ -61,10 +61,10 @@ class Utility(commands.Cog):
         await ctx.send(f"Found {count} instances of `{substring}`")
 
     @commands.command(aliases=["a"])
-    async def avatar(self, ctx, user: discord.User = None):
+    async def avatar(self, ctx, user: diskord.User = None):
         ''' Get somebody's avatar, or your own. '''
         victim = user or ctx.author
-        avatarembed = discord.Embed(
+        avatarembed = diskord.Embed(
             title=f"Avatar of {str(victim)}",
             color=victim.color
         )
@@ -72,10 +72,10 @@ class Utility(commands.Cog):
         await ctx.send(embed=avatarembed)
 
     @commands.command()
-    async def userinfo(self, ctx, user: discord.Member = None):
+    async def userinfo(self, ctx, user: diskord.Member = None):
         ''' Get some info about a user, or yourself. '''
         user = user or ctx.author
-        uiembed = discord.Embed(
+        uiembed = diskord.Embed(
             title=f"User info about {str(user)}",
             color=user.color,
             description="Dates are in mm/dd/yy HH:MM:SS format, UTC"
@@ -101,9 +101,9 @@ class Utility(commands.Cog):
         await ctx.send(embed=uiembed)
 
     @commands.command()
-    async def bigmoji(self, ctx, emoji: typing.Union[discord.PartialEmoji, str]):
+    async def bigmoji(self, ctx, emoji: typing.Union[diskord.PartialEmoji, str]):
         """ Get the full-size image of an emoji. """
-        if isinstance(emoji, discord.PartialEmoji):
+        if isinstance(emoji, diskord.PartialEmoji):
             url = str(emoji.url)
         else:
             cpoint = str(hex(ord(emoji[0])))
@@ -111,16 +111,16 @@ class Utility(commands.Cog):
             if cpoint[0:2] != "1f":
                 return await ctx.send("Invalid emoji.")
             url = f"https://twemoji.maxcdn.com/v/12.1.6/72x72/{cpoint}.png"
-        bmembed = discord.Embed(
+        bmembed = diskord.Embed(
             title="Full-size emoji",
             url=url,
-            color=discord.Color.green()
+            color=diskord.Color.green()
         )
         bmembed.set_image(url=url)
         await ctx.send(embed=bmembed)
 
     @commands.group(aliases=["pypi"], invoke_without_command=True)
-    async def pip(self, ctx, package: str = "discord.py"):
+    async def pip(self, ctx, package: str = "diskord"):
         """Get information about a package from PyPI."""
         packageinfo = None
         if len(package.split()) > 1:
@@ -133,7 +133,7 @@ class Utility(commands.Cog):
                     packageinfo = packageinfo["info"]
             except Exception:
                 return await ctx.send(f"Couldn't get package {package} from PyPI.")
-        gpiembed = discord.Embed(
+        gpiembed = diskord.Embed(
             title=package,
             color=0x4B8BBE,
             description=packageinfo["summary"] or "No description provided.",
@@ -160,7 +160,7 @@ class Utility(commands.Cog):
         await ctx.send(embed=gpiembed)
 
     @pip.command(aliases=["downloads", "files", "releases"])
-    async def release(self, ctx, package: str = "discord.py", version=None):
+    async def release(self, ctx, package: str = "diskord", version=None):
         # return await ctx.send("This is not done")
 
         packageinfo = None
@@ -182,7 +182,7 @@ class Utility(commands.Cog):
         except IndexError:
             release = release[0]
         rURL = release["url"]
-        rlembed = discord.Embed(
+        rlembed = diskord.Embed(
             title=f"{package} v{ver}",
             color=0x4B8BBE,
             description=f"{package} has {len(releases)} releases"
@@ -194,13 +194,13 @@ class Utility(commands.Cog):
 
     @commands.command()
     async def info(self, ctx):
-        iembed = discord.Embed(
+        iembed = diskord.Embed(
             title="LettersBot",
             description="LettersBot started out as a little JavaScript bot hosted on my Chromebook, " +
                         "now rewritten in Python with its own room among a few other great bots! " +
                         "Feel free to invite the bot to your server, play around with it, " +
                         "and tell me about bugs on the GitHub repo!",
-            color=discord.Color.gold()
+            color=diskord.Color.gold()
         )
         iembed.set_thumbnail(url=ctx.bot.user.avatar.url)
         iembed.add_field(name="Home/support server", value="https://discord.gg/Dnhj9GG2Et")

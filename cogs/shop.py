@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import diskord
+from diskord.ext import commands
 from classes.dbmodels import GuildShop, LBUser
 from utility.funcs import paginate_list, db_for_user
 
@@ -28,10 +28,10 @@ class Shop(commands.Cog):
         items = []
         prices = []
         shop = await get_shop(ctx.guild.id)
-        shopembed = discord.Embed(
+        shopembed = diskord.Embed(
             title="Shop",
             description=f"Items for **`{ctx.guild.name}`**",
-            color=discord.Color.greyple()
+            color=diskord.Color.greyple()
         )
         for item, price in shop.items.items():
             items.append(item)
@@ -47,15 +47,15 @@ class Shop(commands.Cog):
         await ctx.send(embed=shopembed)
 
     @commands.command(aliases=["inv"])
-    async def inventory(self, ctx, page: int = 1, user: discord.User = None):
+    async def inventory(self, ctx, page: int = 1, user: diskord.User = None):
         """ Show your or another player's inventory. """
         items = []
         amounts = []
         user = user or ctx.author
         userdb = await db_for_user(user.id, True)
-        shopembed = discord.Embed(
+        shopembed = diskord.Embed(
             title=f"Inventory of {ctx.author.name}",
-            color=discord.Color.greyple()
+            color=diskord.Color.greyple()
         )
         for item, amount in userdb.inventory.items():
             items.append(item)
@@ -94,10 +94,10 @@ class Shop(commands.Cog):
 
         await LBUser.filter(id=ctx.author.id).update(balance=user.balance - (price * amount),
                                                      inventory=user_inv)
-        buyembed = discord.Embed(
+        buyembed = diskord.Embed(
             title="Transaction successful!",
             description=f"You have bought {amount} {item} for {self.cur}{price * amount}.",
-            color=discord.Color.green()
+            color=diskord.Color.green()
         )
         buyembed.add_field(name="Balance remaining", value=self.cur + str(round(user.balance - (price * amount), 2)))
         await ctx.send(embed=buyembed)
@@ -126,16 +126,16 @@ class Shop(commands.Cog):
 
         await LBUser.filter(id=ctx.author.id).update(balance=user.balance + (price * amount),
                                                      inventory=user_inv)
-        buyembed = discord.Embed(
+        buyembed = diskord.Embed(
             title="Transaction successful!",
             description=f"You have sold {amount} {item} for {self.cur}{price * amount}.",
-            color=discord.Color.green()
+            color=diskord.Color.green()
         )
         buyembed.add_field(name="Balance", value=self.cur + str(round(user.balance + (price * amount), 2)))
         await ctx.send(embed=buyembed)
 
     @commands.command()
-    async def give(self, ctx, user: discord.User, item: str, amount: int = 1):
+    async def give(self, ctx, user: diskord.User, item: str, amount: int = 1):
         """Give an item to another user."""
         if amount < 1:
             return await ctx.send("You can't give less than 1 item.")
@@ -156,10 +156,10 @@ class Shop(commands.Cog):
 
         await LBUser.filter(id=ctx.author.id).update(inventory=sender_inv)
         await LBUser.filter(id=user.id).update(inventory=reciever_inv)
-        giveembed = discord.Embed(
+        giveembed = diskord.Embed(
             title="Transaction successful!",
             description=f"You have given {amount} {item} to {user.name}.",
-            color=discord.Color.green()
+            color=diskord.Color.green()
         )
         await ctx.send(embed=giveembed)
 

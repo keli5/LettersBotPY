@@ -1,5 +1,5 @@
-from discord.ext import commands
-from discord.ext.commands.cooldowns import BucketType
+from diskord.ext import commands
+from diskord.ext.commands.cooldowns import BucketType
 from classes.dbmodels import LBUser
 from gtts import gTTS
 import asyncio
@@ -10,7 +10,7 @@ import random
 import html
 import requests
 import json
-import discord
+import diskord
 from io import BytesIO
 coin = ["heads", "tails", "side"]
 weights = [50, 50, 0.00001]
@@ -38,9 +38,9 @@ class Fun(commands.Cog):
             raise Exception("Can't bet less than 5")
 
         LBUser.filter(id=ctx.author.id).update(balance=userdb.balance - wager)
-        wheelembed = discord.Embed(
+        wheelembed = diskord.Embed(
             title="Spin the Wheel!",
-            color=discord.Color.magenta()
+            color=diskord.Color.magenta()
         )
         msg = await ctx.send(embed=wheelembed)
         wheelembed.description = "Spinning..."
@@ -53,13 +53,13 @@ class Fun(commands.Cog):
         text = ""
         if winnings - wager > 0:
             text = "won"
-            wheelembed.color = discord.Color.green()
+            wheelembed.color = diskord.Color.green()
         elif winnings - wager < 0:
             text = "lost"
-            wheelembed.color = discord.Color.red()
+            wheelembed.color = diskord.Color.red()
         else:
             text = "got"
-            wheelembed.color = discord.Color.greyple()
+            wheelembed.color = diskord.Color.greyple()
         fmoney = abs(round(winnings - wager, 2))
         fmoney = f"{fmoney:,}"
         wheelembed.description = f"You {text} {self.cur}{fmoney}."
@@ -71,12 +71,12 @@ class Fun(commands.Cog):
         """ Flip a coin. """
         result = random.choices(coin, weights=weights, k=1)
         result = result[0]
-        coinembed = discord.Embed(
+        coinembed = diskord.Embed(
             title=f"Flipped a coin and got {result}!"
         )
-        coinembed.color = discord.Color.green()
+        coinembed.color = diskord.Color.green()
         if result == "side":
-            coinembed.color = discord.Color.red()
+            coinembed.color = diskord.Color.red()
             coinembed.title = "Flipped a coin and got..."
             coinembed.description = "...the coin landed on its side?"
         await ctx.send(embed=coinembed)
@@ -126,9 +126,9 @@ class Fun(commands.Cog):
             earn = random.randint(10, 50)
         q = json.loads(requests.get("https://opentdb.com/api.php?amount=1").content)["results"][0]
         category = q["category"]
-        tembed = discord.Embed(
+        tembed = diskord.Embed(
             title=f"Category: {category}",
-            color=discord.Color.greyple()
+            color=diskord.Color.greyple()
         )
         answers = q["incorrect_answers"]
         letters = ["A", "B", "C", "D"]
@@ -161,9 +161,9 @@ class Fun(commands.Cog):
                 winners = await reaction.users().flatten()
                 winners = winners[1:]
                 if not winners:
-                    return await ctx.send(embed=discord.Embed(
+                    return await ctx.send(embed=diskord.Embed(
                         title=f"Nobody got it right! The answer was {cor}.",
-                        color=discord.Color.red()
+                        color=diskord.Color.red()
                     ))
             if reaction.emoji != correct_letter:
                 losers = await reaction.users().flatten()
@@ -176,9 +176,9 @@ class Fun(commands.Cog):
                 mybal = winnerdb.balance
                 await LBUser.filter(id=u.id).update(balance=mybal + earn)
             winnerpings = f.enumerate_list(winnerpings, 30)
-        winnerembed = discord.Embed(
+        winnerembed = diskord.Embed(
             title="Winners",
-            color=discord.Color.green()
+            color=diskord.Color.green()
         )
         winnerembed.description = f"Congratulations to {winnerpings}! The answer was {html.unescape(cor)}."
         if earn != 0:
@@ -187,11 +187,11 @@ class Fun(commands.Cog):
         await ctx.send(embed=winnerembed)
 
     @commands.command()
-    async def spotify(self, ctx, user: discord.Member = None):
+    async def spotify(self, ctx, user: diskord.Member = None):
         """ See a user's Spotify information. Uses presences, so offline users / non-connected Spotify won't work.
         It's real fucky, especially on mobile.  """
         user = user or ctx.author
-        sembed = discord.Embed(
+        sembed = diskord.Embed(
             title=f"Spotify for {user}"
         )
         spotify = None
@@ -199,7 +199,7 @@ class Fun(commands.Cog):
             if str(activity) == "Spotify":
                 spotify = activity
         if not spotify:
-            sembed.color = discord.Color.red()
+            sembed.color = diskord.Color.red()
             sembed.description = f"{user} is not listening to Spotify."
         else:
             sembed.color = spotify.color
@@ -222,7 +222,7 @@ class Fun(commands.Cog):
         gTTS(text=text).write_to_fp(out)
         out.seek(0)
         await processing.delete()
-        await ctx.send(file=discord.File(out, filename="tts.mp3"))
+        await ctx.send(file=diskord.File(out, filename="tts.mp3"))
 
     @commands.group(invoke_without_command=True, aliases=["scramble"])
     async def shuffle(self, ctx, *, string):
@@ -240,7 +240,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def xkcd(self, ctx, num: int = 0):
-        cembed = discord.Embed()
+        cembed = diskord.Embed()
         comic = num
         if num == 0:
             comic = ""
@@ -265,9 +265,9 @@ class Fun(commands.Cog):
 
     @commands.command(name="8ball")
     async def magic8ball(self, ctx, *, question):
-        m8embed = discord.Embed(
+        m8embed = diskord.Embed(
             title="🎱 Magic 8 ball",
-            color=discord.Color.greyple()
+            color=diskord.Color.greyple()
         )
         m8embed.add_field(name="❓ Question", value=question)
         m8embed.add_field(name="🎱 Answer", value=f.super_secret_8ball())

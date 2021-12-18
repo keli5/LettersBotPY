@@ -2,8 +2,8 @@ import io
 from PIL import ImageEnhance
 from utility.funcs import image_from_url, image_to_byte_array
 from scipy.io import wavfile
-from discord.ext import commands
-import discord
+from diskord.ext import commands
+import diskord
 import numpy
 import secrets
 
@@ -30,7 +30,7 @@ class Images(commands.Cog):
         im = im.convert("L")
         im.save(out, "png")
         out.seek(0)
-        await ctx.send(file=discord.File(out, filename="grayscale.png"))
+        await ctx.send(file=diskord.File(out, filename="grayscale.png"))
 
     @commands.command(aliases=["colors"])
     async def resample(self, ctx, colors: int = 32, attachment=None):
@@ -52,8 +52,8 @@ class Images(commands.Cog):
             out.seek(0)
             await processing.delete()
             await ctx.send(files=[
-                discord.File(out, filename=f"{colors}-colors.png"),
-                discord.File(hexes, filename="colors.txt")
+                diskord.File(out, filename=f"{colors}-colors.png"),
+                diskord.File(hexes, filename="colors.txt")
                 ]
             )
 
@@ -67,7 +67,7 @@ class Images(commands.Cog):
         image = ImageEnhance.Color(image).enhance(amount)
         image.save(out, "png")
         out.seek(0)
-        await ctx.send(file=discord.File(out, filename="saturated.png"))
+        await ctx.send(file=diskord.File(out, filename="saturated.png"))
 
     @commands.command()
     async def imageinfo(self, ctx, attachment=None):
@@ -77,7 +77,7 @@ class Images(commands.Cog):
         filename, ext = (source.split('/')[-1].split('.'))  # https://stackoverflow.com/a/25913757/
         filename = filename + "." + ext
         filename = filename.split("?")[0]
-        iiembed = discord.Embed(
+        iiembed = diskord.Embed(
             title="Image information"
         )
         iiembed.set_thumbnail(url=source)

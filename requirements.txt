@@ -1,4 +1,4 @@
-git+https://github.com/Rapptz/discord.py@58ca9e99325ac2678a51cd63afd7ae917f14bc8d
+diskord >= 2.6.2
  pillow >= 8.3.0
  requests >= 2.23.0 
  tortoise-orm >= 0.17.6
