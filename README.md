@@ -16,7 +16,7 @@ And huge thanks to [everyone who works on crimsoBOT](https://github.com/crimsobo
 Install Python, preferably 3.9+, but it should hopefully work on 3.7 and up
 Clone the bot or download the zip and extract it to a directory of your choice.
 do `pip install -r requirements.txt` in the directory to automatically install required dependencies<br>
-Run launcher.py to start the bot - on first run, it will create a sqlite3 file<br>
+Run launcher.py (e.g. `py -3.9 .\launcher.py` or `python3.9 ./launcher.py`) to start the bot - on first run, it will create a sqlite3 file<br>
 Should work on Python 3.7 and up, tested on 3.7.5-3.9.9<br>
 Check out the config.template.json file. The keys are pretty self explanatory.<br>
 Your config file should be called `config.json.` The .template.json is only just that, a template. <br>
