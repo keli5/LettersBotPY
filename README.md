@@ -7,23 +7,20 @@
 # LettersBotPY
 LettersBot 2.0, if you will. Marginally better &amp; rewritten in Python. dread
 <br>Join the Discord: [Click here](https://discord.gg/Dnhj9GG2Et)<br>
-Or, invite the bot to your own Discord: [Click here](https://cutt.ly/lettersbot2)
 
 ### Thanks
 Thanks to [kaylynn234](https://github.com/kaylynn234) for a lot but commit [`b308f5d`](https://github.com/keli5/LettersBotPY/commit/b308f5d6e5cb8f60ce90a73788b06689c9610293) in particular  <br>
 And huge thanks to [everyone who works on crimsoBOT](https://github.com/crimsobot/crimsoBOT/) because the help command may, or may not, be directly lifted from them
 
 ## Setup?
-There's a 99% chance this doesn't work on windows<br>
-Run launcher.py to start the bot - on first run, it will create a sqlite3 file<br>
-Should work on Python 3.6 and up, tested on 3.7.5<br>
+Install Python, preferably 3.9+, but it should hopefully work on 3.7 and up
+Clone the bot or download the zip and extract it to a directory of your choice.
+do `pip install -r requirements.txt` in the directory to automatically install required dependencies<br>
+Run launcher.py (e.g. `py -3.9 .\launcher.py` or `python3.9 ./launcher.py`) to start the bot - on first run, it will create a sqlite3 file<br>
+Should work on Python 3.7 and up, tested on 3.7.5-3.9.9<br>
 Check out the config.template.json file. The keys are pretty self explanatory.<br>
-IT'S EXTREMELY IMPORTANT THAT YOUR CONFIG FILE IS CALLED `config.json`. OTHERWISE THE GITIGNORE WON'T CATCH IT AND YOU CAN COMMIT YOUR TOKEN.<br>
-Make sure that you change the classes/botowners.txt to contain user IDs of people who should be able to run owner-only commands and use Jishaku if installed
-### Deps
-Ensure that ffmpeg and libopus are installed on your system
-do `pip install -r requirements.txt` to automatically install required dependencies<br>
-for extra debugging commands, do `pip install jishaku`
+Your config file should be called `config.json.` The .template.json is only just that, a template. <br>
+Make sure that you change the classes/botowners.txt to contain user IDs of people who should be able to run owner-only commands.
 
 
 ## License
