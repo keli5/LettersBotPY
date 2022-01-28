@@ -183,6 +183,7 @@ def reload_markov():
     except Exception as e:
         print("Markov will not work - an error occurred:")
         print(e)
+        return
 
     markov = newmarkov
 

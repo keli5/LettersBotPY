@@ -7,7 +7,7 @@ from tortoise import run_async
 # import os
 import json
 
-extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun", "voice", "shop"]
+extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun"]
 botprefix = ""
 token = ""
 intents = diskord.Intents(messages=True, guilds=True, members=True, presences=True)
