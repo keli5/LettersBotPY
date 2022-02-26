@@ -143,4 +143,5 @@ corpus.txt
 # ignore your config
 config.json
 
-# you don't need to worry about bot.sh it just does some prior checks
+#ignore generated dec files if something went wrong and any remain
+**/DEC/*.wav
