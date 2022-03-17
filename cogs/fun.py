@@ -111,7 +111,7 @@ class Fun(commands.Cog):
     async def markov(self, ctx, start: str = None):
         """ Generate a Markov chain. """
         try:
-            await ctx.send(f.call_markov(1600, start))
+            await ctx.send(f.call_markov(1600, start.lower()))
         except Exception as e:
             if "can't find sentence" in str(e):
                 return await ctx.send(f"`{start}` does not appear enough in the corpus.")
