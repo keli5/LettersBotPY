@@ -4,6 +4,7 @@ import diskord
 import typing
 import utility.funcs as f
 import platform as p
+import psutil as hw
 import pkg_resources
 import aiohttp
 import classes.bot as bot
@@ -17,14 +18,14 @@ def version(package_name):
 
 
 class Utility(commands.Cog):
-    ''' Quick utility commands that provide mostly information '''
+    """ Quick utility commands that provide mostly information """
 
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
     async def ping(self, ctx):
-        ''' Show the bot's ping. '''
+        """ Show the bot's ping. """
         await ctx.send(f"Ponged in **{round(self.bot.latency * 1000, 2)}ms.**")
 
     @commands.group(invoke_without_command=True, aliases=["os"])
@@ -50,6 +51,32 @@ class Utility(commands.Cog):
 # todo: osinfo packages needs to be fixed
 # lol
 
+    @osinfo.command(aliases=["hw"])
+    async def hardware(self, ctx):
+        """ More hardware-related info. """
+        osembed = diskord.Embed(
+            title=ctx.bot.user.name,
+            color=diskord.Color.purple()
+        )
+        me = hw.Process()  # this process
+        # RAM
+        pmem = me.memory_info().rss
+        vmem = me.memory_info().vms
+        total = pmem + vmem
+        pmem = humanize.naturalsize(pmem, binary=True)
+        vmem = humanize.naturalsize(vmem, binary=True)
+        total = humanize.naturalsize(total, binary=True)
+        # CPU
+        cpu = hw.cpu_percent(interval=1.5, percpu=False)
+        cores = hw.cpu_count(logical=True)
+        freq = hw.cpu_freq()
+
+        osembed.add_field(name="CPU", value=f"{cores}x {p.processor()}")
+        osembed.add_field(name="System CPU usage", value=f"{cpu}% ({freq.current}MHz)")
+        osembed.add_field(name="RAM", value=f"Using {total} ({pmem} physical, {vmem} virtual)")
+        osembed.add_field(name="Free RAM", value=f"{humanize.naturalsize(hw.virtual_memory().available, binary=True)}")
+        await ctx.send(embed=osembed)
+
     @commands.command(aliases=["cc"])
     @commands.cooldown(1, 3, BucketType.user)
     async def corpuscontains(self, ctx, *, substring):
@@ -62,7 +89,7 @@ class Utility(commands.Cog):
 
     @commands.command(aliases=["a"])
     async def avatar(self, ctx, user: diskord.User = None):
-        ''' Get somebody's avatar, or your own. '''
+        """ Get somebody's avatar, or your own. """
         victim = user or ctx.author
         avatarembed = diskord.Embed(
             title=f"Avatar of {str(victim)}",
@@ -73,7 +100,7 @@ class Utility(commands.Cog):
 
     @commands.command()
     async def userinfo(self, ctx, user: diskord.Member = None):
-        ''' Get some info about a user, or yourself. '''
+        """ Get some info about a user, or yourself. """
         user = user or ctx.author
         uiembed = diskord.Embed(
             title=f"User info about {str(user)}",

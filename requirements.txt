@@ -10,3 +10,4 @@ diskord >= 2.6.2
  gtts >= 2.1.1
  git+https://github.com/Rapptz/discord-ext-menus
  humanize >= 2.6.0
+ psutil >= 5.9.0
