@@ -62,14 +62,14 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         if message.author.bot or not user.canUseBot:
             return
 
-        swregex = r"(^\W|d::|^```)"
+        swregex = r"(^\W|d::|^```|ooer )"
         pingregex = r"^<@"
         if len(message.content) > 8:
             if re.match(pingregex, message.content) or not re.match(swregex, message.content):
                 if message.channel.type is not diskord.ChannelType.private:
                     if message.guild.id in self.allowedLearningGuilds:
                         pass
-                        corpus.write(message.content.lower() + "\n")
+                        corpus.write(message.content + "\n")
 
         if (message.channel.type == diskord.ChannelType.private) and owner:
             if message.author is not owner:
