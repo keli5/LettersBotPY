@@ -69,16 +69,11 @@ class Fun(commands.Cog):
     @commands.command(aliases=["coin", "cointoss"])
     async def coinflip(self, ctx):
         """ Flip a coin. """
-        result = random.choices(coin]
-        result = result[0]            
+        result = random.choice(coin)
         coinembed = diskord.Embed(
             title=f"Flipped a coin and got {result}!"
         )
         coinembed.color = diskord.Color.green()
-        if result == "side":
-            coinembed.color = diskord.Color.red()
-            coinembed.title = "Flipped a coin and got..."
-            coinembed.description = "...the coin landed on its side?"
         await ctx.send(embed=coinembed)
 
     @commands.command(aliases=["roll"])
