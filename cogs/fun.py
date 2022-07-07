@@ -69,8 +69,8 @@ class Fun(commands.Cog):
     @commands.command(aliases=["coin", "cointoss"])
     async def coinflip(self, ctx):
         """ Flip a coin. """
-        result = random.choices(coin, weights=weights, k=1)
-        result = result[0]
+        result = random.choices(coin]
+        result = result[0]            
         coinembed = diskord.Embed(
             title=f"Flipped a coin and got {result}!"
         )
