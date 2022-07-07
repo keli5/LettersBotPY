@@ -12,8 +12,7 @@ import requests
 import json
 import diskord
 from io import BytesIO
-coin = ["heads", "tails", "side"]
-weights = [50, 50, 0.00001]
+coin = ["heads", "tails"]
 noun = ["cat", "dog", "friend", "closest friend", "TV", "computer", "phone", "bed", "wall", "doorknob", "liver",
         "toes", "fingers", "legs"]
 verb = ["stomp", "ignite", "eviscerate", "disappear", "compress", "stretch", "destroy", "steal", "pour water on"]
