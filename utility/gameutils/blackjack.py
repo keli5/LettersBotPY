@@ -19,7 +19,7 @@ class Card:
 
         if self.hidden:
             self.name = "?? of ?"
-            
+
 
 
 def new_deck():
