@@ -71,8 +71,7 @@ class Moderation(commands.Cog):
         markov = await GuildMarkovSettings[ctx.guild.id]
         can = getattr(markov, "enabled")
         await GuildMarkovSettings.filter(id=ctx.guild.id).update(enabled=(not can))
-        await ctx.send(f"Toggled random markov messages. This bot **{'can' if not can else 'can not'}** randomly speak in this server.")
-
+        await ctx.send(f"Toggled random markov messages. This bot **{'can' if not can else 'can not'}** randomly speak in this server.")  # noqa: E501
 
     @commands.command(aliases=["chatchannel"])
     @commands.has_permissions(manage_guild=True)
@@ -81,8 +80,7 @@ class Moderation(commands.Cog):
         markov = await GuildChatChannel[ctx.channel.id]
         can = getattr(markov, "enabled")
         await GuildChatChannel.filter(id=ctx.channel.id).update(enabled=(not can))
-        await ctx.send(f"Toggled chat channel. This bot **{'can' if not can else 'can not'}** respond to each message in this channel.")
-
+        await ctx.send(f"Toggled chat channel. This bot **{'can' if not can else 'can not'}** respond to each message in this channel.")  # noqa: E501
 
     @commands.group(aliases=["joinmessage"], invoke_without_command=True)
     @commands.has_permissions(manage_guild=True)
