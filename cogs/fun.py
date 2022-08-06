@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from diskord.ext import commands
 from diskord.ext.commands.cooldowns import BucketType
 from classes.dbmodels import LBUser
@@ -5,7 +6,9 @@ from gtts import gTTS
 import asyncio
 import humanize
 import datetime as dt
+import subprocess
 import utility.funcs as f
+import utility.gameutils.blackjack as bj
 import random
 import html
 import requests
@@ -16,6 +19,12 @@ coin = ["heads", "tails"]
 noun = ["cat", "dog", "friend", "closest friend", "TV", "computer", "phone", "bed", "wall", "doorknob", "liver",
         "toes", "fingers", "legs"]
 verb = ["stomp", "ignite", "eviscerate", "disappear", "compress", "stretch", "destroy", "steal", "pour water on"]
+hands = {}
+dealer_hands = {}
+decks = {}
+bets = {}
+active_game = {}
+active_game_bot = {}
 
 
 class Fun(commands.Cog):
@@ -68,11 +77,16 @@ class Fun(commands.Cog):
     @commands.command(aliases=["coin", "cointoss"])
     async def coinflip(self, ctx):
         """ Flip a coin. """
-        result = random.choice(coin)
+        result = random.choices(coin, weights=weights, k=1)
+        result = result[0]
         coinembed = diskord.Embed(
             title=f"Flipped a coin and got {result}!"
         )
         coinembed.color = diskord.Color.green()
+        if result == "side":
+            coinembed.color = diskord.Color.red()
+            coinembed.title = "Flipped a coin and got..."
+            coinembed.description = "...the coin landed on its side?"
         await ctx.send(embed=coinembed)
 
     @commands.command(aliases=["roll"])
@@ -267,6 +281,109 @@ class Fun(commands.Cog):
         m8embed.add_field(name="🎱 Answer", value=f.super_secret_8ball())
         await ctx.send(embed=m8embed)
 
+    @commands.command(aliases=["bj"])
+    @commands.is_owner()
+    async def blackjack(self, ctx, wager: int):
+        """ Blackjack! Maximum wager 7500 """
+        # here goes nothing
+        user_db = await f.db_for_user(ctx.author.id, True)
+        bal = user_db.balance
+        if wager > bal:
+            raise Exception("You can't afford that wager.")
+        if wager > 7500:
+            raise Exception("Maximum wager is 7500.")
+        if wager < 15:
+            raise Exception("Minimum wager is 15.")
+        if active_game.get(ctx.author.id):  # wok made dude shit himself :sob:
+            raise Exception("You already have a game in progress. Finish that first.")
+        print("Money")
+        # This shit is a little bit of a mess
+        decks[ctx.author.id] = bj.new_deck()
+        deck = decks[ctx.author.id]
+        active_game[ctx.author.id] = ctx.message
+
+        hands[ctx.author.id] = [bj.deal(deck), bj.deal(deck)]
+        dealer_hands[ctx.author.id] = [bj.deal(deck), bj.deal(deck)]
+        print("Variables")
+        dealer_hands[ctx.author.id][1].hidden = True  # lol, horrorcode
+        bets[ctx.author.id] = wager
+        await LBUser.filter(id=ctx.author.id).update(balance=user_db.balance - wager)
+
+        # did we already win? trick question: you're programming, you never win
+        if bj.value(hands[ctx.author.id]) == 21:  # player got a blackjack
+            winembed = diskord.Embed(
+                    title="Blackjack!",
+                    description=f"{ctx.author.mention} got 21!\n",
+                    color=diskord.Color.green(),
+            )
+            winnings = bets[ctx.author.id] * 3.5
+            winembed.add_field(name="Winnings", value=winnings)
+            await LBUser.filter(id=ctx.author.id).update(balance=user_db.balance + winnings)
+            active_game[ctx.author.id] = None
+            active_game_bot[ctx.author.id] = None
+            return await ctx.send(embed=winembed)
+
+        readable_hand = [card.name for card in hands[ctx.author.id]]
+        readable_dealer_hand = [card.name for card in dealer_hands[ctx.author.id]]
+        active_game_bot[ctx.author.id] = await ctx.send(embed=diskord.Embed(
+                title="Blackjack",
+                description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[ctx.author.id])})\n" +
+                f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})",
+            ).set_footer(text="🃏 HIT | 🖐️ STAND")
+        )
+        await active_game_bot[ctx.author.id].add_reaction("🃏")
+        await active_game_bot[ctx.author.id].add_reaction("🖐️")
+
+    @commands.Cog.listener()
+    async def on_reaction_add(self, reaction, user):
+        if active_game:
+            player_stood = False
+            if reaction.emoji == "🃏" and not player_stood and not user.bot:
+                # hit
+                hit = bj.player_hit(bj.deal(decks[user.id]), hands[user.id])
+
+                if hit is True:  # explicitly check for true, it could be a truthy value
+                    newtitle = "You got 21!"
+                    await LBUser.filter(id=user.id).update(balance=await f.db_for_user(user.id, True).balance + bets[user.id] * 2.5)
+                    active_game[user.id] = None
+                    active_game_bot[user.id] = None  # clean up
+                    return
+                elif hit is False:
+                    newtitle = "You busted!"
+
+                readable_hand = [card.name for card in hands[user.id]]
+                readable_dealer_hand = [card.name for card in dealer_hands[user.id]]
+                await active_game_bot[user.id].edit(embed=diskord.Embed(
+                    title=newtitle or "Blackjack",
+                    description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[user.id])})\n" +
+                    f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[user.id])})",
+                ).set_footer(text="🃏 HIT | 🖐️ STAND"))
+
+            if reaction.emoji == "🖐️":
+                # user stands
+                player_stood = True
+
+            while bj.value(dealer_hands[user.id]) < 17:
+                dealer_hands[user.id].append(bj.deal(decks[user.id]))
+                readable_hand = [card.name for card in hands[user.id]]
+                readable_dealer_hand = [card.name for card in dealer_hands[user.id]]
+
+                await active_game_bot[user.id].edit(embed=diskord.Embed(
+                    title=newtitle or "Blackjack",
+                    description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[user.id])})\n" +
+                    f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[user.id])})",
+                ))
+
+            if bj.value(dealer_hands[user.id]) > bj.value(hands[user.id]):
+                newtitle = "Dealer wins!"
+            if bj.value(dealer_hands[user.id]) < bj.value(hands[user.id]):
+                newtitle = "You win!"
+                await LBUser.filter(id=user.id).update(balance=await f.db_for_user(user.id, True).balance + bets[user.id] * 1.65)
+            if bj.value(dealer_hands[user.id]) == bj.value(hands[user.id]):
+                newtitle = "Push!"
+                await LBUser.filter(id=user.id).update(balance=await f.db_for_user(user.id, True).balance + bets[user.id])
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))
+>>>>>>> Stashed changes

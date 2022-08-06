@@ -10,7 +10,7 @@ import json
 extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun"]
 botprefix = ""
 token = ""
-intents = diskord.Intents(messages=True, guilds=True, members=True, presences=True)
+intents = diskord.Intents.all()  # reactions.
 
 try:
     with open("config.json") as opts:
