@@ -1,11 +1,8 @@
 import io
 from PIL import ImageEnhance
-from utility.funcs import image_from_url, image_to_byte_array
-from scipy.io import wavfile
+from utility.funcs import image_from_url
 from diskord.ext import commands
 import diskord
-import numpy
-import secrets
 
 imagetypes = {
     "RGBA": "RGB with Transparency",
