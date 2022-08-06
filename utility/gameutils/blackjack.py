@@ -2,7 +2,8 @@
 # it needs its own file
 import random
 
-suits = ["<:spades:936447656463597568>", "<:hearts:936447656480350249>", "<:diamonds:936447656589398066>", "<:clubs:936447656199348256>"]
+suits = ["<:spades:936447656463597568>", "<:hearts:936447656480350249>",
+         "<:diamonds:936447656589398066>", "<:clubs:936447656199348256>"]
 numbers = list(range(1, 10))
 decks = {}
 hands = {}
@@ -19,7 +20,6 @@ class Card:
 
         if self.hidden:
             self.name = "?? of ?"
-
 
 
 def new_deck():

@@ -342,7 +342,9 @@ class Fun(commands.Cog):
 
                 if hit is True:  # explicitly check for true, it could be a truthy value
                     newtitle = "You got 21!"
-                    await LBUser.filter(id=user.id).update(balance=await f.db_for_user(user.id, True).balance + bets[user.id] * 2.5)
+                    await LBUser.filter(id=user.id).update(
+                        balance=await f.db_for_user(user.id, True).balance + bets[user.id] * 2.5
+                    )
                     active_game[user.id] = None
                     active_game_bot[user.id] = None  # clean up
                     return
@@ -376,10 +378,14 @@ class Fun(commands.Cog):
                 newtitle = "Dealer wins!"
             if bj.value(dealer_hands[user.id]) < bj.value(hands[user.id]):
                 newtitle = "You win!"
-                await LBUser.filter(id=user.id).update(balance=await f.db_for_user(user.id, True).balance + bets[user.id] * 1.65)
+                await LBUser.filter(id=user.id).update(
+                    balance=await f.db_for_user(user.id, True).balance + bets[user.id] * 1.65
+                )
             if bj.value(dealer_hands[user.id]) == bj.value(hands[user.id]):
                 newtitle = "Push!"
-                await LBUser.filter(id=user.id).update(balance=await f.db_for_user(user.id, True).balance + bets[user.id])
+                await LBUser.filter(id=user.id).update(
+                    balance=await f.db_for_user(user.id, True).balance + bets[user.id]
+                )
 
 
 def setup(bot):
