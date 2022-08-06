@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 from diskord.ext import commands
 from diskord.ext.commands.cooldowns import BucketType
 from classes.dbmodels import LBUser
@@ -6,7 +5,6 @@ from gtts import gTTS
 import asyncio
 import humanize
 import datetime as dt
-import subprocess
 import utility.funcs as f
 import utility.gameutils.blackjack as bj
 import random
@@ -77,7 +75,7 @@ class Fun(commands.Cog):
     @commands.command(aliases=["coin", "cointoss"])
     async def coinflip(self, ctx):
         """ Flip a coin. """
-        result = random.choices(coin, weights=weights, k=1)
+        result = random.choice(coin)
         result = result[0]
         coinembed = diskord.Embed(
             title=f"Flipped a coin and got {result}!"
@@ -386,4 +384,3 @@ class Fun(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Fun(bot))
->>>>>>> Stashed changes
