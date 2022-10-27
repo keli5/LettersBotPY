@@ -1,9 +1,9 @@
-from diskord.ext import commands
-import diskord
+from discord.ext import commands
+import discord
 import random
 from classes.dbmodels import LBUser
 from utility.funcs import db_for_user, paginate_list
-from diskord.ext.commands.cooldowns import BucketType
+from discord.ext.commands.cooldowns import BucketType
 
 
 class Economy(commands.Cog):
@@ -13,24 +13,24 @@ class Economy(commands.Cog):
         self.cur = "֏"
 
     @commands.command(aliases=["bal"])
-    async def balance(self, ctx, user: diskord.User = None):
+    async def balance(self, ctx, user: discord.User = None):
         """ View your balance or someone else's. """
         user = user or ctx.author
         bal = await db_for_user(user.id, True)
         bal = bal.balance
         formatted = f"{round(bal, 2):,}"  # What is this doing? Couldn't tell you
-        balembed = diskord.Embed(
+        balembed = discord.Embed(
             title=f"{user} has {self.cur}{formatted}!",
             description=f"Get more money with {self.bot.command_prefix}guess.",
-            color=diskord.Color.green()
+            color=discord.Color.green()
         )
         await ctx.send(embed=balembed)
 
     @commands.command(aliases=["lb"])
     async def leaderboard(self, ctx, page: int = 1):
-        lbembed = diskord.Embed(
+        lbembed = discord.Embed(
             title=f"{self.cur} Leaderboard {self.cur}",
-            color=diskord.Color.gold()
+            color=discord.Color.gold()
         )
         lbembed.set_footer(text=f"Page {page}")
         users = await LBUser.filter(balance__gt=0)
@@ -56,22 +56,22 @@ class Economy(commands.Cog):
         userbal = user.balance
         value = random.randint(0, 100)
         earnings = 1000 if guess == value else round(50 / abs(value - guess) * 4, 2)
-        gembed = diskord.Embed(
+        gembed = discord.Embed(
             title=f"{self.cur} Guessing Game {self.cur}",
-            color=diskord.Color.green()
+            color=discord.Color.green()
         )
         gembed.add_field(name="Your guess", value=guess)
         gembed.add_field(name="Actual number", value=value)
         if guess == value:
             gembed.add_field(name="JACKPOT!", value=f"You earned {self.cur}1,000!", inline=False)
-            gembed.color = diskord.Color.magenta()
+            gembed.color = discord.Color.magenta()
         else:
             gembed.add_field(name="Earnings", value=f"You earned {self.cur}{earnings}.")
         await LBUser.filter(id=ctx.author.id).update(balance=userbal + float(earnings))  # tortoise why
         await ctx.send(embed=gembed)
 
     @commands.command()
-    async def pay(self, ctx, user: diskord.User, amount: float):
+    async def pay(self, ctx, user: discord.User, amount: float):
         """ Pay someone some of your money. """
         famount = "{:.2f}".format(round(amount, 2))
         if amount <= 0 or famount == "0.00":
@@ -85,10 +85,10 @@ class Economy(commands.Cog):
         await LBUser.filter(id=ctx.author.id).update(balance=mybal - amount)
         await LBUser.filter(id=user.id).update(balance=userbal + amount)
         famount = "{:.2f}".format(round(amount, 2))
-        payembed = diskord.Embed(
+        payembed = discord.Embed(
             title="Transaction complete!",
             description=f"{ctx.author} sent {self.cur}{famount} to {user}.",
-            color=diskord.Color.green()
+            color=discord.Color.green()
         )
         theyget = "{:.2f}".format(round(userbal + amount, 2))
         youlose = "{:.2f}".format(round(mybal - amount, 2))
@@ -97,5 +97,5 @@ class Economy(commands.Cog):
         await ctx.send(embed=payembed)
 
 
-def setup(bot):
-    bot.add_cog(Economy(bot))
+async def setup(bot):
+    await bot.add_cog(Economy(bot))

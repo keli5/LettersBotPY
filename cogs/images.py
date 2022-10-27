@@ -1,8 +1,8 @@
 import io
 from PIL import ImageEnhance
 from utility.funcs import image_from_url
-from diskord.ext import commands
-import diskord
+from discord.ext import commands
+import discord
 
 imagetypes = {
     "RGBA": "RGB with Transparency",
@@ -27,7 +27,7 @@ class Images(commands.Cog):
         im = im.convert("L")
         im.save(out, "png")
         out.seek(0)
-        await ctx.send(file=diskord.File(out, filename="grayscale.png"))
+        await ctx.send(file=discord.File(out, filename="grayscale.png"))
 
     @commands.command(aliases=["colors"])
     async def resample(self, ctx, colors: int = 32, attachment=None):
@@ -49,8 +49,8 @@ class Images(commands.Cog):
             out.seek(0)
             await processing.delete()
             await ctx.send(files=[
-                diskord.File(out, filename=f"{colors}-colors.png"),
-                diskord.File(hexes, filename="colors.txt")
+                discord.File(out, filename=f"{colors}-colors.png"),
+                discord.File(hexes, filename="colors.txt")
                 ]
             )
 
@@ -64,7 +64,7 @@ class Images(commands.Cog):
         image = ImageEnhance.Color(image).enhance(amount)
         image.save(out, "png")
         out.seek(0)
-        await ctx.send(file=diskord.File(out, filename="saturated.png"))
+        await ctx.send(file=discord.File(out, filename="saturated.png"))
 
     @commands.command()
     async def imageinfo(self, ctx, attachment=None):
@@ -74,7 +74,7 @@ class Images(commands.Cog):
         filename, ext = (source.split('/')[-1].split('.'))  # https://stackoverflow.com/a/25913757/
         filename = filename + "." + ext
         filename = filename.split("?")[0]
-        iiembed = diskord.Embed(
+        iiembed = discord.Embed(
             title="Image information"
         )
         iiembed.set_thumbnail(url=source)
@@ -95,5 +95,5 @@ class Images(commands.Cog):
         await ctx.send(embed=iiembed)
 
 
-def setup(bot):
-    bot.add_cog(Images(bot))
+async def setup(bot):
+    await bot.add_cog(Images(bot))

@@ -3,8 +3,8 @@
 
 from typing import Any, List, Mapping
 
-from diskord.ext.commands import Command, Context, DefaultHelpCommand
-from diskord.ext.menus import CannotAddReactions, CannotReadMessageHistory, ListPageSource, Menu, MenuPages
+from discord.ext.commands import Command, Context, DefaultHelpCommand
+from discord.ext.menus import CannotAddReactions, CannotReadMessageHistory, ListPageSource, Menu, MenuPages
 
 
 # This is a function because it is an utter mess inline

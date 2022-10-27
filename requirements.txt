@@ -1,4 +1,4 @@
-diskord >= 2.6.2
+discord.py >= 2.0.1
  pillow >= 8.3.0
  requests >= 2.23.0 
  tortoise-orm >= 0.17.6

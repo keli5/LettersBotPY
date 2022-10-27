@@ -1,5 +1,5 @@
-from diskord.ext import commands
-from diskord.ext.commands.cooldowns import BucketType
+from discord.ext import commands
+from discord.ext.commands.cooldowns import BucketType
 from classes.dbmodels import LBUser
 from gtts import gTTS
 import asyncio
@@ -11,7 +11,7 @@ import random
 import html
 import requests
 import json
-import diskord
+import discord
 from io import BytesIO
 coin = ["heads", "tails"]
 noun = ["cat", "dog", "friend", "closest friend", "TV", "computer", "phone", "bed", "wall", "doorknob", "liver",
@@ -44,9 +44,9 @@ class Fun(commands.Cog):
             raise Exception("Can't bet less than 5")
 
         LBUser.filter(id=ctx.author.id).update(balance=userdb.balance - wager)
-        wheelembed = diskord.Embed(
+        wheelembed = discord.Embed(
             title="Spin the Wheel!",
-            color=diskord.Color.magenta()
+            color=discord.Color.magenta()
         )
         msg = await ctx.send(embed=wheelembed)
         wheelembed.description = "Spinning..."
@@ -59,13 +59,13 @@ class Fun(commands.Cog):
         text = ""
         if winnings - wager > 0:
             text = "won"
-            wheelembed.color = diskord.Color.green()
+            wheelembed.color = discord.Color.green()
         elif winnings - wager < 0:
             text = "lost"
-            wheelembed.color = diskord.Color.red()
+            wheelembed.color = discord.Color.red()
         else:
             text = "got"
-            wheelembed.color = diskord.Color.greyple()
+            wheelembed.color = discord.Color.greyple()
         fmoney = abs(round(winnings - wager, 2))
         fmoney = f"{fmoney:,}"
         wheelembed.description = f"You {text} {self.cur}{fmoney}."
@@ -77,12 +77,12 @@ class Fun(commands.Cog):
         """ Flip a coin. """
         result = random.choice(coin)
         result = result[0]
-        coinembed = diskord.Embed(
+        coinembed = discord.Embed(
             title=f"Flipped a coin and got {result}!"
         )
-        coinembed.color = diskord.Color.green()
+        coinembed.color = discord.Color.green()
         if result == "side":
-            coinembed.color = diskord.Color.red()
+            coinembed.color = discord.Color.red()
             coinembed.title = "Flipped a coin and got..."
             coinembed.description = "...the coin landed on its side?"
         await ctx.send(embed=coinembed)
@@ -132,9 +132,9 @@ class Fun(commands.Cog):
             earn = random.randint(10, 50)
         q = json.loads(requests.get("https://opentdb.com/api.php?amount=1").content)["results"][0]
         category = q["category"]
-        tembed = diskord.Embed(
+        tembed = discord.Embed(
             title=f"Category: {category}",
-            color=diskord.Color.greyple()
+            color=discord.Color.greyple()
         )
         answers = q["incorrect_answers"]
         letters = ["A", "B", "C", "D"]
@@ -167,9 +167,9 @@ class Fun(commands.Cog):
                 winners = await reaction.users().flatten()
                 winners = winners[1:]
                 if not winners:
-                    return await ctx.send(embed=diskord.Embed(
+                    return await ctx.send(embed=discord.Embed(
                         title=f"Nobody got it right! The answer was {cor}.",
-                        color=diskord.Color.red()
+                        color=discord.Color.red()
                     ))
             if reaction.emoji != correct_letter:
                 losers = await reaction.users().flatten()
@@ -182,9 +182,9 @@ class Fun(commands.Cog):
                 mybal = winnerdb.balance
                 await LBUser.filter(id=u.id).update(balance=mybal + earn)
             winnerpings = f.enumerate_list(winnerpings, 30)
-        winnerembed = diskord.Embed(
+        winnerembed = discord.Embed(
             title="Winners",
-            color=diskord.Color.green()
+            color=discord.Color.green()
         )
         winnerembed.description = f"Congratulations to {winnerpings}! The answer was {html.unescape(cor)}."
         if earn != 0:
@@ -193,11 +193,11 @@ class Fun(commands.Cog):
         await ctx.send(embed=winnerembed)
 
     @commands.command()
-    async def spotify(self, ctx, user: diskord.Member = None):
+    async def spotify(self, ctx, user: discord.Member = None):
         """ See a user's Spotify information. Uses presences, so offline users / non-connected Spotify won't work.
         It's real fucky, especially on mobile.  """
         user = user or ctx.author
-        sembed = diskord.Embed(
+        sembed = discord.Embed(
             title=f"Spotify for {user}"
         )
         spotify = None
@@ -205,7 +205,7 @@ class Fun(commands.Cog):
             if str(activity) == "Spotify":
                 spotify = activity
         if not spotify:
-            sembed.color = diskord.Color.red()
+            sembed.color = discord.Color.red()
             sembed.description = f"{user} is not listening to Spotify."
         else:
             sembed.color = spotify.color
@@ -228,7 +228,7 @@ class Fun(commands.Cog):
         gTTS(text=text).write_to_fp(out)
         out.seek(0)
         await processing.delete()
-        await ctx.send(file=diskord.File(out, filename="tts.mp3"))
+        await ctx.send(file=discord.File(out, filename="tts.mp3"))
 
     @commands.group(invoke_without_command=True, aliases=["scramble"])
     async def shuffle(self, ctx, *, string):
@@ -246,7 +246,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def xkcd(self, ctx, num: int = 0):
-        cembed = diskord.Embed()
+        cembed = discord.Embed()
         comic = num
         if num == 0:
             comic = ""
@@ -271,9 +271,9 @@ class Fun(commands.Cog):
 
     @commands.command(name="8ball")
     async def magic8ball(self, ctx, *, question):
-        m8embed = diskord.Embed(
+        m8embed = discord.Embed(
             title="🎱 Magic 8 ball",
-            color=diskord.Color.greyple()
+            color=discord.Color.greyple()
         )
         m8embed.add_field(name="❓ Question", value=question)
         m8embed.add_field(name="🎱 Answer", value=f.super_secret_8ball())
@@ -309,10 +309,10 @@ class Fun(commands.Cog):
 
         # did we already win? trick question: you're programming, you never win
         if bj.value(hands[ctx.author.id]) == 21:  # player got a blackjack
-            winembed = diskord.Embed(
+            winembed = discord.Embed(
                     title="Blackjack!",
                     description=f"{ctx.author.mention} got 21!\n",
-                    color=diskord.Color.green(),
+                    color=discord.Color.green(),
             )
             winnings = bets[ctx.author.id] * 3.5
             winembed.add_field(name="Winnings", value=winnings)
@@ -323,7 +323,7 @@ class Fun(commands.Cog):
 
         readable_hand = [card.name for card in hands[ctx.author.id]]
         readable_dealer_hand = [card.name for card in dealer_hands[ctx.author.id]]
-        active_game_bot[ctx.author.id] = await ctx.send(embed=diskord.Embed(
+        active_game_bot[ctx.author.id] = await ctx.send(embed=discord.Embed(
                 title="Blackjack",
                 description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[ctx.author.id])})\n" +
                 f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})",
@@ -353,7 +353,7 @@ class Fun(commands.Cog):
 
                 readable_hand = [card.name for card in hands[user.id]]
                 readable_dealer_hand = [card.name for card in dealer_hands[user.id]]
-                await active_game_bot[user.id].edit(embed=diskord.Embed(
+                await active_game_bot[user.id].edit(embed=discord.Embed(
                     title=newtitle or "Blackjack",
                     description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[user.id])})\n" +
                     f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[user.id])})",
@@ -368,7 +368,7 @@ class Fun(commands.Cog):
                 readable_hand = [card.name for card in hands[user.id]]
                 readable_dealer_hand = [card.name for card in dealer_hands[user.id]]
 
-                await active_game_bot[user.id].edit(embed=diskord.Embed(
+                await active_game_bot[user.id].edit(embed=discord.Embed(
                     title=newtitle or "Blackjack",
                     description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[user.id])})\n" +
                     f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[user.id])})",
@@ -388,5 +388,5 @@ class Fun(commands.Cog):
                 )
 
 
-def setup(bot):
-    bot.add_cog(Fun(bot))
+async def setup(bot):
+    await bot.add_cog(Fun(bot))

@@ -1,5 +1,5 @@
-from diskord.ext import commands
-import diskord
+from discord.ext import commands
+import discord
 from classes.dbmodels import LBGuild, GuildMarkovSettings, GuildChatChannel
 alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
@@ -23,12 +23,12 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
-    async def kick(self, ctx, user: diskord.Member, *, reason: str = "No reason provided."):
+    async def kick(self, ctx, user: discord.Member, *, reason: str = "No reason provided."):
         """Kick a user from the guild."""
         await ctx.guild.kick(user, reason=reason)
-        kickembed = diskord.Embed(
+        kickembed = discord.Embed(
             title=f"Kicked {str(user)} from {str(ctx.guild)}",
-            color=diskord.Color.red()
+            color=discord.Color.red()
         )
 
         kickembed.add_field(name="Reason", value=reason)
@@ -38,12 +38,12 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
-    async def ban(self, ctx, user: diskord.Member, *, reason: str = "No reason provided"):
+    async def ban(self, ctx, user: discord.Member, *, reason: str = "No reason provided"):
         """Ban a user from the guild."""
         await ctx.guild.ban(user, reason=reason)
-        banembed = diskord.Embed(
+        banembed = discord.Embed(
             title=f"Banned {str(user)} from {str(ctx.guild)}",
-            color=diskord.Color.red()
+            color=discord.Color.red()
         )
 
         banembed.add_field(name="Reason", value=reason)
@@ -53,12 +53,12 @@ class Moderation(commands.Cog):
     @commands.command(aliases=["pardon"])
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
-    async def unban(self, ctx, userid: diskord.User, *, reason: str = "No reason provided."):
+    async def unban(self, ctx, userid: discord.User, *, reason: str = "No reason provided."):
         """Unban a user from the guild."""
         await ctx.guild.unban(userid, reason=reason)
-        unbanembed = diskord.Embed(
+        unbanembed = discord.Embed(
             title=f"Unbanned {str(userid)} from {str(ctx.guild)}",
-            color=diskord.Color.green()  # green because the victim has been freed
+            color=discord.Color.green()  # green because the victim has been freed
         )
         unbanembed.add_field(name="Reason", value=reason)
         unbanembed.add_field(name="ID", value=userid.id)
@@ -109,7 +109,7 @@ class Moderation(commands.Cog):
 
     @joinmsg.command(aliases=["setchannel"])
     @commands.has_permissions(manage_guild=True)
-    async def channel(self, ctx, channel: diskord.TextChannel):
+    async def channel(self, ctx, channel: discord.TextChannel):
         """Set the channel for the custom join message."""
         myself = ctx.guild.get_member(ctx.bot.user.id)
         if not channel.permissions_for(myself).send_messages:
@@ -126,5 +126,5 @@ class Moderation(commands.Cog):
         await ctx.send(f"Successfully reset the join message channel to {ctx.guild.system_channel}.".capitalize())
 
 
-def setup(bot):
-    bot.add_cog(Moderation(bot))
+async def setup(bot):
+    await bot.add_cog(Moderation(bot))

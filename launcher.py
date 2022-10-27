@@ -1,16 +1,18 @@
-from classes.bot import LettersBot
-from diskord.ext.commands import Paginator
-import utility.initdb as i
-import diskord
-from tortoise import run_async
 # from help_command import PaginatedHelpCommand
 # import os
 import json
 
+import discord
+from discord.ext.commands import Paginator
+from tortoise import run_async
+
+import utility.initdb as i
+from classes.bot import LettersBot
+
 extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun"]
 botprefix = ""
 token = ""
-intents = diskord.Intents.all()  # reactions.
+intents = discord.Intents.all()  # reactions.
 
 try:
     with open("config.json") as opts:
@@ -39,15 +41,19 @@ with open("classes/botowners.txt", "r") as botowners:
 print('Running initdb.py')
 run_async(i.init())
 
-for extension in extlist:
-    prefix = "cogs."
-    if extension == "jishaku":
-        prefix = ""
-    try:
-        bot.load_extension(prefix + extension)
-        print('Successfully loaded extension ' + extension)
-    except Exception as e:
-        exc = "{}: {}".format(type(e).__name__, e)
-        print(f"Failed to load extension {extension}\nError: {exc}")
 
+async def load_extensions():
+    for extension in extlist:
+        prefix = "cogs."
+        if extension == "jishaku":
+            prefix = ""
+        try:
+            await bot.load_extension(prefix + extension)
+            print('Successfully loaded extension ' + extension)
+        except Exception as e:
+            exc = "{}: {}".format(type(e).__name__, e)
+            print(f"Failed to load extension {extension}\nError: {exc}")
+
+
+run_async(load_extensions())
 bot.run(token)

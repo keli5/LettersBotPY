@@ -1,19 +1,22 @@
-import diskord
-from classes.dbmodels import LBGuild
-import utility.funcs as utility
 import datetime
-from diskord.ext import commands, tasks
-import re
-import json
 import difflib
+import json
 import random
+import re
+
+import discord
+from discord.ext import commands, tasks
+
+import utility.funcs as utility
+from classes.dbmodels import LBGuild
+
 corpus = open("corpus.txt", "at", encoding="utf-8")
 started_at = datetime.datetime.now()
 cooldown_texts = ["Hey there.", "Hold on a second!", "pls wait...", "Cooldown..", "Hey, chill.",
                   "Just a minute...", "Give it a second.", "Whoop", "..."]
 
 status_texts = ["with pip", "with python", "with you", "with bot.py", "with git", "mind games", "ooer game",
-                "minecraft", "with bash", "with linux", "games", "with diskord", "with discord.py",
+                "minecraft", "with bash", "with linux", "games", "with discord.py",
                 "with frogs", "with cats", "with dogs", "you", "vs code", "around", "with knives", "with destruction",
                 "with bombs", "with myself", "with your mom", "with your dad", "with crewmates", "."]
 
@@ -38,17 +41,17 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         except Exception:
             user_count = "with you"
 
-        await self.change_presence(activity=diskord.Activity(
-            type=diskord.ActivityType.playing,
+        await self.change_presence(activity=discord.Activity(
+            type=discord.ActivityType.playing,
             name=f"{user_count} | {self.command_prefix}help"
             )
         )
 
-    async def on_message(self, message: diskord.Message):
+    async def on_message(self, message: discord.Message):
         owner = self.owner_ids[0] or self.owner_id or None
         owner = self.get_user(owner)
         guild = None
-        if message.channel.type is not diskord.ChannelType.private:
+        if message.channel.type is not discord.ChannelType.private:
             guild = await utility.db_for_guild(message.guild.id, True)
             mkv = await utility.db_for_mkv(message.guild.id, True)
             chatchannel = await utility.db_for_mkv_channel(message.channel.id, True)
@@ -66,12 +69,12 @@ class LettersBot(commands.AutoShardedBot):  # when you going
         pingregex = r"^<@"
         if len(message.content) > 8:
             if re.match(pingregex, message.content) or not re.match(swregex, message.content):
-                if message.channel.type is not diskord.ChannelType.private:
+                if message.channel.type is not discord.ChannelType.private:
                     if message.guild.id in self.allowedLearningGuilds:
                         pass
                         corpus.write(message.content + "\n")
 
-        if (message.channel.type == diskord.ChannelType.private) and owner:
+        if (message.channel.type == discord.ChannelType.private) and owner:
             if message.author is not owner:
                 await owner.send(f"`DM from {message.author} ({message.author.id}):`\n{message.content}")
 
@@ -97,7 +100,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
     async def on_command_error(self, ctx, exception):
         delay = 10
         excname = type(exception).__name__
-        errembed = diskord.Embed(
+        errembed = discord.Embed(
             title=f"{excname} error",
             description=str(exception),
             color=0xAA0000
@@ -119,7 +122,7 @@ class LettersBot(commands.AutoShardedBot):  # when you going
             matches = difflib.get_close_matches(parsedfailed, commandnames, 6, 0.5)
             if len(matches) == 0:
                 return
-            dymembed = diskord.Embed(
+            dymembed = discord.Embed(
                 title=f"Couldn't find command {failed}",
                 color=0xff0000,
                 description="Did you mean..."

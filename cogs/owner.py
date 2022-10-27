@@ -1,14 +1,17 @@
-from diskord.ext import commands
-import diskord
-from classes.dbmodels import LBUser, LBGuild, GuildMarkovSettings, GuildShop
-from utility.funcs import reload_markov, call_markov, image_from_url, tally_users, paginate_list
-import os
-import humanize
 import io
-import time
+import os
 import random
-import pkg_resources
+import time
 import typing
+
+import discord
+import humanize
+import pkg_resources
+from discord.ext import commands
+
+from classes.dbmodels import GuildMarkovSettings, GuildShop, LBGuild, LBUser
+from utility.funcs import (call_markov, image_from_url, paginate_list,
+                           reload_markov, tally_users)
 
 modeltypes = {
     "users": LBUser,
@@ -34,13 +37,13 @@ class Owner(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def botban(self, ctx, victim: diskord.User):
+    async def botban(self, ctx, victim: discord.User):
         await LBUser.filter(id=victim.id).update(canUseBot=False)
         await ctx.send(f"Disallowed {victim} from using LettersBot.")
 
     @commands.command()
     @commands.is_owner()
-    async def botunban(self, ctx, victim: diskord.User):
+    async def botunban(self, ctx, victim: discord.User):
         await LBUser.filter(id=victim.id).update(canUseBot=True)
         await ctx.send(f"Allowed {victim} to use LettersBot.")
 
@@ -57,13 +60,13 @@ class Owner(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def dm(self, ctx, channel: typing.Union[diskord.User, diskord.TextChannel], markov: bool, *,
+    async def dm(self, ctx, channel: typing.Union[discord.User, discord.TextChannel], markov: bool, *,
                  content: str = None):
 
         if markov:
             content = call_markov(900)
         await channel.send(content)
-        if isinstance(channel, diskord.User):
+        if isinstance(channel, discord.User):
             await ctx.send(f"`Sent DM to {channel}`:\n{content}")
         else:
             await ctx.send(f"`Sent message in {channel.guild}/#{channel.name}`:\n{content}")
@@ -94,7 +97,7 @@ class Owner(commands.Cog):
         model = modeltypes[model] or LBUser
         id = id or ctx.author.id
         result = await model[id]
-        getembed = diskord.Embed(
+        getembed = discord.Embed(
             title=f"{modelnm}.{id}"
         )
         for field in valid_fields:
@@ -137,9 +140,9 @@ class Owner(commands.Cog):
     @commands.is_owner()
     async def guilds(self, ctx, page: int = 1, safe: bool = True):
         # guild.name, guild.id, guild.members, ctx.bot.guilds is amount of guilds, tally_users(ctx.bot)
-        gembed = diskord.Embed(
+        gembed = discord.Embed(
             title=f"Guilds (page {page}) ",
-            color=diskord.Color.blurple()
+            color=discord.Color.blurple()
         )
         guilds = paginate_list(ctx.bot.guilds, 10, page)
         if len(guilds) == 0:
@@ -156,5 +159,5 @@ class Owner(commands.Cog):
         await ctx.send(embed=gembed)
 
 
-def setup(bot):
-    bot.add_cog(Owner(bot))
+async def setup(bot):
+    await bot.add_cog(Owner(bot))
