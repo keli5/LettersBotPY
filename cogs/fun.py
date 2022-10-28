@@ -160,7 +160,7 @@ class Fun(commands.Cog):
         qmsg = await ctx.send(embed=tembed)
         for i in range(idx):
             await qmsg.add_reaction(reacts[i])
-        await asyncio.sleep(5)
+        await asyncio.sleep(15)
         qmsg = await ctx.fetch_message(qmsg.id)
         cor = q["correct_answer"]
         winners = []
