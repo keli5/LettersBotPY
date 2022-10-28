@@ -1,18 +1,21 @@
+import asyncio
+import datetime as dt
+import html
+import json
+import random
+from io import BytesIO
+
+import discord
+import humanize
+import requests
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-from classes.dbmodels import LBUser
 from gtts import gTTS
-import asyncio
-import humanize
-import datetime as dt
+
 import utility.funcs as f
 import utility.gameutils.blackjack as bj
-import random
-import html
-import requests
-import json
-import discord
-from io import BytesIO
+from classes.dbmodels import LBUser
+
 coin = ["heads", "tails"]
 noun = ["cat", "dog", "friend", "closest friend", "TV", "computer", "phone", "bed", "wall", "doorknob", "liver",
         "toes", "fingers", "legs"]
@@ -157,14 +160,14 @@ class Fun(commands.Cog):
         qmsg = await ctx.send(embed=tembed)
         for i in range(idx):
             await qmsg.add_reaction(reacts[i])
-        await asyncio.sleep(15)
+        await asyncio.sleep(5)
         qmsg = await ctx.fetch_message(qmsg.id)
         cor = q["correct_answer"]
         winners = []
         for reaction in qmsg.reactions:
             winnerpings = []
             if reaction.emoji == correct_letter:
-                winners = await reaction.users().flatten()
+                winners = [user async for user in reaction.users()]
                 winners = winners[1:]
                 if not winners:
                     return await ctx.send(embed=discord.Embed(
@@ -172,7 +175,7 @@ class Fun(commands.Cog):
                         color=discord.Color.red()
                     ))
             if reaction.emoji != correct_letter:
-                losers = await reaction.users().flatten()
+                losers = [user async for user in reaction.users()]
                 for u in losers:
                     if u in winners:
                         winners.remove(u)
