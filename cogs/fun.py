@@ -127,6 +127,7 @@ class Fun(commands.Cog):
             if "requires a string containing" in str(e):
                 return await ctx.send(f"`{start}` has too many words. (max 2)")
 
+    @commands.cooldown(1, 15, BucketType.channel)
     @commands.command()
     async def trivia(self, ctx):
         """ Trivia question. Occasionally worth some money. """
