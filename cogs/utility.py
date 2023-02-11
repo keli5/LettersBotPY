@@ -228,11 +228,11 @@ class Utility(commands.Cog):
             description="LettersBot started out as a little JavaScript bot hosted on my Chromebook, " +
                         "now rewritten in Python with its own room among a few other great bots! " +
                         "Feel free to invite the bot to your server, play around with it, " +
-                        "and tell me about bugs on the GitHub repo!",
+                        "and tell me about bugs on the GitHub repo or Discord!",
             color=discord.Color.gold()
         )
         iembed.set_thumbnail(url=ctx.bot.user.avatar.url)
-        iembed.add_field(name="Home/support server", value="https://discord.gg/Dnhj9GG2Et")
+        iembed.add_field(name="Home/support server", value="https://discord.gg/7z6xkE8RKR")
         iembed.add_field(
             name="Invite the bot",
             value="https://cutt.ly/lettersbot2",
