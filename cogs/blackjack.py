@@ -165,7 +165,7 @@ class blj(commands.Cog):
                             color=color
                         )
                         win_embed.add_field(name="Winnings", value=bets[user.id] * 2.5)
-                        active_game_bot[user.id].edit(embed=win_embed)
+                        await active_game_bot[user.id].edit(embed=win_embed)
                         active_game[user.id] = None
                         active_game_bot[user.id] = None  # clean up
                         return
