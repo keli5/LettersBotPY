@@ -1,9 +1,7 @@
 
 import discord
 from discord.ext import commands
-import utility.funcs as f
 import utility.gameutils.blackjack as bj
-from classes.dbmodels import LBUser
 hands = {}
 dealer_hands = {}
 decks = {}
@@ -34,8 +32,7 @@ class blj(commands.Cog):
     async def blackjack(self, ctx, wager: int):
         """ Blackjack! Maximum wager 7500 """
         # here goes nothing
-        user_db = await f.db_for_user(ctx.author.id, True)
-        bal = user_db.balance
+        bal = bj.get_bal(ctx.author.id)
         # check if bal is enough
         if wager > bal:
             raise Exception("You can't afford that wager.")
@@ -59,7 +56,7 @@ class blj(commands.Cog):
         dealer_hands[ctx.author.id][1].hidden = True  # lol, horrorcode
         dealer_hands[ctx.author.id][1].name = "?? of ?"
         bets[ctx.author.id] = wager
-        await LBUser.filter(id=ctx.author.id).update(balance=user_db.balance - wager)
+        await bj.update_bal(ctx.author.id, 0-wager)
 
         # did we already win? trick question: you're programming, you never win
         # there has to be a better way to do this
@@ -73,7 +70,7 @@ class blj(commands.Cog):
                 ).set_footer(text="Thanks for Playing")
                 winnings = bets[ctx.author.id] * 3.5
                 winembed.add_field(name="Winnings", value=winnings)
-                await LBUser.filter(id=ctx.author.id).update(balance=user_db.balance + winnings)
+                await bj.update_bal(ctx.author.id, winnings)
                 active_game[ctx.author.id] = None
                 active_game_bot[ctx.author.id] = None
                 return await ctx.send(embed=winembed)
@@ -85,7 +82,7 @@ class blj(commands.Cog):
                 readable_hand = [card.name for card in hands[ctx.author.id]]
                 readable_dealer_hand = [card.name for card in dealer_hands[ctx.author.id]]
 
-                await LBUser.filter(id=ctx.author.id).update(balance=user_db.balance + bets[ctx.author.id])
+                await bj.update_bal(ctx.author.id, bets[ctx.author.id])
                 # send the tie embed
                 tie_embed = discord.Embed(
                     title="You Tied",
@@ -105,11 +102,12 @@ class blj(commands.Cog):
                 card.name = str(card.symbol) + " " + card.suit
             readable_hand = [card.name for card in hands[ctx.author.id]]
             readable_dealer_hand = [card.name for card in dealer_hands[ctx.author.id]]
-            lossembed = discord.embeds(
+            lossembed = discord.Embed(
                 title="You Lost. 😢",
                 description="The Dealer got 21.\n" +
                 f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[ctx.author.id])})\n" +
-                f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})"
+                f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})",
+                color=discord.Color.red()
             ).set_footer(text="Thanks for Playing")
             await ctx.send(embed=lossembed)
             # end the game
@@ -144,26 +142,31 @@ class blj(commands.Cog):
                     hit = bj.player_hit(bj.deal(decks[user.id]), hands[user.id])
 
                     if bj.value(hit) == 21:  # explicitly check for true, it could be a truthy value
-                        newtitle = "You got 21!"
+                        color = discord.Color.green()
+                        newtitle = "You Win!"
                         # unhide dealer cards for the embed message
                         for card in dealer_hands[user.id]:
                             card.hidden = False
                             card.name = str(card.symbol) + " " + card.suit
                         dealer_hands[user.id] = bj.dealer_finish(dealer_hands[user.id], decks[user.id])
                         if bj.value(dealer_hands[user.id]) != 21:
-                            user_db = await f.db_for_user(user.id, True)
-                            await LBUser.filter(id=user.id).update(
-                                balance=user_db.balance + bets[user.id] * 2.5
-                            )
-
+                            await bj.update_bal(user.id, bets[user.id] * 2.5)
+                            newtitle = "Push!"
+                            color = discord.Color.default()
+                        readable_hand = [card.name for card in hands[user.id]]
+                        readable_dealer_hand = [card.name for card in dealer_hands[user.id]]
+                        active_game_bot[user.id].edit(embed=discord.Embed(
+                            title=newtitle,
+                            description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[user.id])})\n" +
+                            f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[user.id])})",
+                            color=color
+                        ))
                         active_game[user.id] = None
                         active_game_bot[user.id] = None  # clean up
                         return
 
                     elif bj.value(hit) > 21:
                         newtitle = "You busted! 🥵"
-                        # see if the dealer would also bust
-                        # TODO: make aces be counted in value
                         for card in dealer_hands[user.id]:
                             card.hidden = False
 
@@ -179,6 +182,8 @@ class blj(commands.Cog):
                                 f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[user.id])})",
                             )
                                 .set_footer(text="Thanks For Playing!"))
+                            # they both busted, return users money
+                            await bj.update_bal(user.id, bets[user.id])
 
                     else:
                         readable_hand = [card.name for card in hands[user.id]]
@@ -193,7 +198,6 @@ class blj(commands.Cog):
                     # user stands
                     footer = 'Thanks For Playing'
                     # store users bal in a vairable
-                    user_bal = await f.db_for_user(user.id, True)
                     # the user cant hit anymore; unhide the cards
                     for card in dealer_hands[user.id]:
                         card.hidden = False
@@ -207,13 +211,11 @@ class blj(commands.Cog):
 
                     if dealer_value < user_value or (dealer_value > 21):
                         newtitle = "You win!"
-                        await LBUser.filter(id=user.id).update(
-                            balance=user_bal.balance + bets[user.id] * 1.5
-                        )
+                        await bj.update_bal(user.id, bets[user.id] * 1.5)
 
                     if dealer_value == user_value:
                         newtitle = "Push!"
-                        await LBUser.filter(id=user.id).update(user_bal.balance+bets[user.id])
+                        await bj.update_bal(user.id, bets[user.id])
                     readable_hand = [card.name for card in hands[user.id]]
                     readable_dealer_hand = [card.name for card in dealer_hands[user.id]]
                     embed = discord.Embed(

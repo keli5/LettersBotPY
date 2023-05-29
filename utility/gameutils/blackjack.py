@@ -1,8 +1,8 @@
 # lot of bullshit here
 # it needs its own file
 import random
-from traceback import print_exc
-
+from classes.dbmodels import LBUser
+from utility.funcs import db_for_user
 suits = ["<:spades:936447656463597568>", "<:hearts:936447656480350249>",
          "<:diamonds:936447656589398066>", "<:clubs:936447656199348256>"]
 numbers = list(range(1, 10))
@@ -64,14 +64,91 @@ def dealer_play(card, dealer_hand):
     return dealer_hand
 
 
+def dealer_finish(dealer_hand: list[Card], deck: list[Card]) -> list[Card]:
+    # Finishes the dealers hand once the player has hit 21, busted or stood
+    while value(dealer_hand) <= 16:
+        dealer_hand = dealer_play(deal(deck), dealer_hand)
+    return dealer_hand
+
+
 def value(hand):
     """ Get the value of a hand """
-    try:
-        total = 0
-        for card in hand:
-            if card.hidden:
-                continue
-            total += card.value
+    aces = []
+    total = 0
+    for card in hand:
+        if card.hidden:
+            continue
+        if card.ace:
+            aces.append(card)
+            continue
+        total += card.value
+    if aces:
+        if len(aces) == 1:
+            if total+11 > 21:
+                aces[0].value = 1
+                return total + 1
+            if total + 11 <= 21:
+                aces[0].value = 11
+                return total + 11
+
+        if len(aces) > 2:
+            # if we have 2 aces they both cant be 11 or can they *insert vasuce music*
+            a = aces[0].value + (len(aces)-1) + total
+            if a <= 21:
+                aces.pop(0)
+                for ace in aces:
+                    ace.value = 1
+                return 21
+            if a > 21:
+                if len(aces) + total > 21:
+                    for ace in aces:
+                        ace.value = 1
+                    return total+len(aces)
+                return a
+    else:
         return total
-    except Exception as e:
-        print_exc()
+
+
+async def update_bal(user_id: str, ammount):
+    user = await db_for_user(user_id, True)
+    await LBUser.filter(id=user_id).update(user.balance+ammount)
+
+
+async def get_bal(user_id):
+    user = await db_for_user(user_id, True)
+    return user.balance
+
+
+def value_with_hidden(hand: list[Card]):
+    aces = []
+    total = 0
+    for card in hand:
+        if card.ace:
+            aces.append(card)
+            continue
+        total += card.value
+    if aces:
+        if len(aces) == 1:
+            if total+11 > 21:
+                aces[0].value = 1
+                return total + 1
+            if total + 11 <= 21:
+                aces[0].value = 11
+                return total+11
+
+        if len(aces) > 2:
+            # if we have 2 aces they both cant be 11 or can they *insert vasuce music*
+            a = aces[0].value + (len(aces)-1) + total
+            if a <= 21:
+                aces.pop(0)
+                for ace in aces:
+                    ace.value = 1
+                return 21
+            if a > 21:
+                if len(aces) + total > 21:
+                    for ace in aces:
+                        ace.value = 1
+                    return total+len(aces)
+                return a
+    else:
+        return total
