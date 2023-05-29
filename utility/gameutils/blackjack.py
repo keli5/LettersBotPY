@@ -113,9 +113,9 @@ def value(hand) -> int:
         return total
 
 
-async def update_bal(user_id: str, ammount):
+async def update_bal(user_id: str, amount):
     user = await db_for_user(user_id, True)
-    await LBUser.filter(id=user_id).update(balance=user.balance+ammount)
+    await LBUser.filter(id=user_id).update(balance=user.balance+amount)
 
 
 async def get_bal(user_id):
