@@ -9,7 +9,7 @@ from tortoise import run_async
 import utility.initdb as i
 from classes.bot import LettersBot
 
-extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun"]
+extlist = ["jishaku", "utility", "moderation", "images", "economy", "owner", "fun", "blackjack"]
 botprefix = ""
 token = ""
 intents = discord.Intents.all()  # reactions.
