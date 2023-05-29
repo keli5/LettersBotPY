@@ -1,6 +1,7 @@
 # lot of bullshit here
 # it needs its own file
 import random
+from traceback import print_exc
 
 suits = ["<:spades:936447656463597568>", "<:hearts:936447656480350249>",
          "<:diamonds:936447656589398066>", "<:clubs:936447656199348256>"]
@@ -44,12 +45,6 @@ def deal(deck):
 def player_hit(card, player_hand):
     """ Player hit logic """
     player_hand_value = value(player_hand)
-
-    if player_hand_value > 21:
-        return False  # bust
-    elif player_hand_value == 21:
-        return True  # blackjack
-
     if card.ace and (card.value + player_hand_value) > 21:
         player_hand.append(Card(card.suit, 1, True, "A"))
     else:
@@ -61,11 +56,6 @@ def player_hit(card, player_hand):
 
 def dealer_play(card, dealer_hand):
 
-    if value(dealer_hand) > 21:
-        return False  # dealer busted, player wins
-    elif value(dealer_hand) == 21:
-        return True  # dealer blackjack
-
     if card.ace and (card.value + value(dealer_hand)) > 21:
         dealer_hand.append(Card(card.suit, 1, True, "A"))
     else:
@@ -76,7 +66,12 @@ def dealer_play(card, dealer_hand):
 
 def value(hand):
     """ Get the value of a hand """
-    total = 0
-    for card in hand:
-        total += card.value
-    return total
+    try:
+        total = 0
+        for card in hand:
+            if card.hidden:
+                continue
+            total += card.value
+        return total
+    except Exception as e:
+        print_exc()
