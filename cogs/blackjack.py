@@ -175,9 +175,9 @@ class blj(commands.Cog):
                         for card in dealer_hands[user.id]:
                             card.hidden = False
                             card.name = card.name = str(card.symbol) + " " + card.suit
+                        hand = bj.dealer_finish(dealer_hands[user.id], decks[user.id])
                         readable_hand = [card.name for card in hands[user.id]]
                         readable_dealer_hand = [card.name for card in dealer_hands[user.id]]
-                        hand = bj.dealer_finish(dealer_hands[user.id], decks[user.id])
                         # i didnt forget to update the embed for this
                         if bj.value(hand) > 21:
                             newtitle = 'You Both Busted!'
@@ -194,6 +194,7 @@ class blj(commands.Cog):
                                 title=newtitle,
                                 description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[user.id])})\n" +
                                 f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[user.id])})",
+                                color=discord.Color.red()
                             ).set_footer(text="Thanks For Playing!"))
                         # in either case, clean up
                         active_game[user.id] = None
