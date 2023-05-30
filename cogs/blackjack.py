@@ -68,7 +68,7 @@ class blj(commands.Cog):
                 card.name = str(card.symbol) + " " + card.suit
             if not bj.value_with_hidden(dealer_hands[ctx.author.id]) == 21:  # bot did not black jack
                 win_embed = discord.Embed(
-                    title="You Tied",
+                    title="You Won!",
                     description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[ctx.author.id])})\n" +
                     f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})",
                     color=discord.Color.green()
@@ -104,7 +104,7 @@ class blj(commands.Cog):
             readable_hand = [card.name for card in hands[ctx.author.id]]
             readable_dealer_hand = [card.name for card in dealer_hands[ctx.author.id]]
             lossembed = discord.Embed(
-                title="You Lost. 😢",
+                title="You Lost.",
                 description="The Dealer got 21.\n" +
                 f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[ctx.author.id])})\n" +
                 f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})",
