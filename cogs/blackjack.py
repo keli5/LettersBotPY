@@ -1,6 +1,7 @@
 
 import discord
 from discord.ext import commands
+from math import floor
 import utility.gameutils.blackjack as bj
 hands = {}
 dealer_hands = {}
@@ -35,6 +36,7 @@ class blj(commands.Cog):
         # here goes nothing
         bal = await bj.get_bal(ctx.author.id)
         # check if bal is enough
+        wager = floor(wager)
         if wager > bal:
             raise Exception("You can't afford that wager.")
         if wager > 7500:
