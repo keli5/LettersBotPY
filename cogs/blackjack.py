@@ -1,6 +1,7 @@
 
 import discord
 from discord.ext import commands
+from math import floor
 import utility.gameutils.blackjack as bj
 hands = {}
 dealer_hands = {}
@@ -35,6 +36,7 @@ class blj(commands.Cog):
         # here goes nothing
         bal = await bj.get_bal(ctx.author.id)
         # check if bal is enough
+        wager = floor(wager)
         if wager > bal:
             raise Exception("You can't afford that wager.")
         if wager > 7500:
@@ -68,7 +70,7 @@ class blj(commands.Cog):
                 card.name = str(card.symbol) + " " + card.suit
             if not bj.value_with_hidden(dealer_hands[ctx.author.id]) == 21:  # bot did not black jack
                 win_embed = discord.Embed(
-                    title="You Tied",
+                    title="You Won!",
                     description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[ctx.author.id])})\n" +
                     f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})",
                     color=discord.Color.green()
@@ -104,7 +106,7 @@ class blj(commands.Cog):
             readable_hand = [card.name for card in hands[ctx.author.id]]
             readable_dealer_hand = [card.name for card in dealer_hands[ctx.author.id]]
             lossembed = discord.Embed(
-                title="You Lost. 😢",
+                title="You Lost.",
                 description="The Dealer got 21.\n" +
                 f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[ctx.author.id])})\n" +
                 f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})",
@@ -175,9 +177,9 @@ class blj(commands.Cog):
                         for card in dealer_hands[user.id]:
                             card.hidden = False
                             card.name = card.name = str(card.symbol) + " " + card.suit
+                        hand = bj.dealer_finish(dealer_hands[user.id], decks[user.id])
                         readable_hand = [card.name for card in hands[user.id]]
                         readable_dealer_hand = [card.name for card in dealer_hands[user.id]]
-                        hand = bj.dealer_finish(dealer_hands[user.id], decks[user.id])
                         # i didnt forget to update the embed for this
                         if bj.value(hand) > 21:
                             newtitle = 'You Both Busted!'
@@ -194,6 +196,7 @@ class blj(commands.Cog):
                                 title=newtitle,
                                 description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[user.id])})\n" +
                                 f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[user.id])})",
+                                color=discord.Color.red()
                             ).set_footer(text="Thanks For Playing!"))
                         # in either case, clean up
                         active_game[user.id] = None
