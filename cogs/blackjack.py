@@ -2,6 +2,7 @@
 import discord
 from discord.ext import commands
 from math import floor
+from discord.ext.commands.cooldowns import BucketType
 import utility.gameutils.blackjack as bj
 hands = {}
 dealer_hands = {}
@@ -30,6 +31,25 @@ class blj(commands.Cog):
         active_game_bot[ctx.author.id] = None
         await ctx.message.add_reaction('✅')
 
+    @commands.command(aliases=['bjr'])
+    @commands.cooldown(1, 600 , BucketType.user) #pervent spamming
+    async def blackjackResend(self, ctx):
+        """ Resends any active blackjack game message you lost """
+        if active_game[ctx.author.id]:
+            active_game[ctx.author.id] = ctx.message
+            readable_hand = [card.name for card in hands[ctx.author.id]]
+            readable_dealer_hand = [card.name for card in dealer_hands[ctx.author.id]]
+            active_game_bot = await ctx.send( embed=discord.Embed(
+                title="Blackjack!",
+                description=f"Player's hand: {' | '.join(readable_hand)} (total {bj.value(hands[ctx.author.id])})\n" +
+                f"Dealer's hand: {' | '.join(readable_dealer_hand)} (total {bj.value(dealer_hands[ctx.author.id])})"
+            ).set_footer(text="Thanks for Playing")
+                
+            )
+            await active_game_bot[ctx.author.id].add_reaction("🃏")
+            await active_game_bot[ctx.author.id].add_reaction("🖐️")
+        else:
+            raise Exception("You dont have any active game to resend")
     @commands.command(aliases=["bj"])
     async def blackjack(self, ctx, wager: int):
         """ Blackjack! Maximum wager 7500 """
@@ -46,7 +66,8 @@ class blj(commands.Cog):
         if active_game.get(ctx.author.id):  # wok made dude shit himself :sob:
             raise Exception(
                 "You already have a game in progress. Finish that first.\n" +
-                f"You can also use {self.bot.command_prefix}bjq to end your active game")
+                f"You can also use {self.bot.command_prefix}bjq to end your active game\n"+
+                f'or use {self.bot.command_prefix}bjr to resend the blackjack message ')
         # This shit is a little bit of a mess
         decks[ctx.author.id] = bj.new_deck()
         deck = decks[ctx.author.id]
