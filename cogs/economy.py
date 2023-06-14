@@ -52,6 +52,7 @@ class Economy(commands.Cog):
         """ Play a guessing game for a chance to earn some money. """
         if guess > 100 or guess < 0:
             return await ctx.send('Guess may not be below 0 or above 100.')
+            ctx.command.reset_cooldown(ctx) #reset the cooldown if the person didnt have the right inputs
         user = await db_for_user(ctx.author.id, True)
         userbal = user.balance
         value = random.randint(0, 100)
